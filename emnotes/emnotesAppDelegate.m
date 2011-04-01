@@ -7,23 +7,62 @@
 //
 
 #import "emnotesAppDelegate.h"
+#import "CategoryTableViewController.h"
+#import "NotesTableViewController.h"
+#import "PersonalNotesTableViewController.h"
+#import "UpdateViewController.h"
 
 @implementation emnotesAppDelegate
 
 
 @synthesize window=_window;
-
 @synthesize managedObjectContext=__managedObjectContext;
-
 @synthesize managedObjectModel=__managedObjectModel;
-
 @synthesize persistentStoreCoordinator=__persistentStoreCoordinator;
+@synthesize tabBar;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    UINavigationController *categoriesNavCon = [[UINavigationController alloc] init];
+    CategoryTableViewController *categoryTableViewController = [[CategoryTableViewController alloc] initWithStyle:UITableViewStylePlain];
+    [categoriesNavCon pushViewController:categoryTableViewController animated:NO];
+    [categoryTableViewController release];
+    
+    UINavigationController *allNotesNavCon = [[UINavigationController alloc] init];
+    NotesTableViewController *notesTableViewController = [[NotesTableViewController alloc] init];
+    [allNotesNavCon pushViewController:notesTableViewController animated:NO];
+    [notesTableViewController release];
+    
+    UINavigationController *personalNotesNavCon = [[UINavigationController alloc] init];
+    PersonalNotesTableViewController *personalNotesTableViewController = [[PersonalNotesTableViewController alloc] init];
+    [personalNotesNavCon pushViewController:personalNotesTableViewController animated:NO];
+    [personalNotesTableViewController release];
+    
+    UpdateViewController *updateViewController = [[UpdateViewController alloc] init];
+    
+    self.tabBar = [[UITabBarController alloc] init];
+    self.tabBar.delegate = self;
+    
+    tabBar.viewControllers = [NSArray arrayWithObjects:categoriesNavCon, allNotesNavCon, personalNotesNavCon, updateViewController, nil];
+    
+    [categoriesNavCon release];
+    [allNotesNavCon release];
+    [personalNotesNavCon release];
+    [updateViewController release];
+    
+    [self.window addSubview:tabBar.view];
     [self.window makeKeyAndVisible];
     return YES;
+
+}
+
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
+{
+    // if we're a navigation controller, pop back to root
+    if ([viewController isKindOfClass:[UINavigationController class]]) {
+        [(UINavigationController *)viewController popToRootViewControllerAnimated:NO];
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

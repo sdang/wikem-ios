@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface emnotesAppDelegate : NSObject <UIApplicationDelegate> {
-
+@interface emnotesAppDelegate : NSObject <UIApplicationDelegate, UITabBarControllerDelegate> {
+        UITabBarController *tabBar;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
@@ -17,6 +17,8 @@
 @property (nonatomic, retain, readonly) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, retain, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+
+@property (nonatomic, retain) IBOutlet UITabBarController *tabBar;
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
