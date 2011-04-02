@@ -1,40 +1,38 @@
 //
 //  Category.m
-//  TabViewTest
+//  emnotes
 //
 //  Created by Sabin Dang on 4/1/11.
-//  Copyright 2011 sabindang.com. All rights reserved.
+//  Copyright (c) 2011 sabindang.com. All rights reserved.
 //
 
 #import "Category.h"
 
 
-
 @implementation Category
+@dynamic title;
 
-@synthesize categories;
++ (Category *)categoryWithTitle:(NSString *)title inManagedObjectContext:(NSManagedObjectContext *)context
+{
+    Category *category = nil;
+    
+    // request category of title
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    request.entity = [NSEntityDescription entityForName:@"Category" inManagedObjectContext:context];
+    request.predicate = [NSPredicate predicateWithFormat:@"title = %@", title];
+    request.fetchBatchSize = 1;
+    
+    NSError *error = nil;
+    category = [[context executeFetchRequest:request error:&error] lastObject];
 
-- (id)init {
-    [super init];
-    self.categories = [NSArray arrayWithObjects:@"Heme/Onc", @"Cards", nil];
-    return self;
-}
-
-- (void) dealloc {
-    [self.categories release];
-    [super dealloc];
-}
-
-- (NSString *)nameOfCategory:(int)categoryIndex {
-    return [categories objectAtIndex:(NSUInteger)categoryIndex];
-}
-
-- (int)totalNumberOfCategories {
-    return [categories count];
-}
-
-- (int)numberOfNotesInCategory:(int)categoryIndex {
-    return 1;
+    if (!error && !category) {
+        // set category parameters
+        category = [NSEntityDescription insertNewObjectForEntityForName:@"Category" inManagedObjectContext:context];
+        category.title = title;
+    }
+    
+    [request release];
+    return category;
 }
 
 @end

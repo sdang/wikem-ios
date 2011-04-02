@@ -7,12 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Category.h"
+#import "CoreDataTableViewController.h"
 
-@interface CategoryTableViewController : UITableViewController {
-    Category *category;
+@interface CategoryTableViewController : CoreDataTableViewController {
 }
 
+@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 @property (retain) UITabBarItem *tabBarItem;
+
+
+- (id)initWithStyle:(UITableViewStyle)style inManagedContext:(NSManagedObjectContext *)context;
 
 @end
