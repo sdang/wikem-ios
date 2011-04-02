@@ -50,7 +50,7 @@ inManagedObjectContext:self.managedObjectContext];
         TBXMLElement *subElement = categories->firstChild;
         do {
             NSString *title = [NSString stringWithString:[TBXML valueOfAttributeNamed:@"title" forElement:subElement]];
-           [Category categoryWithTitle:title inManagedObjectContext:self.managedObjectContext];
+            [Category categoryWithTitle:title inManagedObjectContext:self.managedObjectContext];
         } while ((subElement = subElement->nextSibling));
         
         // Parse Notes
@@ -77,6 +77,14 @@ inManagedObjectContext:self.managedObjectContext];
     for (Note *note in notes) {
         [self.managedObjectContext deleteObject:note];
     }
+    
+    request.entity = [NSEntityDescription entityForName:@"Category" inManagedObjectContext:self.managedObjectContext];
+    [request setIncludesPropertyValues:NO];
+    NSArray *categories = [self.managedObjectContext executeFetchRequest:request error:nil];
+    for (Category *category in categories) {
+        [self.managedObjectContext deleteObject:category];
+    }
+
     
 }
 

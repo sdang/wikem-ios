@@ -16,6 +16,9 @@
 {
     Category *category = nil;
     
+    if ([title isEqualToString:@""])
+        title = @"Uncategorized";
+    
     // request category of title
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     request.entity = [NSEntityDescription entityForName:@"Category" inManagedObjectContext:context];
