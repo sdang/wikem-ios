@@ -42,20 +42,29 @@
     [super dealloc];
 }
 
-- (id)initWithStyle:(UITableViewStyle)style inManagedContext:(NSManagedObjectContext *)context
+- (id)initWithStyle:(UITableViewStyle)style inManagedContext:(NSManagedObjectContext *)context withCategory:(Category *)category
 {
     if ((self = [self initWithStyle:style])) {
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
         request.entity = [NSEntityDescription entityForName:@"Note" inManagedObjectContext:context];
         request.sortDescriptors = [NSArray arrayWithObject:[[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES]];
-        request.predicate = nil;
+        NSString *cacheName;
+        if (category) {
+            request.predicate = [NSPredicate predicateWithFormat:@"%@ in categories", category];
+            self.title = category.title;
+             cacheName = [NSString stringWithString:category.title];
+        } else {
+            cacheName = @"notes";
+            request.predicate = nil;
+        }
+        
         request.fetchBatchSize = 20;
         
         NSFetchedResultsController *frc = [[NSFetchedResultsController alloc]
                                            initWithFetchRequest:request
                                            managedObjectContext:context
                                            sectionNameKeyPath:nil 
-                                           cacheName:@"notes"];
+                                           cacheName:cacheName];
         
         self.fetchedResultsController = frc;
         [frc release];
@@ -66,6 +75,7 @@
 - (void)managedObjectSelected:(NSManagedObject *)managedObject
 {
     NoteViewController *noteViewController = [[NoteViewController alloc] init];
+    noteViewController.note = (Note *)managedObject;
     [self.navigationController pushViewController:noteViewController animated:YES];
     [noteViewController release];
 }

@@ -21,7 +21,6 @@
 		94DA2FFD13468FBA00862F48 /* 179-notepad.png in Resources */ = {isa = PBXBuildFile; fileRef = 94DA2FF913468FBA00862F48 /* 179-notepad.png */; };
 		94DA2FFE13468FBA00862F48 /* 180-stickynote.png in Resources */ = {isa = PBXBuildFile; fileRef = 94DA2FFA13468FBA00862F48 /* 180-stickynote.png */; };
 		94DA300213468FCB00862F48 /* CategoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94DA300013468FCB00862F48 /* CategoryTableViewController.m */; };
-		94DA300313468FCB00862F48 /* CategoryTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94DA300113468FCB00862F48 /* CategoryTableViewController.xib */; };
 		94DA301013468FE900862F48 /* NotesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94DA300513468FE900862F48 /* NotesTableViewController.m */; };
 		94DA301113468FE900862F48 /* NotesTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94DA300613468FE900862F48 /* NotesTableViewController.xib */; };
 		94DA301213468FE900862F48 /* NoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94DA300813468FE900862F48 /* NoteViewController.m */; };
@@ -30,8 +29,11 @@
 		94DA301513468FE900862F48 /* PersonalNotesTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94DA300C13468FE900862F48 /* PersonalNotesTableViewController.xib */; };
 		94DA301613468FE900862F48 /* UpdateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94DA300E13468FE900862F48 /* UpdateViewController.m */; };
 		94DA301713468FE900862F48 /* UpdateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94DA300F13468FE900862F48 /* UpdateViewController.xib */; };
-		94DA301C1346906300862F48 /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 94DA30191346906300862F48 /* Category.m */; };
-		94DA301D1346906300862F48 /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 94DA301B1346906300862F48 /* Note.m */; };
+		94DA3023134691DE00862F48 /* info.xml in Resources */ = {isa = PBXBuildFile; fileRef = 94DA3021134691DE00862F48 /* info.xml */; };
+		94DA3024134691DE00862F48 /* database.xml in Resources */ = {isa = PBXBuildFile; fileRef = 94DA3022134691DE00862F48 /* database.xml */; };
+		94E6959A1346BCE8008DF6ED /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E695991346BCE8008DF6ED /* Category.m */; };
+		94E6959D1346BD46008DF6ED /* CoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E6959B1346BD46008DF6ED /* CoreDataTableViewController.m */; };
+		94E695A01346CB35008DF6ED /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E6959F1346CB35008DF6ED /* Note.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,7 +56,6 @@
 		94DA2FFA13468FBA00862F48 /* 180-stickynote.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "180-stickynote.png"; sourceTree = "<group>"; };
 		94DA2FFF13468FCB00862F48 /* CategoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryTableViewController.h; sourceTree = "<group>"; };
 		94DA300013468FCB00862F48 /* CategoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryTableViewController.m; sourceTree = "<group>"; };
-		94DA300113468FCB00862F48 /* CategoryTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoryTableViewController.xib; sourceTree = "<group>"; };
 		94DA300413468FE900862F48 /* NotesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotesTableViewController.h; sourceTree = "<group>"; };
 		94DA300513468FE900862F48 /* NotesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotesTableViewController.m; sourceTree = "<group>"; };
 		94DA300613468FE900862F48 /* NotesTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotesTableViewController.xib; sourceTree = "<group>"; };
@@ -67,10 +68,14 @@
 		94DA300D13468FE900862F48 /* UpdateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateViewController.h; sourceTree = "<group>"; };
 		94DA300E13468FE900862F48 /* UpdateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateViewController.m; sourceTree = "<group>"; };
 		94DA300F13468FE900862F48 /* UpdateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UpdateViewController.xib; sourceTree = "<group>"; };
-		94DA30181346906300862F48 /* Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Category.h; sourceTree = "<group>"; };
-		94DA30191346906300862F48 /* Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Category.m; sourceTree = "<group>"; };
-		94DA301A1346906300862F48 /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
-		94DA301B1346906300862F48 /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
+		94DA3021134691DE00862F48 /* info.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = info.xml; sourceTree = "<group>"; };
+		94DA3022134691DE00862F48 /* database.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = database.xml; sourceTree = "<group>"; };
+		94E695981346BCE8008DF6ED /* Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Category.h; sourceTree = "<group>"; };
+		94E695991346BCE8008DF6ED /* Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Category.m; sourceTree = "<group>"; };
+		94E6959B1346BD46008DF6ED /* CoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataTableViewController.m; sourceTree = "<group>"; };
+		94E6959C1346BD46008DF6ED /* CoreDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataTableViewController.h; sourceTree = "<group>"; };
+		94E6959E1346CB35008DF6ED /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
+		94E6959F1346CB35008DF6ED /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,28 +124,11 @@
 		94DA2FE013468F8D00862F48 /* emnotes */ = {
 			isa = PBXGroup;
 			children = (
-				94DA30181346906300862F48 /* Category.h */,
-				94DA30191346906300862F48 /* Category.m */,
-				94DA301A1346906300862F48 /* Note.h */,
-				94DA301B1346906300862F48 /* Note.m */,
-				94DA300413468FE900862F48 /* NotesTableViewController.h */,
-				94DA300513468FE900862F48 /* NotesTableViewController.m */,
-				94DA300613468FE900862F48 /* NotesTableViewController.xib */,
-				94DA300713468FE900862F48 /* NoteViewController.h */,
-				94DA300813468FE900862F48 /* NoteViewController.m */,
-				94DA300913468FE900862F48 /* NoteViewController.xib */,
-				94DA300A13468FE900862F48 /* PersonalNotesTableViewController.h */,
-				94DA300B13468FE900862F48 /* PersonalNotesTableViewController.m */,
-				94DA300C13468FE900862F48 /* PersonalNotesTableViewController.xib */,
-				94DA300D13468FE900862F48 /* UpdateViewController.h */,
-				94DA300E13468FE900862F48 /* UpdateViewController.m */,
-				94DA300F13468FE900862F48 /* UpdateViewController.xib */,
-				94DA2FFF13468FCB00862F48 /* CategoryTableViewController.h */,
-				94DA300013468FCB00862F48 /* CategoryTableViewController.m */,
-				94DA300113468FCB00862F48 /* CategoryTableViewController.xib */,
+				94DA30201346913E00862F48 /* Models */,
+				94DA301F1346913C00862F48 /* Controllers */,
+				94DA301E1346913800862F48 /* Views */,
 				94DA2FE913468F8D00862F48 /* emnotesAppDelegate.h */,
 				94DA2FEA13468F8D00862F48 /* emnotesAppDelegate.m */,
-				94DA2FEC13468F8D00862F48 /* MainWindow.xib */,
 				94DA2FEF13468F8D00862F48 /* emnotes.xcdatamodeld */,
 				94DA2FE113468F8D00862F48 /* Supporting Files */,
 			);
@@ -150,6 +138,10 @@
 		94DA2FE113468F8D00862F48 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				94E6959B1346BD46008DF6ED /* CoreDataTableViewController.m */,
+				94E6959C1346BD46008DF6ED /* CoreDataTableViewController.h */,
+				94DA3021134691DE00862F48 /* info.xml */,
+				94DA3022134691DE00862F48 /* database.xml */,
 				94DA2FF713468FBA00862F48 /* 10-medical.png */,
 				94DA2FF813468FBA00862F48 /* 33-cabinet.png */,
 				94DA2FF913468FBA00862F48 /* 179-notepad.png */,
@@ -160,6 +152,46 @@
 				94DA2FE713468F8D00862F48 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		94DA301E1346913800862F48 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				94DA300613468FE900862F48 /* NotesTableViewController.xib */,
+				94DA300913468FE900862F48 /* NoteViewController.xib */,
+				94DA300C13468FE900862F48 /* PersonalNotesTableViewController.xib */,
+				94DA300F13468FE900862F48 /* UpdateViewController.xib */,
+				94DA2FEC13468F8D00862F48 /* MainWindow.xib */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		94DA301F1346913C00862F48 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				94DA300413468FE900862F48 /* NotesTableViewController.h */,
+				94DA300513468FE900862F48 /* NotesTableViewController.m */,
+				94DA300713468FE900862F48 /* NoteViewController.h */,
+				94DA300813468FE900862F48 /* NoteViewController.m */,
+				94DA300A13468FE900862F48 /* PersonalNotesTableViewController.h */,
+				94DA300B13468FE900862F48 /* PersonalNotesTableViewController.m */,
+				94DA300D13468FE900862F48 /* UpdateViewController.h */,
+				94DA300E13468FE900862F48 /* UpdateViewController.m */,
+				94DA2FFF13468FCB00862F48 /* CategoryTableViewController.h */,
+				94DA300013468FCB00862F48 /* CategoryTableViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		94DA30201346913E00862F48 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				94E695981346BCE8008DF6ED /* Category.h */,
+				94E695991346BCE8008DF6ED /* Category.m */,
+				94E6959E1346CB35008DF6ED /* Note.h */,
+				94E6959F1346CB35008DF6ED /* Note.m */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -218,11 +250,12 @@
 				94DA2FFC13468FBA00862F48 /* 33-cabinet.png in Resources */,
 				94DA2FFD13468FBA00862F48 /* 179-notepad.png in Resources */,
 				94DA2FFE13468FBA00862F48 /* 180-stickynote.png in Resources */,
-				94DA300313468FCB00862F48 /* CategoryTableViewController.xib in Resources */,
 				94DA301113468FE900862F48 /* NotesTableViewController.xib in Resources */,
 				94DA301313468FE900862F48 /* NoteViewController.xib in Resources */,
 				94DA301513468FE900862F48 /* PersonalNotesTableViewController.xib in Resources */,
 				94DA301713468FE900862F48 /* UpdateViewController.xib in Resources */,
+				94DA3023134691DE00862F48 /* info.xml in Resources */,
+				94DA3024134691DE00862F48 /* database.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -241,8 +274,9 @@
 				94DA301213468FE900862F48 /* NoteViewController.m in Sources */,
 				94DA301413468FE900862F48 /* PersonalNotesTableViewController.m in Sources */,
 				94DA301613468FE900862F48 /* UpdateViewController.m in Sources */,
-				94DA301C1346906300862F48 /* Category.m in Sources */,
-				94DA301D1346906300862F48 /* Note.m in Sources */,
+				94E6959A1346BCE8008DF6ED /* Category.m in Sources */,
+				94E6959D1346BD46008DF6ED /* CoreDataTableViewController.m in Sources */,
+				94E695A01346CB35008DF6ED /* Note.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,6 +381,7 @@
 				94DA2FF613468F8D00862F48 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

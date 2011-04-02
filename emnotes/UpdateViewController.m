@@ -7,7 +7,8 @@
 //
 
 #import "UpdateViewController.h"
-
+#import "Category.h"
+#import "Note.h"
 
 @implementation UpdateViewController
 

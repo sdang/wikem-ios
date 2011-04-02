@@ -40,7 +40,10 @@
 
 - (void)managedObjectSelected:(NSManagedObject *)managedObject
 {
-    NotesTableViewController *noteTableViewController = [[NotesTableViewController alloc] initWithStyle:UITableViewStylePlain inManagedContext:[fetchedResultsController managedObjectContext]];
+    
+    NotesTableViewController *noteTableViewController = [[NotesTableViewController alloc] initWithStyle:UITableViewStylePlain 
+                                                                                       inManagedContext:[fetchedResultsController managedObjectContext] 
+                                                                                           withCategory:(Category *)managedObject];
     [self.navigationController pushViewController:noteTableViewController animated:YES];
     [noteTableViewController release];
 }

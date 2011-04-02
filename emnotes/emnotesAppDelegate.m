@@ -26,18 +26,15 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    
-    
     // Sample Data to Test With:
-    Category *cat1 = [Category categoryWithTitle:@"Heme/Onc" inManagedObjectContext:self.managedObjectContext];
-    Category *cat2 = [Category categoryWithTitle:@"Cards" inManagedObjectContext:self.managedObjectContext];
-    Category *cat3 = [Category categoryWithTitle:@"Pulm" inManagedObjectContext:self.managedObjectContext];
-    
-    Note *note = [Note noteWithName:@"AAA" author:@"WikEM" content:@"Hope you don't have a AAA" lastUpdate:[NSDate date] categories:[NSSet setWithObjects:cat2, nil] inManagedObjectContext:self.managedObjectContext];
-    
-    NSLog(@"note = %@", note);
-    
-    
+    /*
+     Category *cat1 = [Category categoryWithTitle:@"Heme/Onc" inManagedObjectContext:self.managedObjectContext];
+     Category *cat2 = [Category categoryWithTitle:@"Cards" inManagedObjectContext:self.managedObjectContext];
+     Category *cat3 = [Category categoryWithTitle:@"Pulm" inManagedObjectContext:self.managedObjectContext];
+     
+     Note *note = [Note noteWithName:@"AAA" author:@"WikEM" content:@"Hope you don't have a AAA" lastUpdate:[NSDate date] categories:[NSSet setWithObjects:cat2, nil] inManagedObjectContext:self.managedObjectContext];
+    [self.managedObjectContext save:nil];
+      */
     
     
     UINavigationController *categoriesNavCon = [[UINavigationController alloc] init];
@@ -52,7 +49,8 @@
     UINavigationController *allNotesNavCon = [[UINavigationController alloc] init];
     NotesTableViewController *notesTableViewController = [[NotesTableViewController alloc]
                                                           initWithStyle:UITableViewStylePlain
-                                                          inManagedContext:self.managedObjectContext];
+                                                          inManagedContext:self.managedObjectContext
+                                                          withCategory:nil];
     
     [allNotesNavCon pushViewController:notesTableViewController animated:NO];
     [notesTableViewController release];

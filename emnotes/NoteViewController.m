@@ -11,7 +11,7 @@
 
 @implementation NoteViewController
 
-@synthesize webView;
+@synthesize webView, note;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -24,6 +24,7 @@
 
 - (void)dealloc
 {
+    [note release];
     [webView release];
     [super dealloc];
 }
@@ -40,7 +41,7 @@
 
 - (void)viewDidLoad
 {
-    [webView loadHTMLString:@"Hello World" baseURL:nil];
+    [webView loadHTMLString:self.note.content baseURL:nil];
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 }

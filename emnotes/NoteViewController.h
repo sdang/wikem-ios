@@ -7,12 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Note.h"
 
 
 @interface NoteViewController : UIViewController <UIWebViewDelegate> {
     UIWebView *webView;
+    Note *note;
 }
 
 @property (retain) IBOutlet UIWebView *webView;
+@property (retain) Note *note;
 
 @end
