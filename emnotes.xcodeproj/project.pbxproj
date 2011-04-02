@@ -34,6 +34,11 @@
 		94E6959A1346BCE8008DF6ED /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E695991346BCE8008DF6ED /* Category.m */; };
 		94E6959D1346BD46008DF6ED /* CoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E6959B1346BD46008DF6ED /* CoreDataTableViewController.m */; };
 		94E695A01346CB35008DF6ED /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E6959F1346CB35008DF6ED /* Note.m */; };
+		94E695B51346ED1D008DF6ED /* NSDataAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E695B21346ED1D008DF6ED /* NSDataAdditions.m */; };
+		94E695B61346ED1D008DF6ED /* TBXML.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E695B41346ED1D008DF6ED /* TBXML.m */; };
+		94E695B91346ED44008DF6ED /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 94E695B81346ED44008DF6ED /* libz.dylib */; };
+		94E695BC134703C8008DF6ED /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E695BB134703C8008DF6ED /* NSString+HTML.m */; };
+		94E695BF13470417008DF6ED /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E695BE13470416008DF6ED /* GTMNSString+HTML.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,6 +81,16 @@
 		94E6959C1346BD46008DF6ED /* CoreDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataTableViewController.h; sourceTree = "<group>"; };
 		94E6959E1346CB35008DF6ED /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
 		94E6959F1346CB35008DF6ED /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
+		94E695B11346ED1D008DF6ED /* NSDataAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDataAdditions.h; sourceTree = "<group>"; };
+		94E695B21346ED1D008DF6ED /* NSDataAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDataAdditions.m; sourceTree = "<group>"; };
+		94E695B31346ED1D008DF6ED /* TBXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBXML.h; sourceTree = "<group>"; };
+		94E695B41346ED1D008DF6ED /* TBXML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBXML.m; sourceTree = "<group>"; };
+		94E695B81346ED44008DF6ED /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		94E695BA134703C8008DF6ED /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HTML.h"; sourceTree = "<group>"; };
+		94E695BB134703C8008DF6ED /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HTML.m"; sourceTree = "<group>"; };
+		94E695BD13470416008DF6ED /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTMNSString+HTML.h"; sourceTree = "<group>"; };
+		94E695BE13470416008DF6ED /* GTMNSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSString+HTML.m"; sourceTree = "<group>"; };
+		94E695C013470425008DF6ED /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +98,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94E695B91346ED44008DF6ED /* libz.dylib in Frameworks */,
 				94DA2FD913468F8D00862F48 /* UIKit.framework in Frameworks */,
 				94DA2FDB13468F8D00862F48 /* Foundation.framework in Frameworks */,
 				94DA2FDD13468F8D00862F48 /* CoreGraphics.framework in Frameworks */,
@@ -113,6 +129,7 @@
 		94DA2FD713468F8D00862F48 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				94E695B81346ED44008DF6ED /* libz.dylib */,
 				94DA2FD813468F8D00862F48 /* UIKit.framework */,
 				94DA2FDA13468F8D00862F48 /* Foundation.framework */,
 				94DA2FDC13468F8D00862F48 /* CoreGraphics.framework */,
@@ -138,6 +155,15 @@
 		94DA2FE113468F8D00862F48 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				94E695C013470425008DF6ED /* GTMDefines.h */,
+				94E695BD13470416008DF6ED /* GTMNSString+HTML.h */,
+				94E695BE13470416008DF6ED /* GTMNSString+HTML.m */,
+				94E695BA134703C8008DF6ED /* NSString+HTML.h */,
+				94E695BB134703C8008DF6ED /* NSString+HTML.m */,
+				94E695B11346ED1D008DF6ED /* NSDataAdditions.h */,
+				94E695B21346ED1D008DF6ED /* NSDataAdditions.m */,
+				94E695B31346ED1D008DF6ED /* TBXML.h */,
+				94E695B41346ED1D008DF6ED /* TBXML.m */,
 				94E6959B1346BD46008DF6ED /* CoreDataTableViewController.m */,
 				94E6959C1346BD46008DF6ED /* CoreDataTableViewController.h */,
 				94DA3021134691DE00862F48 /* info.xml */,
@@ -277,6 +303,10 @@
 				94E6959A1346BCE8008DF6ED /* Category.m in Sources */,
 				94E6959D1346BD46008DF6ED /* CoreDataTableViewController.m in Sources */,
 				94E695A01346CB35008DF6ED /* Note.m in Sources */,
+				94E695B51346ED1D008DF6ED /* NSDataAdditions.m in Sources */,
+				94E695B61346ED1D008DF6ED /* TBXML.m in Sources */,
+				94E695BC134703C8008DF6ED /* NSString+HTML.m in Sources */,
+				94E695BF13470417008DF6ED /* GTMNSString+HTML.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

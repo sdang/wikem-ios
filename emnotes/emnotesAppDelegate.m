@@ -61,6 +61,7 @@
     [personalNotesTableViewController release];
     
     UpdateViewController *updateViewController = [[UpdateViewController alloc] init];
+    updateViewController.managedObjectContext = self.managedObjectContext;
     
     self.tabBar = [[UITabBarController alloc] init];
     self.tabBar.delegate = self;

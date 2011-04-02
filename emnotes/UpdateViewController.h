@@ -7,12 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#include "TBXML.h"
 
-
-@interface UpdateViewController : UIViewController {
-    
+@interface UpdateViewController : UIViewController <NSXMLParserDelegate> {
+    NSManagedObjectContext *managedObjectContext;
 }
 
 @property (retain) UITabBarItem *tabBarItem;
+@property (retain) NSManagedObjectContext *managedObjectContext;
+- (IBAction)clearWikEMData;
+- (IBAction)parseXMLDatabaseFile;
+- (void)addNotefromXMLElement:(TBXMLElement *)subElement;
 
 @end

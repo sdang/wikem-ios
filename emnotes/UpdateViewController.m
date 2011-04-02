@@ -9,10 +9,79 @@
 #import "UpdateViewController.h"
 #import "Category.h"
 #import "Note.h"
+#import "TBXML.h"
+#import "NSString+HTML.h"
 
 @implementation UpdateViewController
-
+@synthesize managedObjectContext;
 @synthesize tabBarItem;
+
+
+
+- (void)addNoteFromXMLElement:(TBXMLElement *)subElement
+{
+    NSString *content = [NSString stringWithString:[TBXML textForElement:[TBXML childElementNamed:@"content" parentElement:subElement]]];
+    NSSet *categories = [NSSet setWithObject:[Category categoryWithTitle:[TBXML textForElement:[TBXML childElementNamed:@"folder" parentElement:subElement]] inManagedObjectContext:self.managedObjectContext]];
+    if (![[categories anyObject] isKindOfClass:[Category class]]) {
+        NSLog(@"Found a note without a category");
+        categories = [NSSet setWithObject:[Category categoryWithTitle:@"Uncategorized" inManagedObjectContext:self.managedObjectContext]];
+    }
+    
+    // [TBXML textForElement:[TBXML childElementNamed:@"content" parentElement:subElement]];
+    [Note noteWithName:[TBXML textForElement:[TBXML childElementNamed:@"name" parentElement:subElement]]
+                author:[TBXML textForElement:[TBXML childElementNamed:@"author" parentElement:subElement]]
+               content:[content stringByDecodingHTMLEntities]
+            lastUpdate:[NSDate date]
+            categories:categories
+inManagedObjectContext:self.managedObjectContext];
+}
+
+
+- (void)parseXMLDatabaseFile {
+    NSLog(@"Running parse xml");
+    NSURL *theURL = [NSURL URLWithString:@"http://dl.android.wikem.org/database.xml"];
+    TBXML *tbxml = [TBXML tbxmlWithURL:theURL];
+    // NSLog(@"%@", [NSString stringWithContentsOfURL:theURL encoding:nil error:nil]);
+
+    if (tbxml.rootXMLElement) {
+        
+        // Parse Categories
+        TBXMLElement *categories = [TBXML childElementNamed:@"categories" parentElement:tbxml.rootXMLElement];
+        TBXMLElement *subElement = categories->firstChild;
+        do {
+            NSString *title = [NSString stringWithString:[TBXML valueOfAttributeNamed:@"title" forElement:subElement]];
+           [Category categoryWithTitle:title inManagedObjectContext:self.managedObjectContext];
+        } while ((subElement = subElement->nextSibling));
+        
+        // Parse Notes
+        TBXMLElement *notes = [TBXML childElementNamed:@"pages" parentElement:tbxml.rootXMLElement];
+        subElement = notes->firstChild;
+        do {
+            // NSLog(@"%@", [TBXML valueOfAttributeNamed:@"id" forElement:subElement]);
+            [self addNoteFromXMLElement:subElement];
+            
+        } while ((subElement = subElement->nextSibling));
+        
+        [self.managedObjectContext save:nil];
+        
+    }
+
+}
+
+- (IBAction)clearWikEMData
+{
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    request.entity = [NSEntityDescription entityForName:@"Note" inManagedObjectContext:self.managedObjectContext];
+    [request setIncludesPropertyValues:NO];
+    NSArray *notes = [self.managedObjectContext executeFetchRequest:request error:nil];
+    for (Note *note in notes) {
+        [self.managedObjectContext deleteObject:note];
+    }
+    
+}
+
+
+
 
 - (void)setupTabBarItem
 {

@@ -41,6 +41,7 @@
 
 - (void)viewDidLoad
 {
+    NSLog(@"Category: %@",self.note.categories);
     [webView loadHTMLString:self.note.content baseURL:nil];
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
