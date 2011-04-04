@@ -42,7 +42,7 @@
 {
     
     NotesTableViewController *noteTableViewController = [[NotesTableViewController alloc] initWithStyle:UITableViewStylePlain 
-                                                                                       inManagedContext:[fetchedResultsController managedObjectContext] 
+                                                                                       inManagedContext:[self.fetchedResultsController managedObjectContext] 
                                                                                            withCategory:(Category *)managedObject];
     [self.navigationController pushViewController:noteTableViewController animated:YES];
     [noteTableViewController release];

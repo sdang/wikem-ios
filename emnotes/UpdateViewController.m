@@ -39,10 +39,16 @@ inManagedObjectContext:self.managedObjectContext];
 
 - (void)parseXMLDatabaseFile {
     NSLog(@"Running parse xml");
-    NSURL *theURL = [NSURL URLWithString:@"http://dl.android.wikem.org/database.xml"];
-    TBXML *tbxml = [TBXML tbxmlWithURL:theURL];
-    // NSLog(@"%@", [NSString stringWithContentsOfURL:theURL encoding:nil error:nil]);
+    // NSURL *theURL = [NSURL URLWithString:@"http://dl.android.wikem.org/database.xml"];
+    // NSURL *theURL = [NSURL URLWithString:@"file:///database.xml"];
+    // TBXML *tbxml = [TBXML tbxmlWithURL:theURL];
+    // NSLog(@"%@", [NSString stringWithContentsOfURL:theURL encoding:nil error:nil]);    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"database" ofType:@"xml"];
+    NSString *content = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+    
 
+    TBXML *tbxml = [TBXML tbxmlWithXMLString:content];
+    
     if (tbxml.rootXMLElement) {
         
         // Parse Categories
@@ -77,13 +83,18 @@ inManagedObjectContext:self.managedObjectContext];
     for (Note *note in notes) {
         [self.managedObjectContext deleteObject:note];
     }
+    [request release];
     
-    request.entity = [NSEntityDescription entityForName:@"Category" inManagedObjectContext:self.managedObjectContext];
-    [request setIncludesPropertyValues:NO];
-    NSArray *categories = [self.managedObjectContext executeFetchRequest:request error:nil];
+    NSFetchRequest *requestC = [[NSFetchRequest alloc] init];
+    requestC.entity = [NSEntityDescription entityForName:@"Category" inManagedObjectContext:self.managedObjectContext];
+    [requestC setIncludesPropertyValues:NO];
+    NSArray *categories = [self.managedObjectContext executeFetchRequest:requestC error:nil];
     for (Category *category in categories) {
         [self.managedObjectContext deleteObject:category];
     }
+    
+    [requestC release];
+
 
     
 }

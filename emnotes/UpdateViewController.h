@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #include "TBXML.h"
 
-@interface UpdateViewController : UIViewController <NSXMLParserDelegate> {
+@interface UpdateViewController : UIViewController {
     NSManagedObjectContext *managedObjectContext;
 }
 
@@ -17,6 +17,6 @@
 @property (retain) NSManagedObjectContext *managedObjectContext;
 - (IBAction)clearWikEMData;
 - (IBAction)parseXMLDatabaseFile;
-- (void)addNotefromXMLElement:(TBXMLElement *)subElement;
+- (void)addNoteFromXMLElement:(TBXMLElement *)subElement;
 
 @end
