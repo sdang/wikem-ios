@@ -55,6 +55,29 @@
 
 #pragma mark - XML Processing
 
+- (void)parseXMLInfoFile {
+    NSString *infoFile = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"info_url"];
+    NSLog(@"plist info file = %@", infoFile);
+    NSURL *theURL = [NSURL URLWithString:infoFile];
+    NSString *content = [NSString stringWithContentsOfURL:theURL encoding:NSUTF8StringEncoding error:NULL];
+    NSLog(@"%@", content);
+    
+    TBXML *tbxml = [TBXML tbxmlWithXMLString:content]; 
+    
+    int size = 0;
+    int lastUpdate = 0;
+    
+    if (tbxml.rootXMLElement) {
+        TBXMLElement *lastUpdateElement = [TBXML childElementNamed:@"lastupdate" parentElement:tbxml.rootXMLElement];
+        TBXMLElement *sizeElement = [TBXML childElementNamed:@"size" parentElement:tbxml.rootXMLElement];
+        size = [[TBXML valueOfAttributeNamed:@"num" forElement:sizeElement] intValue];
+        lastUpdate = [[TBXML valueOfAttributeNamed:@"epoch" forElement:lastUpdateElement] intValue];
+//        NSLog(@"Total Records Found = %@", size);
+//        NSLog(@"Update File Time = %@", lastUpdate);
+    }
+}
+
+
 - (void)addNoteFromXMLElement:(TBXMLElement *)subElement context:(NSManagedObjectContext *)managedObjectContext
 {
     NSString *content = [NSString stringWithString:[TBXML textForElement:[TBXML childElementNamed:@"content" parentElement:subElement]]];
@@ -75,6 +98,7 @@ inManagedObjectContext:managedObjectContext];
 
 
 - (void)parseXMLDatabaseFile {
+    [self parseXMLInfoFile];
     dispatch_queue_t parseQueue = dispatch_queue_create("Parse XML Queue", NULL);
     dispatch_async(parseQueue, ^{
         [self disableAllTabBarItems:YES];
@@ -84,10 +108,6 @@ inManagedObjectContext:managedObjectContext];
         NSManagedObjectContext *managedObjectContext = [[[NSManagedObjectContext alloc] init] autorelease];
         [managedObjectContext setPersistentStoreCoordinator:self.persistentStoreCoordinator];
         NSLog(@"Running parse xml");
-        // NSURL *theURL = [NSURL URLWithString:@"http://dl.android.wikem.org/database.xml"];
-        // NSURL *theURL = [NSURL URLWithString:@"file:///database.xml"];
-        // TBXML *tbxml = [TBXML tbxmlWithURL:theURL];
-        // NSLog(@"%@", [NSString stringWithContentsOfURL:theURL encoding:nil error:nil]);
         
         NSString *path;
         NSString *content;
@@ -95,7 +115,9 @@ inManagedObjectContext:managedObjectContext];
             path = [[NSBundle mainBundle] pathForResource:@"database" ofType:@"xml"];
             content = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
         } else {
-            NSURL *theURL = [NSURL URLWithString:@"http://dl.android.wikem.org/database.xml"];
+            NSString *databaseFile = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"database_url"];
+            NSLog(@"plist db file = %@", databaseFile);
+            NSURL *theURL = [NSURL URLWithString:databaseFile];
             content = [NSString stringWithContentsOfURL:theURL encoding:NSUTF8StringEncoding error:NULL];
         }
         
@@ -105,34 +127,43 @@ inManagedObjectContext:managedObjectContext];
         TBXML *tbxml = [TBXML tbxmlWithXMLString:content];
         
         if (tbxml.rootXMLElement) {
-           [self updateProgressBar:0.1 message:@"Updating Categories"];
-            // Parse Categories
-            TBXMLElement *categories = [TBXML childElementNamed:@"categories" parentElement:tbxml.rootXMLElement];
-            TBXMLElement *subElement = categories->firstChild;
-            do {
-                NSString *title = [NSString stringWithString:[TBXML valueOfAttributeNamed:@"title" forElement:subElement]];
-                [Category categoryWithTitle:title inManagedObjectContext:managedObjectContext];
-            } while ((subElement = subElement->nextSibling));
             
-            // Parse Notes
-           [self updateProgressBar:0.2 message:@"Updating WikEM Notes"];
-            TBXMLElement *notes = [TBXML childElementNamed:@"pages" parentElement:tbxml.rootXMLElement];
-            subElement = notes->firstChild;
-            float i = 0.0;
-            do {
-                // NSLog(@"%@", [TBXML valueOfAttributeNamed:@"id" forElement:subElement]);
-                [self addNoteFromXMLElement:subElement context:managedObjectContext];
-                i++;
-                [self updateProgressBar:(0.8*(i/totalNotes))+0.2 message:@"Updating WikEM Notes"];
+            // extract : <root created="1301616061">
+            int *databaseGenerationTime = [[TBXML valueOfAttributeNamed:@"created" forElement:tbxml.rootXMLElement] intValue];
+            int *totalNumberOfNotes = [[TBXML valueOfAttributeNamed:@"size" forElement:tbxml.rootXMLElement] intValue];
+            
+            if (! totalNumberOfNotes) {
+                [self updateProgressBar:1.0 message:@"Error: Invalid WikEM Data"];
+            } else {
+               [self updateProgressBar:0.1 message:@"Updating Categories"];
+                // Parse Categories
+                TBXMLElement *categories = [TBXML childElementNamed:@"categories" parentElement:tbxml.rootXMLElement];
+                TBXMLElement *subElement = categories->firstChild;
+                do {
+                    NSString *title = [NSString stringWithString:[TBXML valueOfAttributeNamed:@"title" forElement:subElement]];
+                    [Category categoryWithTitle:title inManagedObjectContext:managedObjectContext];
+                } while ((subElement = subElement->nextSibling));
                 
-            } while ((subElement = subElement->nextSibling));
-            [self updateProgressBar:1 message:@"Done"];
-            [managedObjectContext save:nil];
-            [self disableAllTabBarItems:NO];
-            self.ranInitialSetup = YES;
-            NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-            [prefs setBool:self.ranInitialSetup forKey:@"ranInitialSetup"];
-            [prefs synchronize];
+                // Parse Notes
+               [self updateProgressBar:0.2 message:@"Updating WikEM Notes"];
+                TBXMLElement *notes = [TBXML childElementNamed:@"pages" parentElement:tbxml.rootXMLElement];
+                subElement = notes->firstChild;
+                float i = 0.0;
+                do {
+                    // NSLog(@"%@", [TBXML valueOfAttributeNamed:@"id" forElement:subElement]);
+                    [self addNoteFromXMLElement:subElement context:managedObjectContext];
+                    i++;
+                    [self updateProgressBar:(0.8*(i/totalNotes))+0.2 message:@"Updating WikEM Notes"];
+                    
+                } while ((subElement = subElement->nextSibling));
+                [self updateProgressBar:1 message:@"Done"];
+                [managedObjectContext save:nil];
+                [self disableAllTabBarItems:NO];
+                self.ranInitialSetup = YES;
+                NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+                [prefs setBool:self.ranInitialSetup forKey:@"ranInitialSetup"];
+                [prefs synchronize];
+            }
         }
     });
     dispatch_release(parseQueue);

@@ -34,5 +34,6 @@
 - (void)updateAvailable:(BOOL)status;
 - (void)disableAllTabBarItems:(BOOL)status;
 - (void)updateProgressBar:(float)currentProgress message:(NSString *)messageString;
+- (void)parseXMLInfoFile;
 
 @end
