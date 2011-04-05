@@ -11,6 +11,7 @@
 #import "NotesTableViewController.h"
 #import "PersonalNotesTableViewController.h"
 #import "UpdateViewController.h"
+#import "AcceptLicense.h"
 #import "Category.h"
 #import "Note.h"
 
@@ -26,17 +27,14 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    // Sample Data to Test With:
-    /*
-     Category *cat1 = [Category categoryWithTitle:@"Heme/Onc" inManagedObjectContext:self.managedObjectContext];
-     Category *cat2 = [Category categoryWithTitle:@"Cards" inManagedObjectContext:self.managedObjectContext];
-     Category *cat3 = [Category categoryWithTitle:@"Pulm" inManagedObjectContext:self.managedObjectContext];
-     
-     Note *note = [Note noteWithName:@"AAA" author:@"WikEM" content:@"Hope you don't have a AAA" lastUpdate:[NSDate date] categories:[NSSet setWithObjects:cat2, nil] inManagedObjectContext:self.managedObjectContext];
-    [self.managedObjectContext save:nil];
-      */
     
+    // is this the first time we've been run?
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    BOOL ranInitialSetup = [prefs boolForKey:@"ranInitialSetup"];
     
+    if (!ranInitialSetup)
+        NSLog(@"This is a first run");
+      
     UINavigationController *categoriesNavCon = [[UINavigationController alloc] init];
     CategoryTableViewController *categoryTableViewController = [[CategoryTableViewController alloc] 
                                                                 initWithStyle:UITableViewStylePlain
@@ -61,8 +59,7 @@
     [personalNotesTableViewController release];
     
     UpdateViewController *updateViewController = [[UpdateViewController alloc] init];
-    updateViewController.managedObjectContext = self.managedObjectContext;
-    
+    updateViewController.persistentStoreCoordinator = self.persistentStoreCoordinator;
     self.tabBar = [[UITabBarController alloc] init];
     self.tabBar.delegate = self;
     
@@ -75,6 +72,12 @@
     
     [self.window addSubview:tabBar.view];
     [self.window makeKeyAndVisible];
+    
+    if (!ranInitialSetup) {
+        updateViewController.ranInitialSetup = FALSE;
+        [tabBar setSelectedIndex:3];    
+    }
+    
     return YES;
 
 }
