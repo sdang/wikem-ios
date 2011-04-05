@@ -17,7 +17,7 @@
 @synthesize tabBarItem, progressBar, progressText;
 @synthesize ranInitialSetup, displayingLicense, licenseViewController;
 @synthesize persistentStoreCoordinator;
-
+@synthesize updaterButton;
 
 #pragma mark - User Interface Actions
 
@@ -53,14 +53,48 @@
     });
 }
 
+
+- (IBAction)runUpdateCheck:(id)sender
+{
+    NSDictionary *infoFileContents = [self parseXMLInfoFile];
+    if (infoFileContents) {
+        [self updateAvailable:YES];
+    }
+}
+
 #pragma mark - XML Processing
 
-- (void)parseXMLInfoFile {
+- (NSDictionary *)checkUpdateAvailable
+{
+    NSDictionary *infoFileContents = [self parseXMLInfoFile];
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    
+    NSNumber *totalNumberOfNotes = nil;
+    NSNumber *infoGenerationTime = nil;
+    
+    if (infoFileContents) {
+        totalNumberOfNotes = [infoFileContents objectForKey:@"size"];
+        infoGenerationTime = [infoFileContents objectForKey:@"lastUpdate"];
+    } else {
+        NSLog(@"Error parsing info file");
+    }
+    
+    
+    if (NSOrderedDescending == [infoGenerationTime compare:[NSNumber numberWithInt:[prefs integerForKey:@"lastDatabaseGenerationTime"]]]) {
+        [self updateAvailable:YES];
+        return infoFileContents;
+    } else {
+        [self updateAvailable:NO];
+        return nil;
+    }
+}
+
+- (NSDictionary *)parseXMLInfoFile {
     NSString *infoFile = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"info_url"];
-    NSLog(@"plist info file = %@", infoFile);
+
     NSURL *theURL = [NSURL URLWithString:infoFile];
     NSString *content = [NSString stringWithContentsOfURL:theURL encoding:NSUTF8StringEncoding error:NULL];
-    NSLog(@"%@", content);
+
     
     TBXML *tbxml = [TBXML tbxmlWithXMLString:content]; 
     
@@ -75,6 +109,13 @@
 //        NSLog(@"Total Records Found = %@", size);
 //        NSLog(@"Update File Time = %@", lastUpdate);
     }
+
+    NSDictionary *infoFileContents = nil;
+    if (size && lastUpdate) {
+        infoFileContents = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:size], @"size", [NSNumber numberWithInt:lastUpdate], @"lastUpdate", nil];
+    } 
+    
+    return infoFileContents;
 }
 
 
@@ -98,7 +139,7 @@ inManagedObjectContext:managedObjectContext];
 
 
 - (void)parseXMLDatabaseFile {
-    [self parseXMLInfoFile];
+    
     dispatch_queue_t parseQueue = dispatch_queue_create("Parse XML Queue", NULL);
     dispatch_async(parseQueue, ^{
         [self disableAllTabBarItems:YES];
@@ -121,7 +162,7 @@ inManagedObjectContext:managedObjectContext];
             content = [NSString stringWithContentsOfURL:theURL encoding:NSUTF8StringEncoding error:NULL];
         }
         
-        // not ideal!!
+        // not ideal!! But we need a way to count number notes for updating progress bar
         int totalNotes = [[content componentsSeparatedByString:@"<content>"] count]-1;
         
         TBXML *tbxml = [TBXML tbxmlWithXMLString:content];
@@ -129,10 +170,9 @@ inManagedObjectContext:managedObjectContext];
         if (tbxml.rootXMLElement) {
             
             // extract : <root created="1301616061">
-            int *databaseGenerationTime = [[TBXML valueOfAttributeNamed:@"created" forElement:tbxml.rootXMLElement] intValue];
-            int *totalNumberOfNotes = [[TBXML valueOfAttributeNamed:@"size" forElement:tbxml.rootXMLElement] intValue];
+            int databaseGenerationTime = [[TBXML valueOfAttributeNamed:@"created" forElement:tbxml.rootXMLElement] intValue];
             
-            if (! totalNumberOfNotes) {
+            if (! databaseGenerationTime) {
                 [self updateProgressBar:1.0 message:@"Error: Invalid WikEM Data"];
             } else {
                [self updateProgressBar:0.1 message:@"Updating Categories"];
@@ -160,9 +200,11 @@ inManagedObjectContext:managedObjectContext];
                 [managedObjectContext save:nil];
                 [self disableAllTabBarItems:NO];
                 self.ranInitialSetup = YES;
-                NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-                [prefs setBool:self.ranInitialSetup forKey:@"ranInitialSetup"];
-                [prefs synchronize];
+                
+                NSUserDefaults *prefsThread = [NSUserDefaults standardUserDefaults];
+                [prefsThread setInteger:databaseGenerationTime forKey:@"lastDatabaseGenerationTime"];
+                [prefsThread setBool:self.ranInitialSetup forKey:@"ranInitialSetup"];
+                [prefsThread synchronize];
             }
         }
     });
@@ -216,7 +258,20 @@ inManagedObjectContext:managedObjectContext];
 - (void)updateAvailable:(BOOL)status
 {
     if (status) {
+        // show red dot to indicate update available
         [[[[[self tabBarController] tabBar] items] objectAtIndex:3] setBadgeValue:@""];
+        
+        // show button to allow user to update if it isn't already shown
+        if (self.updaterButton.alpha == 0.0) {
+            CGRect finalRect = CGRectOffset(self.updaterButton.frame, 0.0, -100.0);
+            self.updaterButton.alpha = 1.0;
+            [UIView transitionWithView:self.updaterButton
+                              duration:0.5
+                               options:UIViewAnimationCurveLinear
+                            animations:^{ self.updaterButton.frame = finalRect; }
+                            completion:NULL];
+        }
+        
     } else {
         [[[[[self tabBarController] tabBar] items] objectAtIndex:3] setBadgeValue:nil];
     }
@@ -259,6 +314,7 @@ inManagedObjectContext:managedObjectContext];
     [licenseViewController release];
     [tabBarItem release];
     [progressText release];
+    [updaterButton release];
     [super dealloc];
 }
 
@@ -273,7 +329,10 @@ inManagedObjectContext:managedObjectContext];
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.updaterButton setTitle:@"Check for Update" forState:UIControlStateNormal];
     self.progressBar.alpha = 0.0;
+    self.updaterButton.alpha = 0.0;
+    self.updaterButton.frame = CGRectOffset(self.updaterButton.frame, 0.0, 100.0);
     self.progressBar.frame = CGRectOffset(self.progressBar.frame, 0.0, 50.0);
     self.progressText.frame = CGRectOffset(self.progressText.frame, 0.0, 50.0);
     self.progressText.text = @"";
@@ -312,6 +371,7 @@ inManagedObjectContext:managedObjectContext];
     self.licenseViewController = nil;
     self.progressBar = nil;
     self.progressText = nil;
+    self.updaterButton = nil;
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
