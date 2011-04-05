@@ -13,6 +13,8 @@
 @interface UpdateViewController : UIViewController <AcceptLicenseDelegate> {
     AcceptLicense *licenseViewController;
     NSPersistentStoreCoordinator *persistentStoreCoordinator;
+    UIProgressView *progressBar;
+    UILabel *progressText;
     BOOL ranInitialSetup;
     BOOL displayingLicense;
 }
@@ -22,6 +24,8 @@
 @property (assign) BOOL ranInitialSetup;
 @property (assign) BOOL displayingLicense;
 @property (nonatomic, retain) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (retain) IBOutlet UIProgressView *progressBar;
+@property (retain) IBOutlet UILabel *progressText;
 
 - (void)userDidAcceptLicense:(BOOL)status;
 - (IBAction)clearWikEMData;
@@ -29,5 +33,6 @@
 - (void)addNoteFromXMLElement:(TBXMLElement *)subElement context:(NSManagedObjectContext *)managedContextIndex;
 - (void)updateAvailable:(BOOL)status;
 - (void)disableAllTabBarItems:(BOOL)status;
+- (void)updateProgressBar:(float)currentProgress message:(NSString *)messageString;
 
 @end

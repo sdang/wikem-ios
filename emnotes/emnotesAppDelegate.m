@@ -76,6 +76,8 @@
     if (!ranInitialSetup) {
         updateViewController.ranInitialSetup = FALSE;
         [tabBar setSelectedIndex:3];    
+    } else {
+        updateViewController.ranInitialSetup = TRUE;
     }
     
     return YES;

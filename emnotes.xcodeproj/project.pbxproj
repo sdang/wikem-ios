@@ -10,6 +10,8 @@
 		94234C8E134A640900D241B5 /* AcceptLicense.m in Sources */ = {isa = PBXBuildFile; fileRef = 94234C8C134A640900D241B5 /* AcceptLicense.m */; };
 		94234C8F134A640900D241B5 /* AcceptLicense.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94234C8D134A640900D241B5 /* AcceptLicense.xib */; };
 		94234C92134A6EA300D241B5 /* disclaimer.html in Resources */ = {isa = PBXBuildFile; fileRef = 94234C91134A6EA300D241B5 /* disclaimer.html */; };
+		94234C9B134AA33D00D241B5 /* WikEM-Logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94234C99134AA33D00D241B5 /* WikEM-Logo@2x.png */; };
+		94234C9C134AA33D00D241B5 /* WikEM-Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 94234C9A134AA33D00D241B5 /* WikEM-Logo.png */; };
 		94DA2FD913468F8D00862F48 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94DA2FD813468F8D00862F48 /* UIKit.framework */; };
 		94DA2FDB13468F8D00862F48 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94DA2FDA13468F8D00862F48 /* Foundation.framework */; };
 		94DA2FDD13468F8D00862F48 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94DA2FDC13468F8D00862F48 /* CoreGraphics.framework */; };
@@ -49,6 +51,8 @@
 		94234C8C134A640900D241B5 /* AcceptLicense.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AcceptLicense.m; sourceTree = "<group>"; };
 		94234C8D134A640900D241B5 /* AcceptLicense.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AcceptLicense.xib; sourceTree = "<group>"; };
 		94234C91134A6EA300D241B5 /* disclaimer.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = disclaimer.html; sourceTree = "<group>"; };
+		94234C99134AA33D00D241B5 /* WikEM-Logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WikEM-Logo@2x.png"; sourceTree = "<group>"; };
+		94234C9A134AA33D00D241B5 /* WikEM-Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WikEM-Logo.png"; sourceTree = "<group>"; };
 		94DA2FD413468F8D00862F48 /* emnotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = emnotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		94DA2FD813468F8D00862F48 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		94DA2FDA13468F8D00862F48 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -162,6 +166,8 @@
 		94DA2FE113468F8D00862F48 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				94234C99134AA33D00D241B5 /* WikEM-Logo@2x.png */,
+				94234C9A134AA33D00D241B5 /* WikEM-Logo.png */,
 				94E695C013470425008DF6ED /* GTMDefines.h */,
 				94E695BD13470416008DF6ED /* GTMNSString+HTML.h */,
 				94E695BE13470416008DF6ED /* GTMNSString+HTML.m */,
@@ -295,6 +301,8 @@
 				94DA3024134691DE00862F48 /* database.xml in Resources */,
 				94234C8F134A640900D241B5 /* AcceptLicense.xib in Resources */,
 				94234C92134A6EA300D241B5 /* disclaimer.html in Resources */,
+				94234C9B134AA33D00D241B5 /* WikEM-Logo@2x.png in Resources */,
+				94234C9C134AA33D00D241B5 /* WikEM-Logo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

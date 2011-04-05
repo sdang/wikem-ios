@@ -14,11 +14,30 @@
 #import "AcceptLicense.h"
 
 @implementation UpdateViewController
-@synthesize tabBarItem;
+@synthesize tabBarItem, progressBar, progressText;
 @synthesize ranInitialSetup, displayingLicense, licenseViewController;
 @synthesize persistentStoreCoordinator;
 
 
+#pragma mark - User Interface Actions
+
+- (void)userDidAcceptLicense:(BOOL)status {
+    if (status) {
+        self.displayingLicense = NO;
+        [self parseXMLDatabaseFile];
+        [self updateAvailable:NO];
+    }
+}
+
+- (void)updateProgressBar:(float)currentProgress message:(NSString *)messageString {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.progressBar.alpha = 1;
+        self.progressBar.progress = currentProgress;
+        self.progressText.text = messageString;
+    });
+}
+
+#pragma mark - XML Processing
 
 - (void)addNoteFromXMLElement:(TBXMLElement *)subElement context:(NSManagedObjectContext *)managedObjectContext
 {
@@ -43,22 +62,34 @@ inManagedObjectContext:managedObjectContext];
     dispatch_queue_t parseQueue = dispatch_queue_create("Parse XML Queue", NULL);
     dispatch_async(parseQueue, ^{
         [self disableAllTabBarItems:YES];
+        
+        [self updateProgressBar:0.0 message:@"Downloading WikEM Database"];
+        
         NSManagedObjectContext *managedObjectContext = [[NSManagedObjectContext alloc] init];
         [managedObjectContext setPersistentStoreCoordinator:self.persistentStoreCoordinator];
         NSLog(@"Running parse xml");
         // NSURL *theURL = [NSURL URLWithString:@"http://dl.android.wikem.org/database.xml"];
         // NSURL *theURL = [NSURL URLWithString:@"file:///database.xml"];
         // TBXML *tbxml = [TBXML tbxmlWithURL:theURL];
-        // NSLog(@"%@", [NSString stringWithContentsOfURL:theURL encoding:nil error:nil]);    
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"database" ofType:@"xml"];
-        NSString *content = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+        // NSLog(@"%@", [NSString stringWithContentsOfURL:theURL encoding:nil error:nil]);
         
-
+        NSString *path;
+        NSString *content;
+        if (!self.ranInitialSetup) {
+            path = [[NSBundle mainBundle] pathForResource:@"database" ofType:@"xml"];
+            content = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+        } else {
+            NSURL *theURL = [NSURL URLWithString:@"http://dl.android.wikem.org/database.xml"];
+            content = [NSString stringWithContentsOfURL:theURL encoding:NSUTF8StringEncoding error:NULL];
+        }
+        
+        // not ideal!!
+        int totalNotes = [[content componentsSeparatedByString:@"<content>"] count]-1;
+        
         TBXML *tbxml = [TBXML tbxmlWithXMLString:content];
         
-        
         if (tbxml.rootXMLElement) {
-            
+           [self updateProgressBar:0.1 message:@"Updating Categories"];
             // Parse Categories
             TBXMLElement *categories = [TBXML childElementNamed:@"categories" parentElement:tbxml.rootXMLElement];
             TBXMLElement *subElement = categories->firstChild;
@@ -68,26 +99,34 @@ inManagedObjectContext:managedObjectContext];
             } while ((subElement = subElement->nextSibling));
             
             // Parse Notes
+           [self updateProgressBar:0.2 message:@"Updating WikEM Notes"];
             TBXMLElement *notes = [TBXML childElementNamed:@"pages" parentElement:tbxml.rootXMLElement];
             subElement = notes->firstChild;
+            float i = 0.0;
             do {
                 // NSLog(@"%@", [TBXML valueOfAttributeNamed:@"id" forElement:subElement]);
                 [self addNoteFromXMLElement:subElement context:managedObjectContext];
+                i++;
+                [self updateProgressBar:(0.8*(i/totalNotes))+0.2 message:@"Updating WikEM Notes"];
                 
             } while ((subElement = subElement->nextSibling));
-            
+            [self updateProgressBar:1 message:@"Done"];
             [managedObjectContext save:nil];
             [self disableAllTabBarItems:NO];
+            self.ranInitialSetup = YES;
+            NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+            [prefs setBool:self.ranInitialSetup forKey:@"ranInitialSetup"];
+            [prefs synchronize];
         }
     });
-
+    
 }
 
 - (IBAction)clearWikEMData
 {
-    [self disableAllTabBarItems:YES];
     dispatch_queue_t deleteQueue = dispatch_queue_create("Delete Queue", NULL);
     dispatch_async(deleteQueue, ^{
+        [self disableAllTabBarItems:YES];
         NSLog(@"Deleting All Notes");
         NSManagedObjectContext *managedObjectContext = [[NSManagedObjectContext alloc] init];
         [managedObjectContext setPersistentStoreCoordinator:self.persistentStoreCoordinator];
@@ -113,18 +152,10 @@ inManagedObjectContext:managedObjectContext];
         [managedObjectContext save:nil];
         [managedObjectContext release];
         NSLog(@"Deleted All Notes");
+        [self disableAllTabBarItems:NO];
     });
-    [self disableAllTabBarItems:NO];
+    
 }
-
-- (void)userDidAcceptLicense:(BOOL)status {
-    if (status) {        
-        NSLog(@"Updater Class Knows User Accepted Disclaimer");
-        [self parseXMLDatabaseFile];
-        [self updateAvailable:NO];
-    }
-}
-
 
 #pragma mark - Tab Bar Controls
 
@@ -176,9 +207,11 @@ inManagedObjectContext:managedObjectContext];
 
 - (void)dealloc
 {
+    [progressBar release];
     [persistentStoreCoordinator release];
     [licenseViewController release];
     [tabBarItem release];
+    [progressText release];
     [super dealloc];
 }
 
@@ -193,6 +226,8 @@ inManagedObjectContext:managedObjectContext];
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.progressBar.alpha = 0.0;
+    self.progressText.text = @"";
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -226,6 +261,8 @@ inManagedObjectContext:managedObjectContext];
 {
     [super viewDidUnload];
     self.licenseViewController = nil;
+    self.progressBar = nil;
+    self.progressText = nil;
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
