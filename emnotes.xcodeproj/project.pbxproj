@@ -14,6 +14,11 @@
 		94234C9C134AA33D00D241B5 /* WikEM-Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 94234C9A134AA33D00D241B5 /* WikEM-Logo.png */; };
 		94742929134B7C5C00AE579D /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 94742928134B7C5C00AE579D /* Default.png */; };
 		9474292B134B7C6700AE579D /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9474292A134B7C6700AE579D /* Default@2x.png */; };
+		9474292D134B7E9C00AE579D /* note-style.css in Resources */ = {isa = PBXBuildFile; fileRef = 9474292C134B7E9C00AE579D /* note-style.css */; };
+		94742937134B8F4500AE579D /* WikEMIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 94742936134B8F4500AE579D /* WikEMIcon.png */; };
+		94742939134B8F4B00AE579D /* WikEMIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94742938134B8F4B00AE579D /* WikEMIcon@2x.png */; };
+		9474293C134BA6E600AE579D /* wikemUpdaterBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 9474293A134BA6E600AE579D /* wikemUpdaterBackground.png */; };
+		9474293D134BA6E600AE579D /* wikemUpdaterBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9474293B134BA6E600AE579D /* wikemUpdaterBackground@2x.png */; };
 		94DA2FD913468F8D00862F48 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94DA2FD813468F8D00862F48 /* UIKit.framework */; };
 		94DA2FDB13468F8D00862F48 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94DA2FDA13468F8D00862F48 /* Foundation.framework */; };
 		94DA2FDD13468F8D00862F48 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94DA2FDC13468F8D00862F48 /* CoreGraphics.framework */; };
@@ -57,6 +62,11 @@
 		94234C9A134AA33D00D241B5 /* WikEM-Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WikEM-Logo.png"; sourceTree = "<group>"; };
 		94742928134B7C5C00AE579D /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../Default.png; sourceTree = "<group>"; };
 		9474292A134B7C6700AE579D /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../Default@2x.png"; sourceTree = "<group>"; };
+		9474292C134B7E9C00AE579D /* note-style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "note-style.css"; sourceTree = "<group>"; };
+		94742936134B8F4500AE579D /* WikEMIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = WikEMIcon.png; path = ../WikEMIcon.png; sourceTree = "<group>"; };
+		94742938134B8F4B00AE579D /* WikEMIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "WikEMIcon@2x.png"; path = "../WikEMIcon@2x.png"; sourceTree = "<group>"; };
+		9474293A134BA6E600AE579D /* wikemUpdaterBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wikemUpdaterBackground.png; sourceTree = "<group>"; };
+		9474293B134BA6E600AE579D /* wikemUpdaterBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wikemUpdaterBackground@2x.png"; sourceTree = "<group>"; };
 		94DA2FD413468F8D00862F48 /* WikEM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WikEM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		94DA2FD813468F8D00862F48 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		94DA2FDA13468F8D00862F48 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -189,6 +199,10 @@
 		94DA2FE113468F8D00862F48 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9474293A134BA6E600AE579D /* wikemUpdaterBackground.png */,
+				9474293B134BA6E600AE579D /* wikemUpdaterBackground@2x.png */,
+				94742938134B8F4B00AE579D /* WikEMIcon@2x.png */,
+				94742936134B8F4500AE579D /* WikEMIcon.png */,
 				9474292A134B7C6700AE579D /* Default@2x.png */,
 				94742928134B7C5C00AE579D /* Default.png */,
 				94234C99134AA33D00D241B5 /* WikEM-Logo@2x.png */,
@@ -204,6 +218,7 @@
 				94DA2FE613468F8D00862F48 /* emnotes-Prefix.pch */,
 				94DA2FE713468F8D00862F48 /* main.m */,
 				94234C91134A6EA300D241B5 /* disclaimer.html */,
+				9474292C134B7E9C00AE579D /* note-style.css */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -319,6 +334,11 @@
 				94234C9C134AA33D00D241B5 /* WikEM-Logo.png in Resources */,
 				94742929134B7C5C00AE579D /* Default.png in Resources */,
 				9474292B134B7C6700AE579D /* Default@2x.png in Resources */,
+				9474292D134B7E9C00AE579D /* note-style.css in Resources */,
+				94742937134B8F4500AE579D /* WikEMIcon.png in Resources */,
+				94742939134B8F4B00AE579D /* WikEMIcon@2x.png in Resources */,
+				9474293C134BA6E600AE579D /* wikemUpdaterBackground.png in Resources */,
+				9474293D134BA6E600AE579D /* wikemUpdaterBackground@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

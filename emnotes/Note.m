@@ -77,5 +77,13 @@ inManagedObjectContext:(NSManagedObjectContext *)context
     [self didChangeValueForKey:@"categories" withSetMutation:NSKeyValueMinusSetMutation usingObjects:value];
 }
 
+- (NSString *)formattedContent {
+    NSString* cssTags = @"<html><head><link href=\"note-style.css\" rel=\"Stylesheet\" type=\"text/css\" /></head><body>";
+	NSString* htmlContent = [cssTags stringByAppendingString:self.content];
+	htmlContent = [htmlContent stringByAppendingString:@"</body></html>"];
+    
+    return htmlContent;
+}
+
 
 @end

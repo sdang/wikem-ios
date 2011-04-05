@@ -31,6 +31,22 @@
 
 - (void)updateProgressBar:(float)currentProgress message:(NSString *)messageString {
     dispatch_async(dispatch_get_main_queue(), ^{
+        if (self.progressBar.alpha != 1) {
+            // the progress bar hasn't been displayed, lets move it up
+            self.progressBar.alpha = 1;
+            CGRect finalRectBar = CGRectOffset(self.progressBar.frame, 0.0, -1*50.0);
+            CGRect finalRectText = CGRectOffset(self.progressText.frame, 0.0, -1*50.0);
+            [UIView transitionWithView:self.progressBar
+                              duration:0.5
+                               options:UIViewAnimationCurveLinear
+                            animations:^{ self.progressBar.frame = finalRectBar; }
+                            completion:NULL];
+            [UIView transitionWithView:self.progressText   
+                              duration:0.5
+                               options:UIViewAnimationCurveLinear
+                            animations:^{ self.progressText.frame = finalRectText; }
+                            completion:NULL];
+        }
         self.progressBar.alpha = 1;
         self.progressBar.progress = currentProgress;
         self.progressText.text = messageString;
@@ -227,6 +243,8 @@ inManagedObjectContext:managedObjectContext];
 {
     [super viewDidLoad];
     self.progressBar.alpha = 0.0;
+    self.progressBar.frame = CGRectOffset(self.progressBar.frame, 0.0, 50.0);
+    self.progressText.frame = CGRectOffset(self.progressText.frame, 0.0, 50.0);
     self.progressText.text = @"";
 }
 
