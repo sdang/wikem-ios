@@ -131,7 +131,7 @@
 
 - (IBAction)runUpdateCheck:(id)sender
 {
-    NSDictionary *infoFileContents = [self parseXMLInfoFile];
+    NSDictionary *infoFileContents = [self checkUpdateAvailable];
     if (infoFileContents) {
         [self updateAvailable:YES];
     }
@@ -232,7 +232,6 @@ inManagedObjectContext:managedObjectContext];
             content = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
         } else {
             NSString *databaseFile = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"database_url"];
-            NSLog(@"plist db file = %@", databaseFile);
             NSURL *theURL = [NSURL URLWithString:databaseFile];
             content = [NSString stringWithContentsOfURL:theURL encoding:NSUTF8StringEncoding error:NULL];
         }
@@ -280,6 +279,7 @@ inManagedObjectContext:managedObjectContext];
                 [prefsThread setInteger:databaseGenerationTime forKey:@"lastDatabaseGenerationTime"];
                 [prefsThread setBool:self.ranInitialSetup forKey:@"ranInitialSetup"];
                 [prefsThread synchronize];
+                [self updateAvailable:NO];
             }
         }
     });
@@ -332,16 +332,18 @@ inManagedObjectContext:managedObjectContext];
 
 - (void)updateAvailable:(BOOL)status
 {
-    if (status) {
-        // show red dot to indicate update available
-        [[[[[self tabBarController] tabBar] items] objectAtIndex:3] setBadgeValue:@""];
-        
-        // show button to allow user to update if it isn't already shown
-        [self animateInUpdaterButton];
-        
-    } else {
-        [[[[[self tabBarController] tabBar] items] objectAtIndex:3] setBadgeValue:nil];
-    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (status) {
+            // show red dot to indicate update available
+            [[[[[self tabBarController] tabBar] items] objectAtIndex:3] setBadgeValue:@""];
+            
+            // show button to allow user to update if it isn't already shown
+            [self animateInUpdaterButton];
+            
+        } else {
+            [[[[[self tabBarController] tabBar] items] objectAtIndex:3] setBadgeValue:nil];
+        }
+    });
     
 }
 
@@ -396,7 +398,6 @@ inManagedObjectContext:managedObjectContext];
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.updaterButton setTitle:@"Check for Update" forState:UIControlStateNormal];
     self.progressBar.alpha = 0.0;
     self.updaterButton.alpha = 0.0;
     self.updaterButton.frame = CGRectOffset(self.updaterButton.frame, 0.0, 100.0);

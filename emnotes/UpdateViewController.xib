@@ -118,7 +118,7 @@
 							<bytes key="NSWhite">MC41AA</bytes>
 						</object>
 					</object>
-					<object class="IBUIButton" id="512054439">
+					<object class="IBUIButton" id="128240401">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{20, 354}, {286, 37}}</string>
@@ -408,17 +408,8 @@ AAMAAAABAAEAAAFTAAMAAAAEAAACAgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">runUpdateCheck:</string>
-						<reference key="source" ref="512054439"/>
-						<reference key="destination" ref="372490531"/>
-						<int key="IBEventType">7</int>
-					</object>
-					<int key="connectionID">47</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">parseXMLDatabaseFile</string>
-						<reference key="source" ref="512054439"/>
+						<reference key="source" ref="128240401"/>
 						<reference key="destination" ref="372490531"/>
 						<int key="IBEventType">7</int>
 					</object>
@@ -428,7 +419,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAACAgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">updaterButton</string>
 						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="512054439"/>
+						<reference key="destination" ref="128240401"/>
 					</object>
 					<int key="connectionID">49</int>
 				</object>
@@ -458,7 +449,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAACAgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<reference ref="183407477"/>
 							<reference ref="630692100"/>
 							<reference ref="189186547"/>
-							<reference ref="512054439"/>
+							<reference ref="128240401"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -530,7 +521,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAACAgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">46</int>
-						<reference key="object" ref="512054439"/>
+						<reference key="object" ref="128240401"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 				</object>
