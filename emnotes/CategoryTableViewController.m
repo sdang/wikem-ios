@@ -15,14 +15,15 @@
 
 @synthesize tabBarItem;
 @synthesize managedObjectContext;
-
+@synthesize notesTableViewController;
 
 - (id)initWithStyle:(UITableViewStyle)style inManagedContext:(NSManagedObjectContext *)context
 {
     if ((self = [self initWithStyle:style])) {
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
         request.entity = [NSEntityDescription entityForName:@"Category" inManagedObjectContext:context];
-        request.sortDescriptors = [NSArray arrayWithObject:[[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES]];
+        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES];
+        request.sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
         request.predicate = nil;
         request.fetchBatchSize = 20;
         
@@ -33,6 +34,8 @@
                                            cacheName:@"categories"];
         
         self.fetchedResultsController = frc;
+        [sortDescriptor release];
+        [request release];
         [frc release];
     }
     return self;
@@ -44,6 +47,7 @@
     NotesTableViewController *noteTableViewController = [[NotesTableViewController alloc] initWithStyle:UITableViewStylePlain 
                                                                                        inManagedContext:[self.fetchedResultsController managedObjectContext] 
                                                                                            withCategory:(Category *)managedObject];
+    self.notesTableViewController = noteTableViewController;
     [self.navigationController pushViewController:noteTableViewController animated:YES];
     [noteTableViewController release];
 }
@@ -72,9 +76,16 @@
 
 - (void)dealloc
 {
-    [tabBarItem dealloc];
+    [self.notesTableViewController release];
+    [tabBarItem release];
     [super dealloc];
 }
 
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    self.tabBarItem = nil;
+    self.notesTableViewController = nil;
+}
 
 @end

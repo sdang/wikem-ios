@@ -12,6 +12,8 @@
 		94234C92134A6EA300D241B5 /* disclaimer.html in Resources */ = {isa = PBXBuildFile; fileRef = 94234C91134A6EA300D241B5 /* disclaimer.html */; };
 		94234C9B134AA33D00D241B5 /* WikEM-Logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94234C99134AA33D00D241B5 /* WikEM-Logo@2x.png */; };
 		94234C9C134AA33D00D241B5 /* WikEM-Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 94234C9A134AA33D00D241B5 /* WikEM-Logo.png */; };
+		94742929134B7C5C00AE579D /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 94742928134B7C5C00AE579D /* Default.png */; };
+		9474292B134B7C6700AE579D /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9474292A134B7C6700AE579D /* Default@2x.png */; };
 		94DA2FD913468F8D00862F48 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94DA2FD813468F8D00862F48 /* UIKit.framework */; };
 		94DA2FDB13468F8D00862F48 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94DA2FDA13468F8D00862F48 /* Foundation.framework */; };
 		94DA2FDD13468F8D00862F48 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94DA2FDC13468F8D00862F48 /* CoreGraphics.framework */; };
@@ -53,7 +55,9 @@
 		94234C91134A6EA300D241B5 /* disclaimer.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = disclaimer.html; sourceTree = "<group>"; };
 		94234C99134AA33D00D241B5 /* WikEM-Logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WikEM-Logo@2x.png"; sourceTree = "<group>"; };
 		94234C9A134AA33D00D241B5 /* WikEM-Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WikEM-Logo.png"; sourceTree = "<group>"; };
-		94DA2FD413468F8D00862F48 /* emnotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = emnotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		94742928134B7C5C00AE579D /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../Default.png; sourceTree = "<group>"; };
+		9474292A134B7C6700AE579D /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../Default@2x.png"; sourceTree = "<group>"; };
+		94DA2FD413468F8D00862F48 /* WikEM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WikEM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		94DA2FD813468F8D00862F48 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		94DA2FDA13468F8D00862F48 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		94DA2FDC13468F8D00862F48 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -120,6 +124,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		948C0E3B134B60C4007FA6E2 /* Other Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				94E695C013470425008DF6ED /* GTMDefines.h */,
+				94E695BD13470416008DF6ED /* GTMNSString+HTML.h */,
+				94E695BE13470416008DF6ED /* GTMNSString+HTML.m */,
+				94E695BA134703C8008DF6ED /* NSString+HTML.h */,
+				94E695BB134703C8008DF6ED /* NSString+HTML.m */,
+				94E695B11346ED1D008DF6ED /* NSDataAdditions.h */,
+				94E695B21346ED1D008DF6ED /* NSDataAdditions.m */,
+				94E695B31346ED1D008DF6ED /* TBXML.h */,
+				94E695B41346ED1D008DF6ED /* TBXML.m */,
+				94E6959B1346BD46008DF6ED /* CoreDataTableViewController.m */,
+				94E6959C1346BD46008DF6ED /* CoreDataTableViewController.h */,
+			);
+			name = "Other Libraries";
+			sourceTree = "<group>";
+		};
 		94DA2FC913468F8D00862F48 = {
 			isa = PBXGroup;
 			children = (
@@ -132,7 +154,7 @@
 		94DA2FD513468F8D00862F48 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				94DA2FD413468F8D00862F48 /* emnotes.app */,
+				94DA2FD413468F8D00862F48 /* WikEM.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -152,6 +174,7 @@
 		94DA2FE013468F8D00862F48 /* emnotes */ = {
 			isa = PBXGroup;
 			children = (
+				948C0E3B134B60C4007FA6E2 /* Other Libraries */,
 				94DA30201346913E00862F48 /* Models */,
 				94DA301F1346913C00862F48 /* Controllers */,
 				94DA301E1346913800862F48 /* Views */,
@@ -166,19 +189,10 @@
 		94DA2FE113468F8D00862F48 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9474292A134B7C6700AE579D /* Default@2x.png */,
+				94742928134B7C5C00AE579D /* Default.png */,
 				94234C99134AA33D00D241B5 /* WikEM-Logo@2x.png */,
 				94234C9A134AA33D00D241B5 /* WikEM-Logo.png */,
-				94E695C013470425008DF6ED /* GTMDefines.h */,
-				94E695BD13470416008DF6ED /* GTMNSString+HTML.h */,
-				94E695BE13470416008DF6ED /* GTMNSString+HTML.m */,
-				94E695BA134703C8008DF6ED /* NSString+HTML.h */,
-				94E695BB134703C8008DF6ED /* NSString+HTML.m */,
-				94E695B11346ED1D008DF6ED /* NSDataAdditions.h */,
-				94E695B21346ED1D008DF6ED /* NSDataAdditions.m */,
-				94E695B31346ED1D008DF6ED /* TBXML.h */,
-				94E695B41346ED1D008DF6ED /* TBXML.m */,
-				94E6959B1346BD46008DF6ED /* CoreDataTableViewController.m */,
-				94E6959C1346BD46008DF6ED /* CoreDataTableViewController.h */,
 				94DA3021134691DE00862F48 /* info.xml */,
 				94DA3022134691DE00862F48 /* database.xml */,
 				94DA2FF713468FBA00862F48 /* 10-medical.png */,
@@ -254,7 +268,7 @@
 			);
 			name = emnotes;
 			productName = emnotes;
-			productReference = 94DA2FD413468F8D00862F48 /* emnotes.app */;
+			productReference = 94DA2FD413468F8D00862F48 /* WikEM.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -303,6 +317,8 @@
 				94234C92134A6EA300D241B5 /* disclaimer.html in Resources */,
 				94234C9B134AA33D00D241B5 /* WikEM-Logo@2x.png in Resources */,
 				94234C9C134AA33D00D241B5 /* WikEM-Logo.png in Resources */,
+				94742929134B7C5C00AE579D /* Default.png in Resources */,
+				9474292B134B7C6700AE579D /* Default@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,7 +382,7 @@
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -380,7 +396,7 @@
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 			};
@@ -396,7 +412,7 @@
 				GCC_PREFIX_HEADER = "emnotes/emnotes-Prefix.pch";
 				INFOPLIST_FILE = "emnotes/emnotes-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = WikEM;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -410,7 +426,7 @@
 				GCC_PREFIX_HEADER = "emnotes/emnotes-Prefix.pch";
 				INFOPLIST_FILE = "emnotes/emnotes-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = WikEM;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};

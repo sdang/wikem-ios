@@ -8,10 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "CoreDataTableViewController.h"
+#import "NotesTableViewController.h"
 
 @interface CategoryTableViewController : CoreDataTableViewController {
+    NotesTableViewController *notesTableViewController;
+    
 }
 
+@property (nonatomic, retain) NotesTableViewController *notesTableViewController;
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 @property (retain) UITabBarItem *tabBarItem;
 

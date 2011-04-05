@@ -65,7 +65,7 @@ inManagedObjectContext:managedObjectContext];
         
         [self updateProgressBar:0.0 message:@"Downloading WikEM Database"];
         
-        NSManagedObjectContext *managedObjectContext = [[NSManagedObjectContext alloc] init];
+        NSManagedObjectContext *managedObjectContext = [[[NSManagedObjectContext alloc] init] autorelease];
         [managedObjectContext setPersistentStoreCoordinator:self.persistentStoreCoordinator];
         NSLog(@"Running parse xml");
         // NSURL *theURL = [NSURL URLWithString:@"http://dl.android.wikem.org/database.xml"];
@@ -119,7 +119,7 @@ inManagedObjectContext:managedObjectContext];
             [prefs synchronize];
         }
     });
-    
+    dispatch_release(parseQueue);
 }
 
 - (IBAction)clearWikEMData
@@ -154,7 +154,7 @@ inManagedObjectContext:managedObjectContext];
         NSLog(@"Deleted All Notes");
         [self disableAllTabBarItems:NO];
     });
-    
+    dispatch_release(deleteQueue);
 }
 
 #pragma mark - Tab Bar Controls

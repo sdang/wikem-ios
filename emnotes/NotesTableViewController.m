@@ -38,8 +38,14 @@
 
 - (void)dealloc
 {
-    [tabBarItem dealloc];
+    [tabBarItem release];
     [super dealloc];
+}
+
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    self.tabBarItem = nil;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style inManagedContext:(NSManagedObjectContext *)context withCategory:(Category *)category
@@ -47,8 +53,9 @@
     if ((self = [self initWithStyle:style])) {
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
         request.entity = [NSEntityDescription entityForName:@"Note" inManagedObjectContext:context];
-        request.sortDescriptors = [NSArray arrayWithObject:[[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES]];
-        NSString *cacheName;
+        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+        request.sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+        NSString *cacheName = nil;
         if (category) {
             request.predicate = [NSPredicate predicateWithFormat:@"%@ in categories", category];
             self.title = category.title;
@@ -68,6 +75,8 @@
                                            cacheName:cacheName];
         
         self.fetchedResultsController = frc;
+        [sortDescriptor release];
+        [request release];
         [frc release];
     }
     return self;
