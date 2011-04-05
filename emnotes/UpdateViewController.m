@@ -19,6 +19,94 @@
 @synthesize persistentStoreCoordinator;
 @synthesize updaterButton;
 
+#pragma mark - Progress Bar & Update Button Management
+
+- (void)animateOutUpdaterButton
+{
+    // alpha = 0 if it's already hidden
+    if (self.updaterButton.alpha != 0)
+    [UIView transitionWithView:self.updaterButton
+                      duration:0.5
+                       options:UIViewAnimationCurveLinear
+                    animations:^{ self.updaterButton.alpha = 0.0; self.updaterButton.frame = CGRectOffset(self.updaterButton.frame, 0, 100.0); }
+                    completion:NULL];
+}
+
+- (void)animateOutProgressPackage
+{
+    // if alpha == 0 that means it's already hidden
+    if (self.progressBar.alpha != 0) {
+        // we're going to move up the package by 60 pts
+        CGRect finalRectBar = CGRectOffset(self.progressBar.frame, 0.0, 60.0);
+        CGRect finalRectText = CGRectOffset(self.progressText.frame, 0.0, 60.0);
+        
+        // actually do the animation
+        [UIView transitionWithView:self.progressBar
+                          duration:0.5
+                           options:UIViewAnimationCurveLinear
+                        animations:^{ self.progressBar.frame = finalRectBar; self.progressBar.alpha = 0.0;}
+                        completion:NULL];
+        [UIView transitionWithView:self.progressText   
+                          duration:0.5
+                           options:UIViewAnimationCurveLinear
+                        animations:^{ self.progressText.frame = finalRectText; }
+                        completion:NULL];
+        
+    }
+}
+
+
+- (void)animateInUpdaterButton
+{
+    if (self.progressBar.alpha == 1) {
+        // progress bar on screen, animate it out
+        [self animateOutProgressPackage];
+    }
+    
+    // alpha = 1 if it's already shown
+    if (self.updaterButton.alpha != 1)
+        [UIView transitionWithView:self.updaterButton
+                          duration:0.5
+                           options:UIViewAnimationCurveLinear
+                        animations:^{ self.updaterButton.alpha = 1.0; self.updaterButton.frame = CGRectOffset(self.updaterButton.frame, 0, -100.0); }
+                        completion:NULL];
+}
+
+
+
+- (void)animateInProgressPackage
+{
+    
+    // if the updater button is in the way get it out!
+    if (self.updaterButton.alpha == 1) {
+        [self animateOutUpdaterButton];
+    }
+    
+    // if alpha == 1 that means we're already showing it
+    if (self.progressBar.alpha != 1) {
+        // we're going to move up the package by 60 pts
+        CGRect finalRectBar = CGRectOffset(self.progressBar.frame, 0.0, -60.0);
+        CGRect finalRectText = CGRectOffset(self.progressText.frame, 0.0, -60.0);
+        
+        // make sure we can see the progress bar pkg
+        self.progressBar.alpha = 1;
+        
+        // actually do the animation
+        [UIView transitionWithView:self.progressBar
+                          duration:0.5
+                           options:UIViewAnimationCurveLinear
+                        animations:^{ self.progressBar.frame = finalRectBar; }
+                        completion:NULL];
+        [UIView transitionWithView:self.progressText   
+                          duration:0.5
+                           options:UIViewAnimationCurveLinear
+                        animations:^{ self.progressText.frame = finalRectText; }
+                        completion:NULL];
+        
+    }
+    
+}
+
 #pragma mark - User Interface Actions
 
 - (void)userDidAcceptLicense:(BOOL)status {
@@ -32,22 +120,9 @@
 - (void)updateProgressBar:(float)currentProgress message:(NSString *)messageString {
     dispatch_async(dispatch_get_main_queue(), ^{
         if (self.progressBar.alpha != 1) {
-            // the progress bar hasn't been displayed, lets move it up
-            self.progressBar.alpha = 1;
-            CGRect finalRectBar = CGRectOffset(self.progressBar.frame, 0.0, -1*50.0);
-            CGRect finalRectText = CGRectOffset(self.progressText.frame, 0.0, -1*50.0);
-            [UIView transitionWithView:self.progressBar
-                              duration:0.5
-                               options:UIViewAnimationCurveLinear
-                            animations:^{ self.progressBar.frame = finalRectBar; }
-                            completion:NULL];
-            [UIView transitionWithView:self.progressText   
-                              duration:0.5
-                               options:UIViewAnimationCurveLinear
-                            animations:^{ self.progressText.frame = finalRectText; }
-                            completion:NULL];
+            [self animateInProgressPackage];
         }
-        self.progressBar.alpha = 1;
+        
         self.progressBar.progress = currentProgress;
         self.progressText.text = messageString;
     });
@@ -262,15 +337,7 @@ inManagedObjectContext:managedObjectContext];
         [[[[[self tabBarController] tabBar] items] objectAtIndex:3] setBadgeValue:@""];
         
         // show button to allow user to update if it isn't already shown
-        if (self.updaterButton.alpha == 0.0) {
-            CGRect finalRect = CGRectOffset(self.updaterButton.frame, 0.0, -100.0);
-            self.updaterButton.alpha = 1.0;
-            [UIView transitionWithView:self.updaterButton
-                              duration:0.5
-                               options:UIViewAnimationCurveLinear
-                            animations:^{ self.updaterButton.frame = finalRect; }
-                            completion:NULL];
-        }
+        [self animateInUpdaterButton];
         
     } else {
         [[[[[self tabBarController] tabBar] items] objectAtIndex:3] setBadgeValue:nil];
@@ -333,8 +400,8 @@ inManagedObjectContext:managedObjectContext];
     self.progressBar.alpha = 0.0;
     self.updaterButton.alpha = 0.0;
     self.updaterButton.frame = CGRectOffset(self.updaterButton.frame, 0.0, 100.0);
-    self.progressBar.frame = CGRectOffset(self.progressBar.frame, 0.0, 50.0);
-    self.progressText.frame = CGRectOffset(self.progressText.frame, 0.0, 50.0);
+    self.progressBar.frame = CGRectOffset(self.progressBar.frame, 0.0, 60.0);
+    self.progressText.frame = CGRectOffset(self.progressText.frame, 0.0, 60.0);
     self.progressText.text = @"";
 }
 
