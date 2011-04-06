@@ -49,8 +49,6 @@
                                    selector:@selector(animateOutNoUpdateText)
                                    userInfo:nil
                                     repeats:NO];
-    
-    //[UIView setAnimationDidStopSelector:@selector(animationDidStop:finished:context:)]
 }
 
 - (void)animateOutUpdaterButton
@@ -191,6 +189,15 @@
         
         self.progressBar.progress = currentProgress;
         self.progressText.text = messageString;
+        
+        if ([self.progressText.text isEqualToString:@"Done"]) {
+            // we're done so hide the package
+            [NSTimer scheduledTimerWithTimeInterval:1.0f
+                                             target:self
+                                           selector:@selector(animateOutProgressPackage)
+                                           userInfo:nil
+                                            repeats:NO];
+        }
     });
 }
 
