@@ -15,6 +15,9 @@
 #import "AboutWikemViewController.h"
 
 @implementation UpdateViewController
+@synthesize currentDatabaseCreatedLabel;
+@synthesize lastUpdateCheckLabel;
+@synthesize lastUpdatePerformedLabel;
 @synthesize tabBarItem, progressBar, progressText;
 @synthesize ranInitialSetup, displayingLicense, licenseViewController;
 @synthesize persistentStoreCoordinator;
@@ -130,7 +133,27 @@
 }
 
 
-#pragma mark - User Interface Actions
+#pragma mark - User Interface Elements
+
+- (void)updateUpdateTimes
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // update the update stats
+        NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"MM/dd/yy"];
+        
+        NSDate *lastDatabaseGenerationTime = [NSDate dateWithTimeIntervalSince1970:[prefs integerForKey:@"lastDatabaseGenerationTime"]];
+        NSDate *lastDatabaseCheck = [NSDate dateWithTimeIntervalSince1970:[prefs integerForKey:@"lastDatabaseCheck"]];
+        NSDate *lastDatabaseUpdate = [NSDate dateWithTimeIntervalSince1970:[prefs integerForKey:@"lastDatabaseUpdate"]];
+        
+        self.currentDatabaseCreatedLabel.text = [dateFormatter stringFromDate:lastDatabaseGenerationTime];
+        self.lastUpdateCheckLabel.text = [dateFormatter stringFromDate:lastDatabaseCheck];
+        self.lastUpdatePerformedLabel.text = [dateFormatter stringFromDate:lastDatabaseUpdate];
+
+        [dateFormatter release];
+    });
+}
 
 - (void)updateProgressBar:(float)currentProgress message:(NSString *)messageString {
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -160,6 +183,9 @@
     NSDictionary *infoFileContents = [self parseXMLInfoFile];
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     
+    // update last update check time
+    [prefs setInteger:[[NSDate date] timeIntervalSince1970] forKey:@"lastDatabaseCheck"];
+    
     NSNumber *totalNumberOfNotes = nil;
     NSNumber *infoGenerationTime = nil;
     
@@ -170,6 +196,8 @@
         NSLog(@"Error parsing info file");
     }
     
+    [prefs synchronize];
+    [self updateUpdateTimes];
     
     if (NSOrderedDescending == [infoGenerationTime compare:[NSNumber numberWithInt:[prefs integerForKey:@"lastDatabaseGenerationTime"]]]) {
         [self updateAvailable:YES];
@@ -295,9 +323,11 @@ inManagedObjectContext:managedObjectContext];
                 self.ranInitialSetup = YES;
                 
                 NSUserDefaults *prefsThread = [NSUserDefaults standardUserDefaults];
+                [prefsThread setInteger:[[NSDate date] timeIntervalSince1970] forKey:@"lastDatabaseUpdate"];
                 [prefsThread setInteger:databaseGenerationTime forKey:@"lastDatabaseGenerationTime"];
                 [prefsThread setBool:self.ranInitialSetup forKey:@"ranInitialSetup"];
                 [prefsThread synchronize];
+                [self updateUpdateTimes];
                 [self updateAvailable:NO];
             }
         }
@@ -403,6 +433,9 @@ inManagedObjectContext:managedObjectContext];
     [tabBarItem release];
     [progressText release];
     [updaterButton release];
+    [currentDatabaseCreatedLabel release];
+    [lastUpdateCheckLabel release];
+    [lastUpdatePerformedLabel release];
     [super dealloc];
 }
 
@@ -423,6 +456,9 @@ inManagedObjectContext:managedObjectContext];
     self.progressBar.frame = CGRectOffset(self.progressBar.frame, 0.0, 60.0);
     self.progressText.frame = CGRectOffset(self.progressText.frame, 0.0, 60.0);
     self.progressText.text = @"";
+    
+    [self updateUpdateTimes];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -454,6 +490,9 @@ inManagedObjectContext:managedObjectContext];
 
 - (void)viewDidUnload
 {
+    [self setCurrentDatabaseCreatedLabel:nil];
+    [self setLastUpdateCheckLabel:nil];
+    [self setLastUpdatePerformedLabel:nil];
     [super viewDidUnload];
     self.licenseViewController = nil;
     self.progressBar = nil;

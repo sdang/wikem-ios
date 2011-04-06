@@ -19,12 +19,18 @@
     UILabel *progressText;
     BOOL ranInitialSetup;
     BOOL displayingLicense;
+    UILabel *currentDatabaseCreatedLabel;
+    UILabel *lastUpdateCheckLabel;
+    UILabel *lastUpdatePerformedLabel;
 }
 
 
 @property (nonatomic, retain) AcceptLicense *licenseViewController;
 @property (nonatomic, retain) UITabBarItem *tabBarItem;
 @property (nonatomic, retain) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (nonatomic, retain) IBOutlet UILabel *currentDatabaseCreatedLabel;
+@property (nonatomic, retain) IBOutlet UILabel *lastUpdateCheckLabel;
+@property (nonatomic, retain) IBOutlet UILabel *lastUpdatePerformedLabel;
 @property (nonatomic, retain) IBOutlet UIProgressView *progressBar;
 @property (nonatomic, retain) IBOutlet UILabel *progressText;
 @property (nonatomic, retain) IBOutlet UIButton *updaterButton;
