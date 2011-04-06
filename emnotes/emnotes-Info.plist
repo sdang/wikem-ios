@@ -47,5 +47,9 @@
 	<array/>
 	<key>UTImportedTypeDeclarations</key>
 	<array/>
+	<key>database_url</key>
+	<string>http://dl.wikem.org/database.xml</string>
+	<key>info_url</key>
+	<string>http://dl.wikem.org/info.xml</string>
 </dict>
 </plist>

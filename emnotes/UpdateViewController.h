@@ -14,6 +14,7 @@
     AcceptLicense *licenseViewController;
     NSPersistentStoreCoordinator *persistentStoreCoordinator;
     UIProgressView *progressBar;
+    UIButton *updaterButton;
     UILabel *progressText;
     BOOL ranInitialSetup;
     BOOL displayingLicense;
@@ -26,13 +27,17 @@
 @property (nonatomic, retain) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (retain) IBOutlet UIProgressView *progressBar;
 @property (retain) IBOutlet UILabel *progressText;
-
+@property (retain) IBOutlet UIButton *updaterButton;
 - (void)userDidAcceptLicense:(BOOL)status;
 - (IBAction)clearWikEMData;
 - (IBAction)parseXMLDatabaseFile;
+- (IBAction)runUpdateCheck:(id)sender;
+
 - (void)addNoteFromXMLElement:(TBXMLElement *)subElement context:(NSManagedObjectContext *)managedContextIndex;
 - (void)updateAvailable:(BOOL)status;
+- (NSDictionary *)checkUpdateAvailable;
 - (void)disableAllTabBarItems:(BOOL)status;
 - (void)updateProgressBar:(float)currentProgress message:(NSString *)messageString;
+- (NSDictionary *)parseXMLInfoFile;
 
 @end
