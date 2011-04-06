@@ -34,7 +34,6 @@
 		94DA2FFE13468FBA00862F48 /* 180-stickynote.png in Resources */ = {isa = PBXBuildFile; fileRef = 94DA2FFA13468FBA00862F48 /* 180-stickynote.png */; };
 		94DA300213468FCB00862F48 /* CategoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94DA300013468FCB00862F48 /* CategoryTableViewController.m */; };
 		94DA301013468FE900862F48 /* NotesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94DA300513468FE900862F48 /* NotesTableViewController.m */; };
-		94DA301113468FE900862F48 /* NotesTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94DA300613468FE900862F48 /* NotesTableViewController.xib */; };
 		94DA301213468FE900862F48 /* NoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94DA300813468FE900862F48 /* NoteViewController.m */; };
 		94DA301313468FE900862F48 /* NoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94DA300913468FE900862F48 /* NoteViewController.xib */; };
 		94DA301413468FE900862F48 /* PersonalNotesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94DA300B13468FE900862F48 /* PersonalNotesTableViewController.m */; };
@@ -88,7 +87,6 @@
 		94DA300013468FCB00862F48 /* CategoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryTableViewController.m; sourceTree = "<group>"; };
 		94DA300413468FE900862F48 /* NotesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotesTableViewController.h; sourceTree = "<group>"; };
 		94DA300513468FE900862F48 /* NotesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotesTableViewController.m; sourceTree = "<group>"; };
-		94DA300613468FE900862F48 /* NotesTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotesTableViewController.xib; sourceTree = "<group>"; };
 		94DA300713468FE900862F48 /* NoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteViewController.h; sourceTree = "<group>"; };
 		94DA300813468FE900862F48 /* NoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteViewController.m; sourceTree = "<group>"; };
 		94DA300913468FE900862F48 /* NoteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoteViewController.xib; sourceTree = "<group>"; };
@@ -134,6 +132,89 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		940640BA134CE577008E4461 /* ListViews */ = {
+			isa = PBXGroup;
+			children = (
+				94DA300C13468FE900862F48 /* PersonalNotesTableViewController.xib */,
+				94E6959B1346BD46008DF6ED /* CoreDataTableViewController.m */,
+				94E6959C1346BD46008DF6ED /* CoreDataTableViewController.h */,
+				94DA300A13468FE900862F48 /* PersonalNotesTableViewController.h */,
+				94DA300B13468FE900862F48 /* PersonalNotesTableViewController.m */,
+				94DA2FFF13468FCB00862F48 /* CategoryTableViewController.h */,
+				94DA300013468FCB00862F48 /* CategoryTableViewController.m */,
+				94DA300413468FE900862F48 /* NotesTableViewController.h */,
+				94DA300513468FE900862F48 /* NotesTableViewController.m */,
+			);
+			name = ListViews;
+			sourceTree = "<group>";
+		};
+		940640BB134CE596008E4461 /* UpdaterView */ = {
+			isa = PBXGroup;
+			children = (
+				94234C91134A6EA300D241B5 /* disclaimer.html */,
+				94DA300D13468FE900862F48 /* UpdateViewController.h */,
+				94DA300E13468FE900862F48 /* UpdateViewController.m */,
+				94234C8B134A640900D241B5 /* AcceptLicense.h */,
+				94234C8C134A640900D241B5 /* AcceptLicense.m */,
+				94234C8D134A640900D241B5 /* AcceptLicense.xib */,
+				94DA300F13468FE900862F48 /* UpdateViewController.xib */,
+			);
+			name = UpdaterView;
+			sourceTree = "<group>";
+		};
+		940640BC134CE5D5008E4461 /* NoteView */ = {
+			isa = PBXGroup;
+			children = (
+				9474292C134B7E9C00AE579D /* note-style.css */,
+				94DA300913468FE900862F48 /* NoteViewController.xib */,
+				94DA300713468FE900862F48 /* NoteViewController.h */,
+				94DA300813468FE900862F48 /* NoteViewController.m */,
+			);
+			name = NoteView;
+			sourceTree = "<group>";
+		};
+		940640BD134CE85E008E4461 /* WikEM */ = {
+			isa = PBXGroup;
+			children = (
+				94DA2FE613468F8D00862F48 /* emnotes-Prefix.pch */,
+				94DA2FE713468F8D00862F48 /* main.m */,
+				94DA2FE913468F8D00862F48 /* emnotesAppDelegate.h */,
+				94DA2FEA13468F8D00862F48 /* emnotesAppDelegate.m */,
+				94DA2FEC13468F8D00862F48 /* MainWindow.xib */,
+			);
+			name = WikEM;
+			sourceTree = "<group>";
+		};
+		940640BE134CE87B008E4461 /* UIGraphicalElements */ = {
+			isa = PBXGroup;
+			children = (
+				94DA2FF713468FBA00862F48 /* 10-medical.png */,
+				94DA2FF813468FBA00862F48 /* 33-cabinet.png */,
+				94DA2FF913468FBA00862F48 /* 179-notepad.png */,
+				94DA2FFA13468FBA00862F48 /* 180-stickynote.png */,
+				9474293A134BA6E600AE579D /* wikemUpdaterBackground.png */,
+				9474293B134BA6E600AE579D /* wikemUpdaterBackground@2x.png */,
+				94742938134B8F4B00AE579D /* WikEMIcon@2x.png */,
+				94742936134B8F4500AE579D /* WikEMIcon.png */,
+				9474292A134B7C6700AE579D /* Default@2x.png */,
+				94742928134B7C5C00AE579D /* Default.png */,
+				94234C99134AA33D00D241B5 /* WikEM-Logo@2x.png */,
+				94234C9A134AA33D00D241B5 /* WikEM-Logo.png */,
+			);
+			name = UIGraphicalElements;
+			sourceTree = "<group>";
+		};
+		940640BF134CE897008E4461 /* InitialData */ = {
+			isa = PBXGroup;
+			children = (
+				94DA2FE313468F8D00862F48 /* InfoPlist.strings */,
+				94DA3021134691DE00862F48 /* info.xml */,
+				94DA3022134691DE00862F48 /* database.xml */,
+				94DA2FE213468F8D00862F48 /* emnotes-Info.plist */,
+			);
+			name = InitialData;
+			sourceTree = "<group>";
+		};
 		948C0E3B134B60C4007FA6E2 /* Other Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -146,8 +227,6 @@
 				94E695B21346ED1D008DF6ED /* NSDataAdditions.m */,
 				94E695B31346ED1D008DF6ED /* TBXML.h */,
 				94E695B41346ED1D008DF6ED /* TBXML.m */,
-				94E6959B1346BD46008DF6ED /* CoreDataTableViewController.m */,
-				94E6959C1346BD46008DF6ED /* CoreDataTableViewController.h */,
 			);
 			name = "Other Libraries";
 			sourceTree = "<group>";
@@ -184,13 +263,12 @@
 		94DA2FE013468F8D00862F48 /* emnotes */ = {
 			isa = PBXGroup;
 			children = (
+				940640BD134CE85E008E4461 /* WikEM */,
+				940640BC134CE5D5008E4461 /* NoteView */,
+				940640BB134CE596008E4461 /* UpdaterView */,
+				940640BA134CE577008E4461 /* ListViews */,
 				948C0E3B134B60C4007FA6E2 /* Other Libraries */,
-				94DA30201346913E00862F48 /* Models */,
-				94DA301F1346913C00862F48 /* Controllers */,
-				94DA301E1346913800862F48 /* Views */,
-				94DA2FE913468F8D00862F48 /* emnotesAppDelegate.h */,
-				94DA2FEA13468F8D00862F48 /* emnotesAppDelegate.m */,
-				94DA2FEF13468F8D00862F48 /* emnotes.xcdatamodeld */,
+				94DA30201346913E00862F48 /* CoreData */,
 				94DA2FE113468F8D00862F48 /* Supporting Files */,
 			);
 			path = emnotes;
@@ -199,71 +277,22 @@
 		94DA2FE113468F8D00862F48 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				9474293A134BA6E600AE579D /* wikemUpdaterBackground.png */,
-				9474293B134BA6E600AE579D /* wikemUpdaterBackground@2x.png */,
-				94742938134B8F4B00AE579D /* WikEMIcon@2x.png */,
-				94742936134B8F4500AE579D /* WikEMIcon.png */,
-				9474292A134B7C6700AE579D /* Default@2x.png */,
-				94742928134B7C5C00AE579D /* Default.png */,
-				94234C99134AA33D00D241B5 /* WikEM-Logo@2x.png */,
-				94234C9A134AA33D00D241B5 /* WikEM-Logo.png */,
-				94DA3021134691DE00862F48 /* info.xml */,
-				94DA3022134691DE00862F48 /* database.xml */,
-				94DA2FF713468FBA00862F48 /* 10-medical.png */,
-				94DA2FF813468FBA00862F48 /* 33-cabinet.png */,
-				94DA2FF913468FBA00862F48 /* 179-notepad.png */,
-				94DA2FFA13468FBA00862F48 /* 180-stickynote.png */,
-				94DA2FE213468F8D00862F48 /* emnotes-Info.plist */,
-				94DA2FE313468F8D00862F48 /* InfoPlist.strings */,
-				94DA2FE613468F8D00862F48 /* emnotes-Prefix.pch */,
-				94DA2FE713468F8D00862F48 /* main.m */,
-				94234C91134A6EA300D241B5 /* disclaimer.html */,
-				9474292C134B7E9C00AE579D /* note-style.css */,
+				940640BF134CE897008E4461 /* InitialData */,
+				940640BE134CE87B008E4461 /* UIGraphicalElements */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		94DA301E1346913800862F48 /* Views */ = {
+		94DA30201346913E00862F48 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				94234C8D134A640900D241B5 /* AcceptLicense.xib */,
-				94DA300613468FE900862F48 /* NotesTableViewController.xib */,
-				94DA300913468FE900862F48 /* NoteViewController.xib */,
-				94DA300C13468FE900862F48 /* PersonalNotesTableViewController.xib */,
-				94DA300F13468FE900862F48 /* UpdateViewController.xib */,
-				94DA2FEC13468F8D00862F48 /* MainWindow.xib */,
-			);
-			name = Views;
-			sourceTree = "<group>";
-		};
-		94DA301F1346913C00862F48 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				94DA300413468FE900862F48 /* NotesTableViewController.h */,
-				94DA300513468FE900862F48 /* NotesTableViewController.m */,
-				94DA300713468FE900862F48 /* NoteViewController.h */,
-				94DA300813468FE900862F48 /* NoteViewController.m */,
-				94DA300A13468FE900862F48 /* PersonalNotesTableViewController.h */,
-				94DA300B13468FE900862F48 /* PersonalNotesTableViewController.m */,
-				94DA300D13468FE900862F48 /* UpdateViewController.h */,
-				94DA300E13468FE900862F48 /* UpdateViewController.m */,
-				94DA2FFF13468FCB00862F48 /* CategoryTableViewController.h */,
-				94DA300013468FCB00862F48 /* CategoryTableViewController.m */,
-				94234C8B134A640900D241B5 /* AcceptLicense.h */,
-				94234C8C134A640900D241B5 /* AcceptLicense.m */,
-			);
-			name = Controllers;
-			sourceTree = "<group>";
-		};
-		94DA30201346913E00862F48 /* Models */ = {
-			isa = PBXGroup;
-			children = (
+				94DA2FEF13468F8D00862F48 /* emnotes.xcdatamodeld */,
 				94E695981346BCE8008DF6ED /* Category.h */,
 				94E695991346BCE8008DF6ED /* Category.m */,
 				94E6959E1346CB35008DF6ED /* Note.h */,
 				94E6959F1346CB35008DF6ED /* Note.m */,
 			);
-			name = Models;
+			name = CoreData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -322,7 +351,6 @@
 				94DA2FFC13468FBA00862F48 /* 33-cabinet.png in Resources */,
 				94DA2FFD13468FBA00862F48 /* 179-notepad.png in Resources */,
 				94DA2FFE13468FBA00862F48 /* 180-stickynote.png in Resources */,
-				94DA301113468FE900862F48 /* NotesTableViewController.xib in Resources */,
 				94DA301313468FE900862F48 /* NoteViewController.xib in Resources */,
 				94DA301513468FE900862F48 /* PersonalNotesTableViewController.xib in Resources */,
 				94DA301713468FE900862F48 /* UpdateViewController.xib in Resources */,

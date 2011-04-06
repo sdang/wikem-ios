@@ -107,7 +107,8 @@
     
 }
 
-#pragma mark - User Interface Actions
+
+#pragma mark - Accept License Delegate
 
 - (void)userDidAcceptLicense:(BOOL)status {
     if (status) {
@@ -116,6 +117,8 @@
         [self updateAvailable:NO];
     }
 }
+
+#pragma mark - User Interface Actions
 
 - (void)updateProgressBar:(float)currentProgress message:(NSString *)messageString {
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -181,8 +184,6 @@
         TBXMLElement *sizeElement = [TBXML childElementNamed:@"size" parentElement:tbxml.rootXMLElement];
         size = [[TBXML valueOfAttributeNamed:@"num" forElement:sizeElement] intValue];
         lastUpdate = [[TBXML valueOfAttributeNamed:@"epoch" forElement:lastUpdateElement] intValue];
-//        NSLog(@"Total Records Found = %@", size);
-//        NSLog(@"Update File Time = %@", lastUpdate);
     }
 
     NSDictionary *infoFileContents = nil;
@@ -203,7 +204,6 @@
         categories = [NSSet setWithObject:[Category categoryWithTitle:@"Uncategorized" inManagedObjectContext:managedObjectContext]];
     }
     
-    // [TBXML textForElement:[TBXML childElementNamed:@"content" parentElement:subElement]];
     [Note noteWithName:[TBXML textForElement:[TBXML childElementNamed:@"name" parentElement:subElement]]
                 author:[TBXML textForElement:[TBXML childElementNamed:@"author" parentElement:subElement]]
                content:[content stringByDecodingHTMLEntities]
@@ -212,6 +212,21 @@
 inManagedObjectContext:managedObjectContext];
 }
 
+- (NSString *)getXMLDatabaseContents
+{
+    NSString *path;
+    NSString *content = nil;
+    if (!self.ranInitialSetup) {
+        path = [[NSBundle mainBundle] pathForResource:@"database" ofType:@"xml"];
+        content = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+    } else {
+        NSString *databaseFile = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"database_url"];
+        NSURL *theURL = [NSURL URLWithString:databaseFile];
+        content = [NSString stringWithContentsOfURL:theURL encoding:NSUTF8StringEncoding error:NULL];
+    }
+    
+    return content;
+}
 
 - (void)parseXMLDatabaseFile {
     
@@ -225,16 +240,7 @@ inManagedObjectContext:managedObjectContext];
         [managedObjectContext setPersistentStoreCoordinator:self.persistentStoreCoordinator];
         NSLog(@"Running parse xml");
         
-        NSString *path;
-        NSString *content;
-        if (!self.ranInitialSetup) {
-            path = [[NSBundle mainBundle] pathForResource:@"database" ofType:@"xml"];
-            content = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
-        } else {
-            NSString *databaseFile = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"database_url"];
-            NSURL *theURL = [NSURL URLWithString:databaseFile];
-            content = [NSString stringWithContentsOfURL:theURL encoding:NSUTF8StringEncoding error:NULL];
-        }
+        NSString *content = [self getXMLDatabaseContents];
         
         // not ideal!! But we need a way to count number notes for updating progress bar
         int totalNotes = [[content componentsSeparatedByString:@"<content>"] count]-1;
