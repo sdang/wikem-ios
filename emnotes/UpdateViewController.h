@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#include "TBXML.h"
-#include "AcceptLicense.h"
+#import "TBXML.h"
+#import "AcceptLicense.h"
+#import "AboutWikemViewController.h"
 
 @interface UpdateViewController : UIViewController <AcceptLicenseDelegate> {
     AcceptLicense *licenseViewController;
@@ -20,18 +21,22 @@
     BOOL displayingLicense;
 }
 
-@property (retain) AcceptLicense *licenseViewController;
-@property (retain) UITabBarItem *tabBarItem;
+
+@property (nonatomic, retain) AcceptLicense *licenseViewController;
+@property (nonatomic, retain) UITabBarItem *tabBarItem;
+@property (nonatomic, retain) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (nonatomic, retain) IBOutlet UIProgressView *progressBar;
+@property (nonatomic, retain) IBOutlet UILabel *progressText;
+@property (nonatomic, retain) IBOutlet UIButton *updaterButton;
+
 @property (assign) BOOL ranInitialSetup;
 @property (assign) BOOL displayingLicense;
-@property (nonatomic, retain) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-@property (retain) IBOutlet UIProgressView *progressBar;
-@property (retain) IBOutlet UILabel *progressText;
-@property (retain) IBOutlet UIButton *updaterButton;
+
 - (void)userDidAcceptLicense:(BOOL)status;
 - (IBAction)clearWikEMData;
 - (IBAction)parseXMLDatabaseFile;
 - (IBAction)runUpdateCheck:(id)sender;
+- (IBAction)displayAboutWikEMView:(id)sender;
 
 - (void)addNoteFromXMLElement:(TBXMLElement *)subElement context:(NSManagedObjectContext *)managedContextIndex;
 - (void)updateAvailable:(BOOL)status;

@@ -12,6 +12,7 @@
 #import "TBXML.h"
 #import "NSString+HTML.h"
 #import "AcceptLicense.h"
+#import "AboutWikemViewController.h"
 
 @implementation UpdateViewController
 @synthesize tabBarItem, progressBar, progressText;
@@ -118,6 +119,17 @@
     }
 }
 
+#pragma mark - Manage About Screen
+- (IBAction)displayAboutWikEMView:(id)sender
+{
+    AboutWikemViewController *about = [[AboutWikemViewController alloc] init];
+    [self setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+    [about setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+    [self presentModalViewController:about animated:YES];
+    [about release];
+}
+
+
 #pragma mark - User Interface Actions
 
 - (void)updateProgressBar:(float)currentProgress message:(NSString *)messageString {
@@ -139,6 +151,7 @@
         [self updateAvailable:YES];
     }
 }
+
 
 #pragma mark - XML Processing
 
