@@ -10,6 +10,7 @@
 
 
 @implementation AboutWikemViewController
+@synthesize webView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -22,6 +23,7 @@
 
 - (void)dealloc
 {
+    [webView release];
     [super dealloc];
 }
 
@@ -39,10 +41,14 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"disclaimer" ofType:@"html"];    
+    NSString *disclaimer = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+    [self.webView loadHTMLString:disclaimer baseURL:nil];
 }
 
 - (void)viewDidUnload
 {
+    [self setWebView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

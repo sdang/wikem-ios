@@ -20,10 +20,38 @@
 @synthesize lastUpdatePerformedLabel;
 @synthesize tabBarItem, progressBar, progressText;
 @synthesize ranInitialSetup, displayingLicense, licenseViewController;
+@synthesize noUpdateLabel;
 @synthesize persistentStoreCoordinator;
 @synthesize updaterButton;
 
-#pragma mark - Progress Bar & Update Button Management
+#pragma mark - Progress Bar & Update Button Animation
+
+- (void)animateOutNoUpdateText
+{
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.5];
+    [UIView setAnimationCurve:UIViewAnimationOptionCurveEaseIn];
+    [self.noUpdateLabel setAlpha:0.0];
+    [UIView commitAnimations];
+}
+
+- (void)animateInNoUpdateText:(NSString *)updateMessage
+{
+    self.noUpdateLabel.text = updateMessage;
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.5];
+    [UIView setAnimationCurve:UIViewAnimationOptionCurveEaseOut];
+    [UIView setAnimationDelegate:self];
+    [self.noUpdateLabel setAlpha:1.0];
+    [UIView commitAnimations];
+    [NSTimer scheduledTimerWithTimeInterval:1.0f
+                                     target:self
+                                   selector:@selector(animateOutNoUpdateText)
+                                   userInfo:nil
+                                    repeats:NO];
+    
+    //[UIView setAnimationDidStopSelector:@selector(animationDidStop:finished:context:)]
+}
 
 - (void)animateOutUpdaterButton
 {
@@ -171,7 +199,10 @@
 {
     NSDictionary *infoFileContents = [self checkUpdateAvailable];
     if (infoFileContents) {
+        [self animateInNoUpdateText:@"Update Available"];
         [self updateAvailable:YES];
+    } else {
+        [self animateInNoUpdateText:@"Database is Up to Date"];
     }
 }
 
@@ -436,6 +467,7 @@ inManagedObjectContext:managedObjectContext];
     [currentDatabaseCreatedLabel release];
     [lastUpdateCheckLabel release];
     [lastUpdatePerformedLabel release];
+    [noUpdateLabel release];
     [super dealloc];
 }
 
@@ -456,7 +488,8 @@ inManagedObjectContext:managedObjectContext];
     self.progressBar.frame = CGRectOffset(self.progressBar.frame, 0.0, 60.0);
     self.progressText.frame = CGRectOffset(self.progressText.frame, 0.0, 60.0);
     self.progressText.text = @"";
-    
+    self.noUpdateLabel.text = @"";
+    self.noUpdateLabel.alpha = 0.0;
     [self updateUpdateTimes];
     
 }
@@ -493,6 +526,7 @@ inManagedObjectContext:managedObjectContext];
     [self setCurrentDatabaseCreatedLabel:nil];
     [self setLastUpdateCheckLabel:nil];
     [self setLastUpdatePerformedLabel:nil];
+    [self setNoUpdateLabel:nil];
     [super viewDidUnload];
     self.licenseViewController = nil;
     self.progressBar = nil;

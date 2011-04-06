@@ -42,9 +42,7 @@
 - (void)viewDidLoad
 {
     NSURL *resourceBaseURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
-    NSLog(@"resourceBaseURL Path = %@", resourceBaseURL);
     [webView loadHTMLString:[self.note formattedContent] baseURL:resourceBaseURL];
-    NSLog(@"%@", [self.note formattedContent]);
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 }

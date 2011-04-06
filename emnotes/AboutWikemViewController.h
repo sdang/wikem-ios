@@ -11,7 +11,9 @@
 
 @interface AboutWikemViewController : UIViewController {
     
+    UIWebView *webView;
 }
+@property (nonatomic, retain) IBOutlet UIWebView *webView;
 - (IBAction)closeAboutView:(id)sender;
 
 @end

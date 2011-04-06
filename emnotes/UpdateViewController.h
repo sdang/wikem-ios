@@ -22,11 +22,13 @@
     UILabel *currentDatabaseCreatedLabel;
     UILabel *lastUpdateCheckLabel;
     UILabel *lastUpdatePerformedLabel;
+    UILabel *noUpdateLabel;
 }
 
 
 @property (nonatomic, retain) AcceptLicense *licenseViewController;
 @property (nonatomic, retain) UITabBarItem *tabBarItem;
+@property (nonatomic, retain) IBOutlet UILabel *noUpdateLabel;
 @property (nonatomic, retain) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (nonatomic, retain) IBOutlet UILabel *currentDatabaseCreatedLabel;
 @property (nonatomic, retain) IBOutlet UILabel *lastUpdateCheckLabel;
@@ -50,5 +52,8 @@
 - (void)disableAllTabBarItems:(BOOL)status;
 - (void)updateProgressBar:(float)currentProgress message:(NSString *)messageString;
 - (NSDictionary *)parseXMLInfoFile;
+- (void)animateInNoUpdateText:(NSString *)updateMessage;
+- (void)animateOutNoUpdateText;
+
 
 @end
