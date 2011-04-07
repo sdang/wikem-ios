@@ -70,7 +70,7 @@
         NSFetchedResultsController *frc = [[NSFetchedResultsController alloc]
                                            initWithFetchRequest:request
                                            managedObjectContext:context
-                                           sectionNameKeyPath:nil 
+                                           sectionNameKeyPath:@"getFirstLetter" 
                                            cacheName:cacheName];
         
         self.fetchedResultsController = frc;
