@@ -67,6 +67,8 @@
 		94EFE5E8134D71D400B1CBDB /* PersonalNote.m in Sources */ = {isa = PBXBuildFile; fileRef = 94EFE5E7134D71D400B1CBDB /* PersonalNote.m */; };
 		94EFE5ED134D790100B1CBDB /* EditNoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94EFE5EB134D790100B1CBDB /* EditNoteViewController.m */; };
 		94EFE5EE134D790100B1CBDB /* EditNoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94EFE5EC134D790100B1CBDB /* EditNoteViewController.xib */; };
+		94EFE5F3134D8A9900B1CBDB /* PersonalNotesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94EFE5F1134D8A9900B1CBDB /* PersonalNotesViewController.m */; };
+		94EFE5F4134D8A9900B1CBDB /* PersonalNotesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94EFE5F2134D8A9900B1CBDB /* PersonalNotesViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -151,6 +153,9 @@
 		94EFE5EA134D790100B1CBDB /* EditNoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditNoteViewController.h; sourceTree = "<group>"; };
 		94EFE5EB134D790100B1CBDB /* EditNoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditNoteViewController.m; sourceTree = "<group>"; };
 		94EFE5EC134D790100B1CBDB /* EditNoteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditNoteViewController.xib; sourceTree = "<group>"; };
+		94EFE5F0134D8A9900B1CBDB /* PersonalNotesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalNotesViewController.h; sourceTree = "<group>"; };
+		94EFE5F1134D8A9900B1CBDB /* PersonalNotesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalNotesViewController.m; sourceTree = "<group>"; };
+		94EFE5F2134D8A9900B1CBDB /* PersonalNotesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonalNotesViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,8 +180,6 @@
 				94DA300C13468FE900862F48 /* PersonalNotesTableViewController.xib */,
 				94E6959B1346BD46008DF6ED /* CoreDataTableViewController.m */,
 				94E6959C1346BD46008DF6ED /* CoreDataTableViewController.h */,
-				94DA300A13468FE900862F48 /* PersonalNotesTableViewController.h */,
-				94DA300B13468FE900862F48 /* PersonalNotesTableViewController.m */,
 				94DA2FFF13468FCB00862F48 /* CategoryTableViewController.h */,
 				94DA300013468FCB00862F48 /* CategoryTableViewController.m */,
 				94DA300413468FE900862F48 /* NotesTableViewController.h */,
@@ -209,9 +212,6 @@
 				94DA300913468FE900862F48 /* NoteViewController.xib */,
 				94DA300713468FE900862F48 /* NoteViewController.h */,
 				94DA300813468FE900862F48 /* NoteViewController.m */,
-				94EFE5EA134D790100B1CBDB /* EditNoteViewController.h */,
-				94EFE5EB134D790100B1CBDB /* EditNoteViewController.m */,
-				94EFE5EC134D790100B1CBDB /* EditNoteViewController.xib */,
 			);
 			name = NoteView;
 			sourceTree = "<group>";
@@ -319,6 +319,7 @@
 			isa = PBXGroup;
 			children = (
 				940640BD134CE85E008E4461 /* WikEM */,
+				94EFE5EF134D8A2500B1CBDB /* PersonalNotesView */,
 				940640BC134CE5D5008E4461 /* NoteView */,
 				940640BB134CE596008E4461 /* UpdaterView */,
 				940640BA134CE577008E4461 /* ListViews */,
@@ -350,6 +351,21 @@
 				94EFE5E7134D71D400B1CBDB /* PersonalNote.m */,
 			);
 			name = CoreData;
+			sourceTree = "<group>";
+		};
+		94EFE5EF134D8A2500B1CBDB /* PersonalNotesView */ = {
+			isa = PBXGroup;
+			children = (
+				94DA300A13468FE900862F48 /* PersonalNotesTableViewController.h */,
+				94DA300B13468FE900862F48 /* PersonalNotesTableViewController.m */,
+				94EFE5EA134D790100B1CBDB /* EditNoteViewController.h */,
+				94EFE5EB134D790100B1CBDB /* EditNoteViewController.m */,
+				94EFE5EC134D790100B1CBDB /* EditNoteViewController.xib */,
+				94EFE5F0134D8A9900B1CBDB /* PersonalNotesViewController.h */,
+				94EFE5F1134D8A9900B1CBDB /* PersonalNotesViewController.m */,
+				94EFE5F2134D8A9900B1CBDB /* PersonalNotesViewController.xib */,
+			);
+			name = PersonalNotesView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -438,6 +454,7 @@
 				9421A3E4134D46810031D4AB /* AcceptButton@2x.png in Resources */,
 				9421A3E6134D47760031D4AB /* InfoBackground.png in Resources */,
 				94EFE5EE134D790100B1CBDB /* EditNoteViewController.xib in Resources */,
+				94EFE5F4134D8A9900B1CBDB /* PersonalNotesViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -467,6 +484,7 @@
 				940640DE134CFD81008E4461 /* AboutWikemViewController.m in Sources */,
 				94EFE5E8134D71D400B1CBDB /* PersonalNote.m in Sources */,
 				94EFE5ED134D790100B1CBDB /* EditNoteViewController.m in Sources */,
+				94EFE5F3134D8A9900B1CBDB /* PersonalNotesViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,6 +13,7 @@
 @synthesize noteTitleTextField;
 @synthesize noteContentTextField;
 @synthesize managedObjectContext;
+@synthesize editingMode;
 
 # pragma mark - Text View Delegates
 
@@ -56,6 +57,19 @@
 }
 
 # pragma mark - Memory Management
+
+- (id)initWithNote:(PersonalNote *)personalNote {
+    [super init];
+    
+    if (personalNote) {
+        self.editingMode = TRUE;
+        self.noteContentTextField.text = personalNote.content;
+        self.noteTitleTextField.text = personalNote.title;
+        [self.noteTitleTextField setEnabled:NO];
+    }
+    
+    return self;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

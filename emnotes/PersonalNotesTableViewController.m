@@ -9,6 +9,8 @@
 #import "PersonalNotesTableViewController.h"
 #import "PersonalNote.h"
 #import "EditNoteViewController.h"
+#import "PersonalNotesViewController.h"
+
 
 @implementation PersonalNotesTableViewController
 
@@ -134,7 +136,10 @@
 - (void)managedObjectSelected:(NSManagedObject *)managedObject
 {
     // show note view controller
-    NSLog(@"Show Person Note View");
+    PersonalNotesViewController *personalNotesViewController = [[PersonalNotesViewController alloc] init];
+    personalNotesViewController.personalNote = (PersonalNote *)managedObject;
+    [[self navigationController] pushViewController:personalNotesViewController animated:YES];
+    [personalNotesViewController release];
 }
 
 @end

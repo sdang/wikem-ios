@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "CoreDataTableViewController.h"
 #import "PersonalNote.h"
+#import "PersonalNotesViewController.h"
 
 @interface PersonalNotesTableViewController : CoreDataTableViewController {
     
