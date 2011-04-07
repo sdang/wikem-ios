@@ -13,11 +13,24 @@
 
 @synthesize webView, note;
 
+
+- (void)editNote
+{
+    NSString *update_url_template = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"edit_note_url"];
+    NSString *articleName = [self.note.name stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+    NSLog(@"%@", [NSString stringWithFormat:update_url_template, articleName]);
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString: [NSString stringWithFormat:update_url_template, articleName]]];
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editNote)];
+        self.navigationItem.rightBarButtonItem = editButton;
+        [editButton release];
+        
     }
     return self;
 }
