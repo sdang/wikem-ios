@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "PersonalNote.h"
+#import "EditNoteViewController.h"
 
-@interface PersonalNotesViewController : UIViewController {
+@interface PersonalNotesViewController : UIViewController <EditNoteViewControllerDelegate> {
     
     UITextView *noteTextField;
     PersonalNote *personalNote;
@@ -18,4 +19,5 @@
 @property (nonatomic, retain) PersonalNote *personalNote;
 @property (nonatomic, retain) IBOutlet UITextView *noteTextField;
 
+- (void)updateNoteText;
 @end

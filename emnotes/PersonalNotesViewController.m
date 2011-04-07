@@ -7,7 +7,8 @@
 //
 
 #import "PersonalNotesViewController.h"
-
+#import "EditNoteViewController.h"
+#import "emnotesAppDelegate.h"
 
 @implementation PersonalNotesViewController
 @synthesize noteTextField;
@@ -39,16 +40,43 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
+#pragma mark - Note Management
+
+- (void)editNote
+{
+    EditNoteViewController *editController = [[EditNoteViewController alloc] initWithNote:self.personalNote];
+    editController.managedObjectContext = [(emnotesAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    editController.delegate = self;
+    [self.navigationController pushViewController:editController animated:YES];
+    [editController release];
+}
+
+- (void)userSavedChanges
+{
+    [self updateNoteText];
+}
+
 #pragma mark - View lifecycle
+- (void)updateNoteText
+{
+    if (self.personalNote) {
+        self.title = self.personalNote.title;
+        self.noteTextField.text = self.personalNote.content;
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self updateNoteText];
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    if (self.personalNote) {
-        self.title = self.personalNote.title;
-        self.noteTextField.text = self.personalNote.content;
-    }
+    [self updateNoteText];
+
 }
 
 - (void)viewDidUnload

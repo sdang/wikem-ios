@@ -14,6 +14,8 @@
 @synthesize noteContentTextField;
 @synthesize managedObjectContext;
 @synthesize editingMode;
+@synthesize personalNote;
+@synthesize delegate;
 
 # pragma mark - Text View Delegates
 
@@ -31,9 +33,7 @@
 
        // if we're centered, we're place holder text
     if (self.noteContentTextField.textAlignment == UITextAlignmentCenter && textView == self.noteContentTextField) {
-        [self.noteContentTextField setTextAlignment:UITextAlignmentLeft];
-        [self.noteContentTextField setText:@""];
-        [self.noteContentTextField setTextColor:[UIColor blackColor]];
+        [self setContentFieldToNormal];
     }
 }
 
@@ -47,27 +47,37 @@
     }
 }
 
+- (void)setContentFieldToNormal
+{
+    [self.noteContentTextField setTextAlignment:UITextAlignmentLeft];
+    [self.noteContentTextField setText:@""];
+    [self.noteContentTextField setTextColor:[UIColor blackColor]];
+}
+
 # pragma mark - Note Management
 
 - (void)saveNote
 {
-    [PersonalNote personalNoteWithTitle:self.noteTitleTextField.text content:self.noteContentTextField.text inManagedObjectContext:self.managedObjectContext forceCreate:YES];
+    if (self.editingMode && self.personalNote) {
+        self.personalNote.content = self.noteContentTextField.text;
+        [self.managedObjectContext save:NULL];
+    } else {
+        [PersonalNote personalNoteWithTitle:self.noteTitleTextField.text content:self.noteContentTextField.text inManagedObjectContext:self.managedObjectContext forceCreate:YES];
+    }
+    
+    if (self.delegate) {
+        [self.delegate userSavedChanges];
+    }
+    
     [self.navigationController popViewControllerAnimated:TRUE];
-    NSLog(@"Saving Personal Note");
+
 }
 
 # pragma mark - Memory Management
 
-- (id)initWithNote:(PersonalNote *)personalNote {
+- (id)initWithNote:(PersonalNote *)aPersonalNote {
     [super init];
-    
-    if (personalNote) {
-        self.editingMode = TRUE;
-        self.noteContentTextField.text = personalNote.content;
-        self.noteTitleTextField.text = personalNote.title;
-        [self.noteTitleTextField setEnabled:NO];
-    }
-    
+    self.personalNote = aPersonalNote;
     return self;
 }
 
@@ -104,6 +114,13 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    if (self.personalNote) {
+        [self setContentFieldToNormal];
+        self.editingMode = TRUE;
+        self.noteContentTextField.text = personalNote.content;
+        self.noteTitleTextField.text = personalNote.title;
+        [self.noteTitleTextField setEnabled:NO];
+    }
     [self.noteTitleTextField becomeFirstResponder];
 }
 
