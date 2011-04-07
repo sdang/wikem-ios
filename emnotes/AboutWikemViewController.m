@@ -1,17 +1,16 @@
 //
-//  NoteViewController.m
-//  TabViewTest
+//  AboutWikemViewController.m
+//  emnotes
 //
-//  Created by Sabin Dang on 4/1/11.
+//  Created by Sabin Dang on 4/6/11.
 //  Copyright 2011 sabindang.com. All rights reserved.
 //
 
-#import "NoteViewController.h"
+#import "AboutWikemViewController.h"
 
 
-@implementation NoteViewController
-
-@synthesize webView, note;
+@implementation AboutWikemViewController
+@synthesize webView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -24,7 +23,6 @@
 
 - (void)dealloc
 {
-    [note release];
     [webView release];
     [super dealloc];
 }
@@ -41,19 +39,19 @@
 
 - (void)viewDidLoad
 {
-    NSURL *resourceBaseURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
-    [webView loadHTMLString:[self.note formattedContent] baseURL:resourceBaseURL];
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"disclaimer" ofType:@"html"];    
+    NSString *disclaimer = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+    [self.webView loadHTMLString:disclaimer baseURL:nil];
 }
 
 - (void)viewDidUnload
 {
-
+    [self setWebView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-    self.webView = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -62,4 +60,11 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (IBAction)closeAboutView:(id)sender {
+    [self dismissModalViewControllerAnimated:YES];
+}
+
+- (IBAction)openWikEMWebsite:(id)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://www.wikem.org"]];
+}
 @end

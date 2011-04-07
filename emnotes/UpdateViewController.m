@@ -12,14 +12,44 @@
 #import "TBXML.h"
 #import "NSString+HTML.h"
 #import "AcceptLicense.h"
+#import "AboutWikemViewController.h"
 
 @implementation UpdateViewController
+@synthesize currentDatabaseCreatedLabel;
+@synthesize lastUpdateCheckLabel;
+@synthesize lastUpdatePerformedLabel;
 @synthesize tabBarItem, progressBar, progressText;
 @synthesize ranInitialSetup, displayingLicense, licenseViewController;
+@synthesize noUpdateLabel;
 @synthesize persistentStoreCoordinator;
 @synthesize updaterButton;
 
-#pragma mark - Progress Bar & Update Button Management
+#pragma mark - Progress Bar & Update Button Animation
+
+- (void)animateOutNoUpdateText
+{
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.5];
+    [UIView setAnimationCurve:UIViewAnimationOptionCurveEaseIn];
+    [self.noUpdateLabel setAlpha:0.0];
+    [UIView commitAnimations];
+}
+
+- (void)animateInNoUpdateText:(NSString *)updateMessage
+{
+    self.noUpdateLabel.text = updateMessage;
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.5];
+    [UIView setAnimationCurve:UIViewAnimationOptionCurveEaseOut];
+    [UIView setAnimationDelegate:self];
+    [self.noUpdateLabel setAlpha:1.0];
+    [UIView commitAnimations];
+    [NSTimer scheduledTimerWithTimeInterval:1.0f
+                                     target:self
+                                   selector:@selector(animateOutNoUpdateText)
+                                   userInfo:nil
+                                    repeats:NO];
+}
 
 - (void)animateOutUpdaterButton
 {
@@ -58,18 +88,21 @@
 
 - (void)animateInUpdaterButton
 {
-    if (self.progressBar.alpha == 1) {
-        // progress bar on screen, animate it out
-        [self animateOutProgressPackage];
-    }
-    
-    // alpha = 1 if it's already shown
-    if (self.updaterButton.alpha != 1)
-        [UIView transitionWithView:self.updaterButton
-                          duration:0.5
-                           options:UIViewAnimationCurveLinear
-                        animations:^{ self.updaterButton.alpha = 1.0; self.updaterButton.frame = CGRectOffset(self.updaterButton.frame, 0, -100.0); }
-                        completion:NULL];
+    NSLog(@"animate in button");
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (self.progressBar.alpha == 1) {
+            // progress bar on screen, animate it out
+            [self animateOutProgressPackage];
+        }
+        
+        // alpha = 1 if it's already shown
+        if (self.updaterButton.alpha != 1)
+            [UIView transitionWithView:self.updaterButton
+                              duration:0.5
+                               options:UIViewAnimationCurveLinear
+                            animations:^{ self.updaterButton.alpha = 1.0; self.updaterButton.frame = CGRectOffset(self.updaterButton.frame, 0, -100.0); }
+                            completion:NULL];
+    });
 }
 
 
@@ -118,7 +151,53 @@
     }
 }
 
-#pragma mark - User Interface Actions
+#pragma mark - Manage About Screen
+- (IBAction)displayAboutWikEMView:(id)sender
+{
+    AboutWikemViewController *about = [[AboutWikemViewController alloc] init];
+    [self setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+    [about setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+    [self presentModalViewController:about animated:YES];
+    [about release];
+}
+
+
+#pragma mark - User Interface Elements
+
+- (void)updateUpdateTimes
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // update the update stats
+        NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"MM/dd/yy hh:mma"];
+        
+        NSDate *lastDatabaseGenerationTime = [NSDate dateWithTimeIntervalSince1970:[prefs integerForKey:@"lastDatabaseGenerationTime"]];
+        NSDate *lastDatabaseCheck = [NSDate dateWithTimeIntervalSince1970:[prefs integerForKey:@"lastDatabaseCheck"]];
+        NSDate *lastDatabaseUpdate = [NSDate dateWithTimeIntervalSince1970:[prefs integerForKey:@"lastDatabaseUpdate"]];
+        
+        if ([prefs integerForKey:@"lastDatabaseGenerationTime"] != 0) {
+            self.currentDatabaseCreatedLabel.text = [dateFormatter stringFromDate:lastDatabaseGenerationTime];
+        } else {
+            self.currentDatabaseCreatedLabel.text = @"";
+        }
+        
+        if ([prefs integerForKey:@"lastDatabaseCheck"] != 0) {
+            self.lastUpdateCheckLabel.text = [dateFormatter stringFromDate:lastDatabaseCheck];
+        } else {
+            self.lastUpdateCheckLabel.text = @"";
+        }
+        
+        if ([prefs integerForKey:@"lastDatabaseUpdate"] != 0) {
+            self.lastUpdatePerformedLabel.text = [dateFormatter stringFromDate:lastDatabaseUpdate];
+        } else {
+            self.lastUpdatePerformedLabel.text = @"";
+        }
+
+
+        [dateFormatter release];
+    });
+}
 
 - (void)updateProgressBar:(float)currentProgress message:(NSString *)messageString {
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -128,6 +207,15 @@
         
         self.progressBar.progress = currentProgress;
         self.progressText.text = messageString;
+        
+        if ([self.progressText.text isEqualToString:@"Done"]) {
+            // we're done so hide the progress bar package in 1 second
+            [NSTimer scheduledTimerWithTimeInterval:1.0f
+                                             target:self
+                                           selector:@selector(animateOutProgressPackage)
+                                           userInfo:nil
+                                            repeats:NO];
+        }
     });
 }
 
@@ -136,16 +224,47 @@
 {
     NSDictionary *infoFileContents = [self checkUpdateAvailable];
     if (infoFileContents) {
+        [self animateInNoUpdateText:@"Update Available"];
         [self updateAvailable:YES];
+    } else {
+        [self animateInNoUpdateText:@"Database is Up to Date"];
     }
 }
 
+
 #pragma mark - XML Processing
+- (void)autoUpdateCheck
+{
+    if (self.ranInitialSetup) {
+        dispatch_queue_t updateQueue = dispatch_queue_create("Run Auto Update Check", NULL);
+        dispatch_async(updateQueue, ^{
+        NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+        
+        if ([prefs boolForKey:@"updateAvailable"]) {
+            [self updateAvailable:YES];
+            return;
+        }
+            
+        NSTimeInterval nowInEpoch = [[NSDate date] timeIntervalSince1970];
+        if (nowInEpoch > ([prefs integerForKey:@"lastDatabaseCheck"] + 7 * 24 * 3600) && ranInitialSetup) {
+            NSLog(@"Will perform auto check (last check: %@)", [NSDate dateWithTimeIntervalSince1970:[prefs integerForKey:@"lastDatabaseCheck"]]);
+            [self checkUpdateAvailable];
+        } else {
+            NSLog(@"Will NOT perform auto check (last check: %@)", [NSDate dateWithTimeIntervalSince1970:[prefs integerForKey:@"lastDatabaseCheck"]]);
+        }
+        });
+        dispatch_release(updateQueue);
+    }
+}
 
 - (NSDictionary *)checkUpdateAvailable
 {
+    NSLog(@"Checking for Update");
     NSDictionary *infoFileContents = [self parseXMLInfoFile];
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    
+    // update last update check time
+    [prefs setInteger:[[NSDate date] timeIntervalSince1970] forKey:@"lastDatabaseCheck"];
     
     NSNumber *totalNumberOfNotes = nil;
     NSNumber *infoGenerationTime = nil;
@@ -157,6 +276,8 @@
         NSLog(@"Error parsing info file");
     }
     
+    [prefs synchronize];
+    [self updateUpdateTimes];
     
     if (NSOrderedDescending == [infoGenerationTime compare:[NSNumber numberWithInt:[prefs integerForKey:@"lastDatabaseGenerationTime"]]]) {
         [self updateAvailable:YES];
@@ -255,8 +376,11 @@ inManagedObjectContext:managedObjectContext];
             if (! databaseGenerationTime) {
                 [self updateProgressBar:1.0 message:@"Error: Invalid WikEM Data"];
             } else {
-               [self updateProgressBar:0.1 message:@"Updating Categories"];
+                // clear the database
+                [self clearWikEMData];
+               
                 // Parse Categories
+                [self updateProgressBar:0.1 message:@"Updating Categories"];
                 TBXMLElement *categories = [TBXML childElementNamed:@"categories" parentElement:tbxml.rootXMLElement];
                 TBXMLElement *subElement = categories->firstChild;
                 do {
@@ -282,9 +406,11 @@ inManagedObjectContext:managedObjectContext];
                 self.ranInitialSetup = YES;
                 
                 NSUserDefaults *prefsThread = [NSUserDefaults standardUserDefaults];
+                [prefsThread setInteger:[[NSDate date] timeIntervalSince1970] forKey:@"lastDatabaseUpdate"];
                 [prefsThread setInteger:databaseGenerationTime forKey:@"lastDatabaseGenerationTime"];
                 [prefsThread setBool:self.ranInitialSetup forKey:@"ranInitialSetup"];
                 [prefsThread synchronize];
+                [self updateUpdateTimes];
                 [self updateAvailable:NO];
             }
         }
@@ -294,37 +420,36 @@ inManagedObjectContext:managedObjectContext];
 
 - (IBAction)clearWikEMData
 {
-    dispatch_queue_t deleteQueue = dispatch_queue_create("Delete Queue", NULL);
-    dispatch_async(deleteQueue, ^{
-        [self disableAllTabBarItems:YES];
+    // commented out multithreading deleting b/c it crashes parseXMLDatabase
+    // dispatch_queue_t deleteQueue = dispatch_queue_create("Delete Queue", NULL);
+    // dispatch_async(deleteQueue, ^{
         NSLog(@"Deleting All Notes");
-        NSManagedObjectContext *managedObjectContext = [[NSManagedObjectContext alloc] init];
-        [managedObjectContext setPersistentStoreCoordinator:self.persistentStoreCoordinator];
+        NSManagedObjectContext *managedObjectContextClear = [[NSManagedObjectContext alloc] init];
+        [managedObjectContextClear setPersistentStoreCoordinator:self.persistentStoreCoordinator];
         
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
-        request.entity = [NSEntityDescription entityForName:@"Note" inManagedObjectContext:managedObjectContext];
+        request.entity = [NSEntityDescription entityForName:@"Note" inManagedObjectContext:managedObjectContextClear];
         [request setIncludesPropertyValues:NO];
-        NSArray *notes = [managedObjectContext executeFetchRequest:request error:nil];
+        NSArray *notes = [managedObjectContextClear executeFetchRequest:request error:nil];
         for (Note *note in notes) {
-            [managedObjectContext deleteObject:note];
+            [managedObjectContextClear deleteObject:note];
         }
         [request release];
         
         NSFetchRequest *requestC = [[NSFetchRequest alloc] init];
-        requestC.entity = [NSEntityDescription entityForName:@"Category" inManagedObjectContext:managedObjectContext];
+        requestC.entity = [NSEntityDescription entityForName:@"Category" inManagedObjectContext:managedObjectContextClear];
         [requestC setIncludesPropertyValues:NO];
-        NSArray *categories = [managedObjectContext executeFetchRequest:requestC error:nil];
+        NSArray *categories = [managedObjectContextClear executeFetchRequest:requestC error:nil];
         for (Category *category in categories) {
-            [managedObjectContext deleteObject:category];
+            [managedObjectContextClear deleteObject:category];
         }
         
         [requestC release];
-        [managedObjectContext save:nil];
-        [managedObjectContext release];
+        [managedObjectContextClear save:nil];
+        [managedObjectContextClear release];
         NSLog(@"Deleted All Notes");
-        [self disableAllTabBarItems:NO];
-    });
-    dispatch_release(deleteQueue);
+    // });
+    // dispatch_release(deleteQueue);
 }
 
 #pragma mark - Tab Bar Controls
@@ -339,16 +464,20 @@ inManagedObjectContext:managedObjectContext];
 - (void)updateAvailable:(BOOL)status
 {
     dispatch_async(dispatch_get_main_queue(), ^{
+        NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
         if (status) {
             // show red dot to indicate update available
             [[[[[self tabBarController] tabBar] items] objectAtIndex:3] setBadgeValue:@""];
             
             // show button to allow user to update if it isn't already shown
             [self animateInUpdaterButton];
+            [prefs setBool:YES forKey:@"updateAvailable"];
             
         } else {
             [[[[[self tabBarController] tabBar] items] objectAtIndex:3] setBadgeValue:nil];
+            [prefs setBool:NO forKey:@"updateAvailable"];
         }
+        [prefs synchronize];
     });
     
 }
@@ -390,6 +519,10 @@ inManagedObjectContext:managedObjectContext];
     [tabBarItem release];
     [progressText release];
     [updaterButton release];
+    [currentDatabaseCreatedLabel release];
+    [lastUpdateCheckLabel release];
+    [lastUpdatePerformedLabel release];
+    [noUpdateLabel release];
     [super dealloc];
 }
 
@@ -410,6 +543,15 @@ inManagedObjectContext:managedObjectContext];
     self.progressBar.frame = CGRectOffset(self.progressBar.frame, 0.0, 60.0);
     self.progressText.frame = CGRectOffset(self.progressText.frame, 0.0, 60.0);
     self.progressText.text = @"";
+    self.noUpdateLabel.text = @"";
+    self.noUpdateLabel.alpha = 0.0;
+    [self updateUpdateTimes];
+    
+    // do we need to display the progress bar?
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    if ([prefs boolForKey:@"updateAvailable"]) {
+        [self animateInUpdaterButton];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -437,10 +579,15 @@ inManagedObjectContext:managedObjectContext];
             [self updateAvailable:YES];
         }
     }
+    
 }
 
 - (void)viewDidUnload
 {
+    [self setCurrentDatabaseCreatedLabel:nil];
+    [self setLastUpdateCheckLabel:nil];
+    [self setLastUpdatePerformedLabel:nil];
+    [self setNoUpdateLabel:nil];
     [super viewDidUnload];
     self.licenseViewController = nil;
     self.progressBar = nil;

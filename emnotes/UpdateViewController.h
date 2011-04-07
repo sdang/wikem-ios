@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#include "TBXML.h"
-#include "AcceptLicense.h"
+#import "TBXML.h"
+#import "AcceptLicense.h"
+#import "AboutWikemViewController.h"
 
 @interface UpdateViewController : UIViewController <AcceptLicenseDelegate> {
     AcceptLicense *licenseViewController;
@@ -18,20 +19,32 @@
     UILabel *progressText;
     BOOL ranInitialSetup;
     BOOL displayingLicense;
+    UILabel *currentDatabaseCreatedLabel;
+    UILabel *lastUpdateCheckLabel;
+    UILabel *lastUpdatePerformedLabel;
+    UILabel *noUpdateLabel;
 }
 
-@property (retain) AcceptLicense *licenseViewController;
-@property (retain) UITabBarItem *tabBarItem;
+
+@property (nonatomic, retain) AcceptLicense *licenseViewController;
+@property (nonatomic, retain) UITabBarItem *tabBarItem;
+@property (nonatomic, retain) IBOutlet UILabel *noUpdateLabel;
+@property (nonatomic, retain) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (nonatomic, retain) IBOutlet UILabel *currentDatabaseCreatedLabel;
+@property (nonatomic, retain) IBOutlet UILabel *lastUpdateCheckLabel;
+@property (nonatomic, retain) IBOutlet UILabel *lastUpdatePerformedLabel;
+@property (nonatomic, retain) IBOutlet UIProgressView *progressBar;
+@property (nonatomic, retain) IBOutlet UILabel *progressText;
+@property (nonatomic, retain) IBOutlet UIButton *updaterButton;
+
 @property (assign) BOOL ranInitialSetup;
 @property (assign) BOOL displayingLicense;
-@property (nonatomic, retain) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-@property (retain) IBOutlet UIProgressView *progressBar;
-@property (retain) IBOutlet UILabel *progressText;
-@property (retain) IBOutlet UIButton *updaterButton;
+
 - (void)userDidAcceptLicense:(BOOL)status;
 - (IBAction)clearWikEMData;
 - (IBAction)parseXMLDatabaseFile;
 - (IBAction)runUpdateCheck:(id)sender;
+- (IBAction)displayAboutWikEMView:(id)sender;
 
 - (void)addNoteFromXMLElement:(TBXMLElement *)subElement context:(NSManagedObjectContext *)managedContextIndex;
 - (void)updateAvailable:(BOOL)status;
@@ -39,5 +52,9 @@
 - (void)disableAllTabBarItems:(BOOL)status;
 - (void)updateProgressBar:(float)currentProgress message:(NSString *)messageString;
 - (NSDictionary *)parseXMLInfoFile;
+- (void)animateInNoUpdateText:(NSString *)updateMessage;
+- (void)animateOutNoUpdateText;
+- (void)autoUpdateCheck;
+
 
 @end

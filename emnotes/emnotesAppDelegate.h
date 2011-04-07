@@ -7,13 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UpdateViewController.h"
 
 @interface emnotesAppDelegate : NSObject <UIApplicationDelegate, UITabBarControllerDelegate> {
         UITabBarController *tabBar;
+        UpdateViewController *uVC;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
-
+@property (nonatomic, retain) UpdateViewController *uVC;
 @property (nonatomic, retain, readonly) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, retain, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
