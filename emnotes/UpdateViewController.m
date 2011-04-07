@@ -88,18 +88,21 @@
 
 - (void)animateInUpdaterButton
 {
-    if (self.progressBar.alpha == 1) {
-        // progress bar on screen, animate it out
-        [self animateOutProgressPackage];
-    }
-    
-    // alpha = 1 if it's already shown
-    if (self.updaterButton.alpha != 1)
-        [UIView transitionWithView:self.updaterButton
-                          duration:0.5
-                           options:UIViewAnimationCurveLinear
-                        animations:^{ self.updaterButton.alpha = 1.0; self.updaterButton.frame = CGRectOffset(self.updaterButton.frame, 0, -100.0); }
-                        completion:NULL];
+    NSLog(@"animate in button");
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (self.progressBar.alpha == 1) {
+            // progress bar on screen, animate it out
+            [self animateOutProgressPackage];
+        }
+        
+        // alpha = 1 if it's already shown
+        if (self.updaterButton.alpha != 1)
+            [UIView transitionWithView:self.updaterButton
+                              duration:0.5
+                               options:UIViewAnimationCurveLinear
+                            animations:^{ self.updaterButton.alpha = 1.0; self.updaterButton.frame = CGRectOffset(self.updaterButton.frame, 0, -100.0); }
+                            completion:NULL];
+    });
 }
 
 
@@ -230,9 +233,33 @@
 
 
 #pragma mark - XML Processing
+- (void)autoUpdateCheck
+{
+    if (self.ranInitialSetup) {
+        dispatch_queue_t updateQueue = dispatch_queue_create("Run Auto Update Check", NULL);
+        dispatch_async(updateQueue, ^{
+        NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+        
+        if ([prefs boolForKey:@"updateAvailable"]) {
+            [self updateAvailable:YES];
+            return;
+        }
+            
+        NSTimeInterval nowInEpoch = [[NSDate date] timeIntervalSince1970];
+        if (nowInEpoch > ([prefs integerForKey:@"lastDatabaseCheck"] + 7 * 24 * 3600) && ranInitialSetup) {
+            NSLog(@"Will perform auto check (last check: %@)", [NSDate dateWithTimeIntervalSince1970:[prefs integerForKey:@"lastDatabaseCheck"]]);
+            [self checkUpdateAvailable];
+        } else {
+            NSLog(@"Will NOT perform auto check (last check: %@)", [NSDate dateWithTimeIntervalSince1970:[prefs integerForKey:@"lastDatabaseCheck"]]);
+        }
+        });
+        dispatch_release(updateQueue);
+    }
+}
 
 - (NSDictionary *)checkUpdateAvailable
 {
+    NSLog(@"Checking for Update");
     NSDictionary *infoFileContents = [self parseXMLInfoFile];
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     
@@ -437,16 +464,20 @@ inManagedObjectContext:managedObjectContext];
 - (void)updateAvailable:(BOOL)status
 {
     dispatch_async(dispatch_get_main_queue(), ^{
+        NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
         if (status) {
             // show red dot to indicate update available
             [[[[[self tabBarController] tabBar] items] objectAtIndex:3] setBadgeValue:@""];
             
             // show button to allow user to update if it isn't already shown
             [self animateInUpdaterButton];
+            [prefs setBool:YES forKey:@"updateAvailable"];
             
         } else {
             [[[[[self tabBarController] tabBar] items] objectAtIndex:3] setBadgeValue:nil];
+            [prefs setBool:NO forKey:@"updateAvailable"];
         }
+        [prefs synchronize];
     });
     
 }
@@ -516,6 +547,11 @@ inManagedObjectContext:managedObjectContext];
     self.noUpdateLabel.alpha = 0.0;
     [self updateUpdateTimes];
     
+    // do we need to display the progress bar?
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    if ([prefs boolForKey:@"updateAvailable"]) {
+        [self animateInUpdaterButton];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -543,6 +579,7 @@ inManagedObjectContext:managedObjectContext];
             [self updateAvailable:YES];
         }
     }
+    
 }
 
 - (void)viewDidUnload

@@ -54,6 +54,7 @@
 - (NSDictionary *)parseXMLInfoFile;
 - (void)animateInNoUpdateText:(NSString *)updateMessage;
 - (void)animateOutNoUpdateText;
+- (void)autoUpdateCheck;
 
 
 @end

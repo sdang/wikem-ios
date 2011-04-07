@@ -23,6 +23,7 @@
 @synthesize managedObjectModel=__managedObjectModel;
 @synthesize persistentStoreCoordinator=__persistentStoreCoordinator;
 @synthesize tabBar;
+@synthesize uVC;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -60,6 +61,8 @@
     
     UpdateViewController *updateViewController = [[UpdateViewController alloc] init];
     updateViewController.persistentStoreCoordinator = self.persistentStoreCoordinator;
+    self.uVC = updateViewController;
+    
     self.tabBar = [[UITabBarController alloc] init];
     self.tabBar.delegate = self;
     
@@ -120,6 +123,7 @@
     /*
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
+    [self.uVC autoUpdateCheck];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -134,6 +138,7 @@
     [__managedObjectContext release];
     [__managedObjectModel release];
     [__persistentStoreCoordinator release];
+    [uVC release];
     [super dealloc];
 }
 
