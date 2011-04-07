@@ -286,7 +286,7 @@
         return infoFileContents;
     } else {
         [self updateAvailable:NO];
-        return [NSDictionary dictionaryWithObject:nil forKey:@"size"];
+        return [NSDictionary dictionaryWithObject:@"" forKey:@"size"];
     }
 }
 
