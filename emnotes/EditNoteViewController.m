@@ -58,6 +58,11 @@
 
 - (void)saveNote
 {
+    // if the text is centered, its place holder text... get rid of it
+    if (self.noteContentTextField.textAlignment == UITextAlignmentCenter) {
+        self.noteContentTextField.text = @"";
+    }
+    
     if (self.editingMode && self.personalNote) {
         self.personalNote.content = self.noteContentTextField.text;
         [self.managedObjectContext save:NULL];
@@ -120,8 +125,10 @@
         self.noteContentTextField.text = personalNote.content;
         self.noteTitleTextField.text = personalNote.title;
         [self.noteTitleTextField setEnabled:NO];
+        [self.noteContentTextField becomeFirstResponder];
+    } else {
+        [self.noteTitleTextField becomeFirstResponder];
     }
-    [self.noteTitleTextField becomeFirstResponder];
 }
 
 - (void)viewDidUnload
