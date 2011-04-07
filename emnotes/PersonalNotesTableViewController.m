@@ -158,5 +158,10 @@
     [self.managedObjectContext save:NULL];
 }
 
+- (UITableViewCellAccessoryType)accessoryTypeForManagedObject:(NSManagedObject *)managedObject
+{
+	return UITableViewCellAccessoryNone;
+}
+
 
 @end

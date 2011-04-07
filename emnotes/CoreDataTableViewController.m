@@ -220,7 +220,12 @@
 //Sample code taken from NSFetchedResultsController Class Reference
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
 {
-	return [[self fetchedResultsControllerForTableView:tableView] sectionForSectionIndexTitle:title atIndex:index];
+    if (index) {
+        return [[self fetchedResultsControllerForTableView:tableView] sectionForSectionIndexTitle:title atIndex:index-1];
+    } else {
+        return 0;
+    }
+
 }
 
 #pragma mark NSFetchedResultsControllerDelegate methods
