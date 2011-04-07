@@ -43,6 +43,7 @@
 {
     NSURL *resourceBaseURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
     [webView loadHTMLString:[self.note formattedContent] baseURL:resourceBaseURL];
+    self.title = self.note.name;
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 }
