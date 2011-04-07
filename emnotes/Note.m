@@ -16,6 +16,7 @@
 @dynamic name;
 @dynamic lastUpdate;
 @dynamic categories;
+@dynamic firstLetter;
 
 + (Note *)noteWithName:(NSString *)name
                 author:(NSString *)author 
@@ -47,6 +48,13 @@ inManagedObjectContext:(NSManagedObjectContext *)context
     
     [request release];
     return note;
+}
+
+- (NSString *) getFirstLetter {
+    [self willAccessValueForKey:@"firstLetter"];
+    NSString *firstLetter = [[self name] substringToIndex:1];
+    [self didAccessValueForKey:@"firstLetter"];
+    return firstLetter;
 }
 
 - (void)addCategoriesObject:(Category *)value {    

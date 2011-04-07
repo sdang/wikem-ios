@@ -17,6 +17,7 @@
 @property (nonatomic, retain) NSString * author;
 @property (nonatomic, retain) NSString * content;
 @property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSString * firstLetter;
 @property (nonatomic, retain) NSDate * lastUpdate;
 @property (nonatomic, retain) NSSet* categories;
 
@@ -28,4 +29,6 @@
 inManagedObjectContext:(NSManagedObjectContext *)context;
 
 - (NSString *)formattedContent;
+- (NSString *)getFirstLetter;
+
 @end
