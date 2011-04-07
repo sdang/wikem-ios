@@ -39,6 +39,10 @@
                                                                                     action: @selector(createNewNote)];
         self.navigationItem.rightBarButtonItem = addButton;
         [addButton release];
+        
+        self.navigationItem.leftBarButtonItem = self.editButtonItem;
+        
+        
     }
     return self;
 }
@@ -141,5 +145,18 @@
     [[self navigationController] pushViewController:personalNotesViewController animated:YES];
     [personalNotesViewController release];
 }
+
+- (BOOL)canDeleteManagedObject:(NSManagedObject *)managedObject
+{
+	return YES;
+}
+
+- (void)deleteManagedObject:(NSManagedObject *)managedObject
+{
+    // delete the personal note
+    [self.managedObjectContext deleteObject:managedObject];
+    [self.managedObjectContext save:NULL];
+}
+
 
 @end
