@@ -64,6 +64,7 @@
 		94E695B91346ED44008DF6ED /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 94E695B81346ED44008DF6ED /* libz.dylib */; };
 		94E695BC134703C8008DF6ED /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E695BB134703C8008DF6ED /* NSString+HTML.m */; };
 		94E695BF13470417008DF6ED /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E695BE13470416008DF6ED /* GTMNSString+HTML.m */; };
+		94EFE5E8134D71D400B1CBDB /* PersonalNote.m in Sources */ = {isa = PBXBuildFile; fileRef = 94EFE5E7134D71D400B1CBDB /* PersonalNote.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -143,6 +144,8 @@
 		94E695BD13470416008DF6ED /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTMNSString+HTML.h"; sourceTree = "<group>"; };
 		94E695BE13470416008DF6ED /* GTMNSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSString+HTML.m"; sourceTree = "<group>"; };
 		94E695C013470425008DF6ED /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
+		94EFE5E6134D71D400B1CBDB /* PersonalNote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalNote.h; sourceTree = "<group>"; };
+		94EFE5E7134D71D400B1CBDB /* PersonalNote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalNote.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -335,6 +338,8 @@
 				94E695991346BCE8008DF6ED /* Category.m */,
 				94E6959E1346CB35008DF6ED /* Note.h */,
 				94E6959F1346CB35008DF6ED /* Note.m */,
+				94EFE5E6134D71D400B1CBDB /* PersonalNote.h */,
+				94EFE5E7134D71D400B1CBDB /* PersonalNote.m */,
 			);
 			name = CoreData;
 			sourceTree = "<group>";
@@ -451,6 +456,7 @@
 				94E695BF13470417008DF6ED /* GTMNSString+HTML.m in Sources */,
 				94234C8E134A640900D241B5 /* AcceptLicense.m in Sources */,
 				940640DE134CFD81008E4461 /* AboutWikemViewController.m in Sources */,
+				94EFE5E8134D71D400B1CBDB /* PersonalNote.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
