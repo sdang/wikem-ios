@@ -63,4 +63,8 @@
 - (IBAction)closeAboutView:(id)sender {
     [self dismissModalViewControllerAnimated:YES];
 }
+
+- (IBAction)openWikEMWebsite:(id)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://www.wikem.org"]];
+}
 @end

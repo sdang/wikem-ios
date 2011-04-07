@@ -334,8 +334,11 @@ inManagedObjectContext:managedObjectContext];
             if (! databaseGenerationTime) {
                 [self updateProgressBar:1.0 message:@"Error: Invalid WikEM Data"];
             } else {
-               [self updateProgressBar:0.1 message:@"Updating Categories"];
+                // clear the database
+                [self clearWikEMData];
+               
                 // Parse Categories
+                [self updateProgressBar:0.1 message:@"Updating Categories"];
                 TBXMLElement *categories = [TBXML childElementNamed:@"categories" parentElement:tbxml.rootXMLElement];
                 TBXMLElement *subElement = categories->firstChild;
                 do {
@@ -375,37 +378,36 @@ inManagedObjectContext:managedObjectContext];
 
 - (IBAction)clearWikEMData
 {
-    dispatch_queue_t deleteQueue = dispatch_queue_create("Delete Queue", NULL);
-    dispatch_async(deleteQueue, ^{
-        [self disableAllTabBarItems:YES];
+    // commented out multithreading deleting b/c it crashes parseXMLDatabase
+    // dispatch_queue_t deleteQueue = dispatch_queue_create("Delete Queue", NULL);
+    // dispatch_async(deleteQueue, ^{
         NSLog(@"Deleting All Notes");
-        NSManagedObjectContext *managedObjectContext = [[NSManagedObjectContext alloc] init];
-        [managedObjectContext setPersistentStoreCoordinator:self.persistentStoreCoordinator];
+        NSManagedObjectContext *managedObjectContextClear = [[NSManagedObjectContext alloc] init];
+        [managedObjectContextClear setPersistentStoreCoordinator:self.persistentStoreCoordinator];
         
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
-        request.entity = [NSEntityDescription entityForName:@"Note" inManagedObjectContext:managedObjectContext];
+        request.entity = [NSEntityDescription entityForName:@"Note" inManagedObjectContext:managedObjectContextClear];
         [request setIncludesPropertyValues:NO];
-        NSArray *notes = [managedObjectContext executeFetchRequest:request error:nil];
+        NSArray *notes = [managedObjectContextClear executeFetchRequest:request error:nil];
         for (Note *note in notes) {
-            [managedObjectContext deleteObject:note];
+            [managedObjectContextClear deleteObject:note];
         }
         [request release];
         
         NSFetchRequest *requestC = [[NSFetchRequest alloc] init];
-        requestC.entity = [NSEntityDescription entityForName:@"Category" inManagedObjectContext:managedObjectContext];
+        requestC.entity = [NSEntityDescription entityForName:@"Category" inManagedObjectContext:managedObjectContextClear];
         [requestC setIncludesPropertyValues:NO];
-        NSArray *categories = [managedObjectContext executeFetchRequest:requestC error:nil];
+        NSArray *categories = [managedObjectContextClear executeFetchRequest:requestC error:nil];
         for (Category *category in categories) {
-            [managedObjectContext deleteObject:category];
+            [managedObjectContextClear deleteObject:category];
         }
         
         [requestC release];
-        [managedObjectContext save:nil];
-        [managedObjectContext release];
+        [managedObjectContextClear save:nil];
+        [managedObjectContextClear release];
         NSLog(@"Deleted All Notes");
-        [self disableAllTabBarItems:NO];
-    });
-    dispatch_release(deleteQueue);
+    // });
+    // dispatch_release(deleteQueue);
 }
 
 #pragma mark - Tab Bar Controls

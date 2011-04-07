@@ -15,5 +15,6 @@
 }
 @property (nonatomic, retain) IBOutlet UIWebView *webView;
 - (IBAction)closeAboutView:(id)sender;
+- (IBAction)openWikEMWebsite:(id)sender;
 
 @end
