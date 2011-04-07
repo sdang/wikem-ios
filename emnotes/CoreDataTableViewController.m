@@ -186,7 +186,11 @@
 //Sample code taken from NSFetchedResultsController Class Reference
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
 {
-	return [[self fetchedResultsControllerForTableView:tableView] sectionIndexTitles];
+    NSMutableArray *sectionTitles = [NSMutableArray arrayWithArray:[[self fetchedResultsControllerForTableView:tableView] sectionIndexTitles]];
+    if ([sectionTitles count]) {
+        [sectionTitles insertObject:@"{search}" atIndex:0];
+    }
+	return [NSArray arrayWithArray:sectionTitles];
 }
 
 #pragma mark UITableViewDelegate methods
@@ -216,7 +220,12 @@
 //Sample code taken from NSFetchedResultsController Class Reference
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
 {
-	return [[self fetchedResultsControllerForTableView:tableView] sectionForSectionIndexTitle:title atIndex:index];
+    if (index) {
+        return [[self fetchedResultsControllerForTableView:tableView] sectionForSectionIndexTitle:title atIndex:index-1];
+    } else {
+        return 0;
+    }
+
 }
 
 #pragma mark NSFetchedResultsControllerDelegate methods

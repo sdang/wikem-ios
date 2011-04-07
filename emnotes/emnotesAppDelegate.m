@@ -55,7 +55,10 @@
     [notesTableViewController release];
     
     UINavigationController *personalNotesNavCon = [[UINavigationController alloc] init];
-    PersonalNotesTableViewController *personalNotesTableViewController = [[PersonalNotesTableViewController alloc] init];
+    PersonalNotesTableViewController *personalNotesTableViewController = [[PersonalNotesTableViewController alloc]
+                                                                          initWithStyle:UITableViewStylePlain
+                                                                    inManagedContext:self.managedObjectContext];
+    
     [personalNotesNavCon pushViewController:personalNotesTableViewController animated:NO];
     [personalNotesTableViewController release];
     

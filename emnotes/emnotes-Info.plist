@@ -33,6 +33,12 @@
 	<array/>
 	<key>CFBundleVersion</key>
 	<string>2.0</string>
+	<key>database_url</key>
+	<string>http://dl.wikem.org/database.xml</string>
+	<key>info_url</key>
+	<string>http://dl.wikem.org/info.xml</string>
+	<key>edit_note_url</key>
+	<string>http://www.wikem.org/w/index.php?title=%@&amp;action=edit</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.medical</string>
 	<key>LSRequiresIPhoneOS</key>
@@ -47,9 +53,5 @@
 	<array/>
 	<key>UTImportedTypeDeclarations</key>
 	<array/>
-	<key>database_url</key>
-	<string>http://dl.wikem.org/database.xml</string>
-	<key>info_url</key>
-	<string>http://dl.wikem.org/info.xml</string>
 </dict>
 </plist>

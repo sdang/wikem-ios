@@ -223,11 +223,13 @@
 - (IBAction)runUpdateCheck:(id)sender
 {
     NSDictionary *infoFileContents = [self checkUpdateAvailable];
-    if (infoFileContents) {
+    if ([infoFileContents count] == 2) {
         [self animateInNoUpdateText:@"Update Available"];
         [self updateAvailable:YES];
-    } else {
+    } else if ([infoFileContents count] == 1) {
         [self animateInNoUpdateText:@"Database is Up to Date"];
+    } else {
+        [self animateInNoUpdateText:@"Error Checking for Update"];
     }
 }
 
@@ -262,17 +264,18 @@
     NSDictionary *infoFileContents = [self parseXMLInfoFile];
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     
-    // update last update check time
-    [prefs setInteger:[[NSDate date] timeIntervalSince1970] forKey:@"lastDatabaseCheck"];
     
     NSNumber *totalNumberOfNotes = nil;
     NSNumber *infoGenerationTime = nil;
     
     if (infoFileContents) {
+        // update last update check time, only update last check if we have data
+        [prefs setInteger:[[NSDate date] timeIntervalSince1970] forKey:@"lastDatabaseCheck"];
         totalNumberOfNotes = [infoFileContents objectForKey:@"size"];
         infoGenerationTime = [infoFileContents objectForKey:@"lastUpdate"];
     } else {
         NSLog(@"Error parsing info file");
+        return nil;
     }
     
     [prefs synchronize];
@@ -283,7 +286,7 @@
         return infoFileContents;
     } else {
         [self updateAvailable:NO];
-        return nil;
+        return [NSDictionary dictionaryWithObject:nil forKey:@"size"];
     }
 }
 
