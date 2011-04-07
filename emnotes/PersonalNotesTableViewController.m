@@ -13,6 +13,7 @@
 @implementation PersonalNotesTableViewController
 
 @synthesize tabBarItem;
+@synthesize managedObjectContext;
 
 - (void)setupTabBarItem
 {
@@ -43,6 +44,7 @@
 - (void)createNewNote
 {
     EditNoteViewController *editNoteViewController = [[EditNoteViewController alloc] init];
+    editNoteViewController.managedObjectContext = self.managedObjectContext;
     [[self navigationController] pushViewController:editNoteViewController animated:YES];
     [editNoteViewController release];
 }
@@ -56,6 +58,7 @@
         request.sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
         request.predicate = nil;
         request.fetchBatchSize = 20;
+        self.managedObjectContext = context;
         
         NSFetchedResultsController *frc = [[NSFetchedResultsController alloc]
                                            initWithFetchRequest:request

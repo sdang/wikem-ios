@@ -16,4 +16,7 @@
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSString * content;
 
+
++ (PersonalNote *)personalNoteWithTitle:(NSString *)title content:(NSString *)content inManagedObjectContext:(NSManagedObjectContext *)context forceCreate:(BOOL)forceCreate;
+
 @end

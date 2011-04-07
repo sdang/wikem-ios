@@ -7,11 +7,12 @@
 //
 
 #import "EditNoteViewController.h"
-
+#import "PersonalNote.h"
 
 @implementation EditNoteViewController
 @synthesize noteTitleTextField;
 @synthesize noteContentTextField;
+@synthesize managedObjectContext;
 
 # pragma mark - Text View Delegates
 
@@ -45,6 +46,15 @@
     }
 }
 
+# pragma mark - Note Management
+
+- (void)saveNote
+{
+    [PersonalNote personalNoteWithTitle:self.noteTitleTextField.text content:self.noteContentTextField.text inManagedObjectContext:self.managedObjectContext forceCreate:YES];
+    [self.navigationController popViewControllerAnimated:TRUE];
+    NSLog(@"Saving Personal Note");
+}
+
 # pragma mark - Memory Management
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -52,6 +62,9 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStyleDone target:self action:@selector(saveNote)];
+        self.navigationItem.rightBarButtonItem = saveButton;
+        [saveButton release];
     }
     return self;
 }

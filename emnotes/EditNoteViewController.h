@@ -12,8 +12,10 @@
 @interface EditNoteViewController : UIViewController <UITextFieldDelegate, UITextViewDelegate> {
     UITextField *noteTitleTextField;
     UITextView *noteContentTextField;
+    NSManagedObjectContext *managedObjectContext;
 }
 
+@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, retain) IBOutlet UITextField *noteTitleTextField;
 @property (nonatomic, retain) IBOutlet UITextView *noteContentTextField;
 
