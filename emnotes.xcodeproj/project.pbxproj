@@ -69,6 +69,10 @@
 		94EFE5EE134D790100B1CBDB /* EditNoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94EFE5EC134D790100B1CBDB /* EditNoteViewController.xib */; };
 		94EFE5F3134D8A9900B1CBDB /* PersonalNotesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94EFE5F1134D8A9900B1CBDB /* PersonalNotesViewController.m */; };
 		94EFE5F4134D8A9900B1CBDB /* PersonalNotesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94EFE5F2134D8A9900B1CBDB /* PersonalNotesViewController.xib */; };
+		94EFE5F7134DA10400B1CBDB /* Close.png in Resources */ = {isa = PBXBuildFile; fileRef = 94EFE5F5134DA10400B1CBDB /* Close.png */; };
+		94EFE5F8134DA10400B1CBDB /* Close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94EFE5F6134DA10400B1CBDB /* Close@2x.png */; };
+		94EFE5FB134DA10B00B1CBDB /* WikEM.org.png in Resources */ = {isa = PBXBuildFile; fileRef = 94EFE5F9134DA10B00B1CBDB /* WikEM.org.png */; };
+		94EFE5FC134DA10B00B1CBDB /* WikEM.org@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94EFE5FA134DA10B00B1CBDB /* WikEM.org@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -156,6 +160,10 @@
 		94EFE5F0134D8A9900B1CBDB /* PersonalNotesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalNotesViewController.h; sourceTree = "<group>"; };
 		94EFE5F1134D8A9900B1CBDB /* PersonalNotesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalNotesViewController.m; sourceTree = "<group>"; };
 		94EFE5F2134D8A9900B1CBDB /* PersonalNotesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonalNotesViewController.xib; sourceTree = "<group>"; };
+		94EFE5F5134DA10400B1CBDB /* Close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Close.png; sourceTree = "<group>"; };
+		94EFE5F6134DA10400B1CBDB /* Close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Close@2x.png"; sourceTree = "<group>"; };
+		94EFE5F9134DA10B00B1CBDB /* WikEM.org.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WikEM.org.png; sourceTree = "<group>"; };
+		94EFE5FA134DA10B00B1CBDB /* WikEM.org@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WikEM.org@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -231,6 +239,10 @@
 		940640BE134CE87B008E4461 /* UIGraphicalElements */ = {
 			isa = PBXGroup;
 			children = (
+				94EFE5F9134DA10B00B1CBDB /* WikEM.org.png */,
+				94EFE5FA134DA10B00B1CBDB /* WikEM.org@2x.png */,
+				94EFE5F5134DA10400B1CBDB /* Close.png */,
+				94EFE5F6134DA10400B1CBDB /* Close@2x.png */,
 				9421A3E1134D46810031D4AB /* AcceptButton.png */,
 				9421A3E5134D47760031D4AB /* InfoBackground.png */,
 				9421A3E2134D46810031D4AB /* AcceptButton@2x.png */,
@@ -455,6 +467,10 @@
 				9421A3E6134D47760031D4AB /* InfoBackground.png in Resources */,
 				94EFE5EE134D790100B1CBDB /* EditNoteViewController.xib in Resources */,
 				94EFE5F4134D8A9900B1CBDB /* PersonalNotesViewController.xib in Resources */,
+				94EFE5F7134DA10400B1CBDB /* Close.png in Resources */,
+				94EFE5F8134DA10400B1CBDB /* Close@2x.png in Resources */,
+				94EFE5FB134DA10B00B1CBDB /* WikEM.org.png in Resources */,
+				94EFE5FC134DA10B00B1CBDB /* WikEM.org@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
