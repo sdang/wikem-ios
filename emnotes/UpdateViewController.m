@@ -88,7 +88,7 @@
 
 - (void)animateInUpdaterButton
 {
-    NSLog(@"animate in button");
+
     dispatch_async(dispatch_get_main_queue(), ^{
         if (self.progressBar.alpha == 1) {
             // progress bar on screen, animate it out
@@ -259,7 +259,6 @@
 
 - (NSDictionary *)checkUpdateAvailable
 {
-    NSLog(@"Checking for Update");
     NSDictionary *infoFileContents = [self parseXMLInfoFile];
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     
@@ -394,7 +393,6 @@ inManagedObjectContext:managedObjectContext];
                 subElement = notes->firstChild;
                 float i = 0.0;
                 do {
-                    // NSLog(@"%@", [TBXML valueOfAttributeNamed:@"id" forElement:subElement]);
                     [self addNoteFromXMLElement:subElement context:managedObjectContext];
                     i++;
                     [self updateProgressBar:(0.8*(i/totalNotes))+0.2 message:@"Updating WikEM Notes"];

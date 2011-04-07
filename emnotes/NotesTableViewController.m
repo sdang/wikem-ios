@@ -59,7 +59,6 @@
         if (category) {
             request.predicate = [NSPredicate predicateWithFormat:@"%@ in categories", category];
             self.title = category.title;
-            NSLog(@"Opening Category: %@", category);
              cacheName = [NSString stringWithString:category.title];
         } else {
             cacheName = @"notes";
