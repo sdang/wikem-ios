@@ -167,7 +167,7 @@
         // update the update stats
         NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"MM/dd/yy"];
+        [dateFormatter setDateFormat:@"HH:mm MM/dd/yy"];
         
         NSDate *lastDatabaseGenerationTime = [NSDate dateWithTimeIntervalSince1970:[prefs integerForKey:@"lastDatabaseGenerationTime"]];
         NSDate *lastDatabaseCheck = [NSDate dateWithTimeIntervalSince1970:[prefs integerForKey:@"lastDatabaseCheck"]];
@@ -191,7 +191,7 @@
         self.progressText.text = messageString;
         
         if ([self.progressText.text isEqualToString:@"Done"]) {
-            // we're done so hide the package
+            // we're done so hide the progress bar package in 1 second
             [NSTimer scheduledTimerWithTimeInterval:1.0f
                                              target:self
                                            selector:@selector(animateOutProgressPackage)

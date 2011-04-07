@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		940640DE134CFD81008E4461 /* AboutWikemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 940640DC134CFD81008E4461 /* AboutWikemViewController.m */; };
 		940640DF134CFD81008E4461 /* AboutWikemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 940640DD134CFD81008E4461 /* AboutWikemViewController.xib */; };
+		9421A3C9134D316D0031D4AB /* ElevatedBar.png in Resources */ = {isa = PBXBuildFile; fileRef = 9421A3C8134D316D0031D4AB /* ElevatedBar.png */; };
 		94234C8E134A640900D241B5 /* AcceptLicense.m in Sources */ = {isa = PBXBuildFile; fileRef = 94234C8C134A640900D241B5 /* AcceptLicense.m */; };
 		94234C8F134A640900D241B5 /* AcceptLicense.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94234C8D134A640900D241B5 /* AcceptLicense.xib */; };
 		94234C92134A6EA300D241B5 /* disclaimer.html in Resources */ = {isa = PBXBuildFile; fileRef = 94234C91134A6EA300D241B5 /* disclaimer.html */; };
@@ -58,6 +59,7 @@
 		940640DB134CFD81008E4461 /* AboutWikemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutWikemViewController.h; sourceTree = "<group>"; };
 		940640DC134CFD81008E4461 /* AboutWikemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutWikemViewController.m; sourceTree = "<group>"; };
 		940640DD134CFD81008E4461 /* AboutWikemViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutWikemViewController.xib; sourceTree = "<group>"; };
+		9421A3C8134D316D0031D4AB /* ElevatedBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ElevatedBar.png; sourceTree = "<group>"; };
 		94234C8B134A640900D241B5 /* AcceptLicense.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AcceptLicense.h; sourceTree = "<group>"; };
 		94234C8C134A640900D241B5 /* AcceptLicense.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AcceptLicense.m; sourceTree = "<group>"; };
 		94234C8D134A640900D241B5 /* AcceptLicense.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AcceptLicense.xib; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 		940640BE134CE87B008E4461 /* UIGraphicalElements */ = {
 			isa = PBXGroup;
 			children = (
+				9421A3C8134D316D0031D4AB /* ElevatedBar.png */,
 				94DA2FF713468FBA00862F48 /* 10-medical.png */,
 				94DA2FF813468FBA00862F48 /* 33-cabinet.png */,
 				94DA2FF913468FBA00862F48 /* 179-notepad.png */,
@@ -376,6 +379,7 @@
 				9474293C134BA6E600AE579D /* wikemUpdaterBackground.png in Resources */,
 				9474293D134BA6E600AE579D /* wikemUpdaterBackground@2x.png in Resources */,
 				940640DF134CFD81008E4461 /* AboutWikemViewController.xib in Resources */,
+				9421A3C9134D316D0031D4AB /* ElevatedBar.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
