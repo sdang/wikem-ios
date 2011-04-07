@@ -56,11 +56,15 @@
         NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
         request.sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
         NSString *cacheName = nil;
+        NSString *sectionName = nil;
+        
         if (category) {
             request.predicate = [NSPredicate predicateWithFormat:@"%@ in categories", category];
             self.title = category.title;
-             cacheName = [NSString stringWithString:category.title];
+            cacheName = [NSString stringWithString:category.title];
+            sectionName = nil; 
         } else {
+            sectionName = @"getFirstLetter";
             cacheName = @"notes";
             request.predicate = nil;
         }
@@ -70,7 +74,7 @@
         NSFetchedResultsController *frc = [[NSFetchedResultsController alloc]
                                            initWithFetchRequest:request
                                            managedObjectContext:context
-                                           sectionNameKeyPath:@"getFirstLetter" 
+                                           sectionNameKeyPath:sectionName
                                            cacheName:cacheName];
         
         self.fetchedResultsController = frc;
@@ -87,6 +91,11 @@
     noteViewController.note = (Note *)managedObject;
     [self.navigationController pushViewController:noteViewController animated:YES];
     [noteViewController release];
+}
+
+- (UITableViewCellAccessoryType)accessoryTypeForManagedObject:(NSManagedObject *)managedObject
+{
+	return UITableViewCellAccessoryNone;
 }
 
 
