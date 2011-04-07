@@ -17,5 +17,6 @@
 @property (retain) UITabBarItem *tabBarItem;
 
 - (id)initWithStyle:(UITableViewStyle)style inManagedContext:(NSManagedObjectContext *)context;
+- (void)createNewNote;
 
 @end

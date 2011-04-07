@@ -8,6 +8,7 @@
 
 #import "PersonalNotesTableViewController.h"
 #import "PersonalNote.h"
+#import "EditNoteViewController.h"
 
 @implementation PersonalNotesTableViewController
 
@@ -30,8 +31,20 @@
         // Custom initialization
         [self setupTabBarItem];
         self.title = self.tabBarItem.title;
+        UIBarButtonItem *addButton  = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemAdd
+                                                                                    target: self
+                                                                                    action: @selector(createNewNote)];
+        self.navigationItem.rightBarButtonItem = addButton;
+        [addButton release];
     }
     return self;
+}
+
+- (void)createNewNote
+{
+    EditNoteViewController *editNoteViewController = [[EditNoteViewController alloc] init];
+    [[self navigationController] pushViewController:editNoteViewController animated:YES];
+    [editNoteViewController release];
 }
 
 - (id)initWithStyle:(UITableViewStyle)style inManagedContext:(NSManagedObjectContext *)context

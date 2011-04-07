@@ -65,6 +65,8 @@
 		94E695BC134703C8008DF6ED /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E695BB134703C8008DF6ED /* NSString+HTML.m */; };
 		94E695BF13470417008DF6ED /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E695BE13470416008DF6ED /* GTMNSString+HTML.m */; };
 		94EFE5E8134D71D400B1CBDB /* PersonalNote.m in Sources */ = {isa = PBXBuildFile; fileRef = 94EFE5E7134D71D400B1CBDB /* PersonalNote.m */; };
+		94EFE5ED134D790100B1CBDB /* EditNoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94EFE5EB134D790100B1CBDB /* EditNoteViewController.m */; };
+		94EFE5EE134D790100B1CBDB /* EditNoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94EFE5EC134D790100B1CBDB /* EditNoteViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -146,6 +148,9 @@
 		94E695C013470425008DF6ED /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
 		94EFE5E6134D71D400B1CBDB /* PersonalNote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalNote.h; sourceTree = "<group>"; };
 		94EFE5E7134D71D400B1CBDB /* PersonalNote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalNote.m; sourceTree = "<group>"; };
+		94EFE5EA134D790100B1CBDB /* EditNoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditNoteViewController.h; sourceTree = "<group>"; };
+		94EFE5EB134D790100B1CBDB /* EditNoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditNoteViewController.m; sourceTree = "<group>"; };
+		94EFE5EC134D790100B1CBDB /* EditNoteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditNoteViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,6 +209,9 @@
 				94DA300913468FE900862F48 /* NoteViewController.xib */,
 				94DA300713468FE900862F48 /* NoteViewController.h */,
 				94DA300813468FE900862F48 /* NoteViewController.m */,
+				94EFE5EA134D790100B1CBDB /* EditNoteViewController.h */,
+				94EFE5EB134D790100B1CBDB /* EditNoteViewController.m */,
+				94EFE5EC134D790100B1CBDB /* EditNoteViewController.xib */,
 			);
 			name = NoteView;
 			sourceTree = "<group>";
@@ -429,6 +437,7 @@
 				9421A3E3134D46810031D4AB /* AcceptButton.png in Resources */,
 				9421A3E4134D46810031D4AB /* AcceptButton@2x.png in Resources */,
 				9421A3E6134D47760031D4AB /* InfoBackground.png in Resources */,
+				94EFE5EE134D790100B1CBDB /* EditNoteViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -457,6 +466,7 @@
 				94234C8E134A640900D241B5 /* AcceptLicense.m in Sources */,
 				940640DE134CFD81008E4461 /* AboutWikemViewController.m in Sources */,
 				94EFE5E8134D71D400B1CBDB /* PersonalNote.m in Sources */,
+				94EFE5ED134D790100B1CBDB /* EditNoteViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
