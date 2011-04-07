@@ -167,15 +167,30 @@
         // update the update stats
         NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"HH:mm MM/dd/yy"];
+        [dateFormatter setDateFormat:@"hh:mma MM/dd/yy"];
         
         NSDate *lastDatabaseGenerationTime = [NSDate dateWithTimeIntervalSince1970:[prefs integerForKey:@"lastDatabaseGenerationTime"]];
         NSDate *lastDatabaseCheck = [NSDate dateWithTimeIntervalSince1970:[prefs integerForKey:@"lastDatabaseCheck"]];
         NSDate *lastDatabaseUpdate = [NSDate dateWithTimeIntervalSince1970:[prefs integerForKey:@"lastDatabaseUpdate"]];
         
-        self.currentDatabaseCreatedLabel.text = [dateFormatter stringFromDate:lastDatabaseGenerationTime];
-        self.lastUpdateCheckLabel.text = [dateFormatter stringFromDate:lastDatabaseCheck];
-        self.lastUpdatePerformedLabel.text = [dateFormatter stringFromDate:lastDatabaseUpdate];
+        if (lastDatabaseGenerationTime) {
+            self.currentDatabaseCreatedLabel.text = [dateFormatter stringFromDate:lastDatabaseGenerationTime];
+        } else {
+            self.currentDatabaseCreatedLabel.text = @"";
+        }
+        
+        if (lastDatabaseCheck) {
+            self.lastUpdateCheckLabel.text = [dateFormatter stringFromDate:lastDatabaseCheck];
+        } else {
+            self.lastUpdateCheckLabel.text = @"";
+        }
+        
+        if (lastDatabaseUpdate) {
+            self.lastUpdatePerformedLabel.text = [dateFormatter stringFromDate:lastDatabaseUpdate];
+        } else {
+            self.lastUpdatePerformedLabel.text = @"";
+        }
+
 
         [dateFormatter release];
     });

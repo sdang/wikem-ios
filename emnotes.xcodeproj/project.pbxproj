@@ -10,6 +10,14 @@
 		940640DE134CFD81008E4461 /* AboutWikemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 940640DC134CFD81008E4461 /* AboutWikemViewController.m */; };
 		940640DF134CFD81008E4461 /* AboutWikemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 940640DD134CFD81008E4461 /* AboutWikemViewController.xib */; };
 		9421A3C9134D316D0031D4AB /* ElevatedBar.png in Resources */ = {isa = PBXBuildFile; fileRef = 9421A3C8134D316D0031D4AB /* ElevatedBar.png */; };
+		9421A3CD134D3D780031D4AB /* DownloadUpdateButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9421A3CB134D3D780031D4AB /* DownloadUpdateButton@2x.png */; };
+		9421A3CE134D3D780031D4AB /* DownloadUpdateButtonHighlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9421A3CC134D3D780031D4AB /* DownloadUpdateButtonHighlighted@2x.png */; };
+		9421A3D1134D3E260031D4AB /* DownloadUpdateButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 9421A3CF134D3E250031D4AB /* DownloadUpdateButton.png */; };
+		9421A3D2134D3E260031D4AB /* DownloadUpdateButtonHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 9421A3D0134D3E250031D4AB /* DownloadUpdateButtonHighlighted.png */; };
+		9421A3DB134D42340031D4AB /* AboutWikEMButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 9421A3D9134D42330031D4AB /* AboutWikEMButton.png */; };
+		9421A3DC134D42340031D4AB /* AboutWikEMButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9421A3DA134D42330031D4AB /* AboutWikEMButton@2x.png */; };
+		9421A3DF134D42C30031D4AB /* UpdateButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 9421A3DD134D42C20031D4AB /* UpdateButton.png */; };
+		9421A3E0134D42C30031D4AB /* UpdateButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9421A3DE134D42C20031D4AB /* UpdateButton@2x.png */; };
 		94234C8E134A640900D241B5 /* AcceptLicense.m in Sources */ = {isa = PBXBuildFile; fileRef = 94234C8C134A640900D241B5 /* AcceptLicense.m */; };
 		94234C8F134A640900D241B5 /* AcceptLicense.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94234C8D134A640900D241B5 /* AcceptLicense.xib */; };
 		94234C92134A6EA300D241B5 /* disclaimer.html in Resources */ = {isa = PBXBuildFile; fileRef = 94234C91134A6EA300D241B5 /* disclaimer.html */; };
@@ -60,6 +68,14 @@
 		940640DC134CFD81008E4461 /* AboutWikemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutWikemViewController.m; sourceTree = "<group>"; };
 		940640DD134CFD81008E4461 /* AboutWikemViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutWikemViewController.xib; sourceTree = "<group>"; };
 		9421A3C8134D316D0031D4AB /* ElevatedBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ElevatedBar.png; sourceTree = "<group>"; };
+		9421A3CB134D3D780031D4AB /* DownloadUpdateButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DownloadUpdateButton@2x.png"; sourceTree = "<group>"; };
+		9421A3CC134D3D780031D4AB /* DownloadUpdateButtonHighlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DownloadUpdateButtonHighlighted@2x.png"; sourceTree = "<group>"; };
+		9421A3CF134D3E250031D4AB /* DownloadUpdateButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DownloadUpdateButton.png; sourceTree = "<group>"; };
+		9421A3D0134D3E250031D4AB /* DownloadUpdateButtonHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DownloadUpdateButtonHighlighted.png; sourceTree = "<group>"; };
+		9421A3D9134D42330031D4AB /* AboutWikEMButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AboutWikEMButton.png; sourceTree = "<group>"; };
+		9421A3DA134D42330031D4AB /* AboutWikEMButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AboutWikEMButton@2x.png"; sourceTree = "<group>"; };
+		9421A3DD134D42C20031D4AB /* UpdateButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UpdateButton.png; sourceTree = "<group>"; };
+		9421A3DE134D42C20031D4AB /* UpdateButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UpdateButton@2x.png"; sourceTree = "<group>"; };
 		94234C8B134A640900D241B5 /* AcceptLicense.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AcceptLicense.h; sourceTree = "<group>"; };
 		94234C8C134A640900D241B5 /* AcceptLicense.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AcceptLicense.m; sourceTree = "<group>"; };
 		94234C8D134A640900D241B5 /* AcceptLicense.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AcceptLicense.xib; sourceTree = "<group>"; };
@@ -198,6 +214,14 @@
 		940640BE134CE87B008E4461 /* UIGraphicalElements */ = {
 			isa = PBXGroup;
 			children = (
+				9421A3DD134D42C20031D4AB /* UpdateButton.png */,
+				9421A3DE134D42C20031D4AB /* UpdateButton@2x.png */,
+				9421A3D9134D42330031D4AB /* AboutWikEMButton.png */,
+				9421A3DA134D42330031D4AB /* AboutWikEMButton@2x.png */,
+				9421A3CF134D3E250031D4AB /* DownloadUpdateButton.png */,
+				9421A3D0134D3E250031D4AB /* DownloadUpdateButtonHighlighted.png */,
+				9421A3CB134D3D780031D4AB /* DownloadUpdateButton@2x.png */,
+				9421A3CC134D3D780031D4AB /* DownloadUpdateButtonHighlighted@2x.png */,
 				9421A3C8134D316D0031D4AB /* ElevatedBar.png */,
 				94DA2FF713468FBA00862F48 /* 10-medical.png */,
 				94DA2FF813468FBA00862F48 /* 33-cabinet.png */,
@@ -380,6 +404,14 @@
 				9474293D134BA6E600AE579D /* wikemUpdaterBackground@2x.png in Resources */,
 				940640DF134CFD81008E4461 /* AboutWikemViewController.xib in Resources */,
 				9421A3C9134D316D0031D4AB /* ElevatedBar.png in Resources */,
+				9421A3CD134D3D780031D4AB /* DownloadUpdateButton@2x.png in Resources */,
+				9421A3CE134D3D780031D4AB /* DownloadUpdateButtonHighlighted@2x.png in Resources */,
+				9421A3D1134D3E260031D4AB /* DownloadUpdateButton.png in Resources */,
+				9421A3D2134D3E260031D4AB /* DownloadUpdateButtonHighlighted.png in Resources */,
+				9421A3DB134D42340031D4AB /* AboutWikEMButton.png in Resources */,
+				9421A3DC134D42340031D4AB /* AboutWikEMButton@2x.png in Resources */,
+				9421A3DF134D42C30031D4AB /* UpdateButton.png in Resources */,
+				9421A3E0134D42C30031D4AB /* UpdateButton@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
