@@ -12,3 +12,34 @@ h3 {margin-top: 0px; margin-bottom: 0px }
 h2 {margin-top: 0px; margin-bottom: 0px }
 
 */
+
+/* ck: added stuff to change outline format to more word-style...*/
+
+ol {
+   list-style: decimal;
+   margin-left: 1.25em;
+   padding: 0; }
+ol ol {
+   list-style: lower-alpha; 
+   margin-left: .75em;}
+ol ol ol {
+   list-style: lower-roman;
+   margin-left: .75em; }
+ol ol ol ol {
+   list-style: decimal; 
+    margin-left: 1.25em;}
+   
+ol ol ol ol ol {
+   list-style: lower-alpha; 
+    margin-left: 1.25em;}
+   
+ol ol ol ol ol ol {
+   list-style: lower-roman; 
+    margin-left: 1.25em;}
+   
+li {
+   padding-left: .25em; }
+li li {
+   padding-left: .1em; }
+li li li {
+   padding-left: 0; }
