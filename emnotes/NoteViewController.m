@@ -71,7 +71,12 @@
 - (void)viewDidLoad
 {
     NSURL *resourceBaseURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
-    [webView loadHTMLString:[self.note formattedContent] baseURL:resourceBaseURL];
+//what is the url ?? ck
+	NSLog(@"wth is the url anyways?");
+	
+	NSString* myString = @"http://www.wikem.org/";
+	NSURL *testURL = [NSURL URLWithString:myString];
+    [webView loadHTMLString:[self.note formattedContent] baseURL:testURL]; //instead of resourceBaseURL
     self.title = self.note.name;
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
