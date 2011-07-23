@@ -4,27 +4,16 @@ p,ol,li,ul,a {font-size: 12pt }
 h2 { font-size: 14pt; border-top:1px solid #DBDEE2; padding-top: 10px; color: darkblue }
 h3 { font-size: 12pt; color: darkgray }
 #toc { width: 100% };
-/*
-div { font-family: arial; }
-p { margin-top: 0px; margin-bottom: 0px }
-h4 {margin-top: 0px; margin-bottom: 0px; color: navy }
-h3 {margin-top: 0px; margin-bottom: 0px }
-h2 {margin-top: 0px; margin-bottom: 0px }
-
-*/
-
-/* ck: added stuff to change outline format to more word-style...*/
-
 ol {
    list-style: decimal;
    margin-left: 1.25em;
    padding: 0; }
 ol ol {
    list-style: lower-alpha; 
-   margin-left: .75em;}
+   margin-left: 1.75em;}
 ol ol ol {
    list-style: lower-roman;
-   margin-left: .75em; }
+   margin-left: 1.75em; }
 ol ol ol ol {
    list-style: decimal; 
     margin-left: 1.25em;}

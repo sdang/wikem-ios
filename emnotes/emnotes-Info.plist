@@ -43,6 +43,41 @@
 	<string>http://www.wikem.org</string>
 	<key>link_base_url</key>
 	<string>/wiki/</string>
+	<key>head_css_string</key>
+	<string>&lt;html&gt;&lt;head&gt;&lt;style type=&quot;text/css&quot;&gt; body { font-family: arial }
+.editsection {display: none}
+p,ol,li,ul,a {font-size: 12pt }
+h2 { font-size: 14pt; border-top:1px solid #DBDEE2; padding-top: 10px; color: darkblue }
+h3 { font-size: 12pt; color: darkgray }
+#toc { width: 100% };
+ol {
+   list-style: decimal;
+   margin-left: 1.25em;
+   padding: 0; }
+ol ol {
+   list-style: lower-alpha; 
+   margin-left: 1.75em;}
+ol ol ol {
+   list-style: lower-roman;
+   margin-left: 1.75em; }
+ol ol ol ol {
+   list-style: decimal; 
+    margin-left: 1.25em;}
+   
+ol ol ol ol ol {
+   list-style: lower-alpha; 
+    margin-left: 1.25em;}
+   
+ol ol ol ol ol ol {
+   list-style: lower-roman; 
+    margin-left: 1.25em;}
+   
+li {
+   padding-left: .25em; }
+li li {
+   padding-left: .1em; }
+li li li {
+   padding-left: 0; } &lt;/style&gt;&lt;/head&gt;&lt;body&gt;</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.medical</string>
 	<key>LSRequiresIPhoneOS</key>
