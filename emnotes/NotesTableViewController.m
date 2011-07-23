@@ -78,7 +78,8 @@
                                            initWithFetchRequest:request
                                            managedObjectContext:context
                                            sectionNameKeyPath:sectionName
-                                           cacheName:cacheName];
+                                        //   cacheName:cacheName];
+										   cacheName:nil];
         
         self.fetchedResultsController = frc;
         [sortDescriptor release];

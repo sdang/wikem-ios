@@ -31,7 +31,8 @@
                                            initWithFetchRequest:request
                                            managedObjectContext:context
                                            sectionNameKeyPath:nil 
-                                           cacheName:@"categories"];
+                                     //      cacheName:@"categories"];
+										   cacheName:nil];
         
         self.fetchedResultsController = frc;
         [sortDescriptor release];
