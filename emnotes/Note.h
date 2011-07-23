@@ -28,6 +28,10 @@
             categories:(NSSet *)categories
 inManagedObjectContext:(NSManagedObjectContext *)context;
 
++ (Note *)noteFromName:(NSString *)name
+inManagedObjectContext:(NSManagedObjectContext *)context;
+
+
 - (NSString *)formattedContent;
 - (NSString *)getFirstLetter;
 

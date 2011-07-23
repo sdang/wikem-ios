@@ -13,6 +13,9 @@
 @implementation NotesTableViewController
 
 @synthesize tabBarItem;
+//ck : makes default setters and getters..
+@synthesize managedObjectContext;
+
 
 - (void)setupTabBarItem
 {
@@ -86,9 +89,11 @@
 }
 
 - (void)managedObjectSelected:(NSManagedObject *)managedObject
-{
+{ 
     NoteViewController *noteViewController = [[NoteViewController alloc] init];
-    noteViewController.note = (Note *)managedObject;
+	noteViewController.managedObjectContext = self.managedObjectContext;
+//i hope that passed the correct context along...
+	noteViewController.note = (Note *)managedObject;
     [self.navigationController pushViewController:noteViewController animated:YES];
     [noteViewController release];
 }

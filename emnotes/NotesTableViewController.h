@@ -14,6 +14,9 @@
 }
 
 @property (retain) UITabBarItem *tabBarItem;
+//ck add a context
+@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
+
 
 - (id)initWithStyle:(UITableViewStyle)style inManagedContext:(NSManagedObjectContext *)context withCategory:(Category *)category;
 

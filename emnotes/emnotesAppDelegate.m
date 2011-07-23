@@ -14,6 +14,8 @@
 #import "AcceptLicense.h"
 #import "Category.h"
 #import "Note.h"
+//add import now that we alloc a context
+#import "NoteViewController.h"
 
 @implementation emnotesAppDelegate
 
@@ -28,7 +30,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    
+ 
+	
     // is this the first time we've been run?
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     BOOL ranInitialSetup = [prefs boolForKey:@"ranInitialSetup"];
@@ -44,13 +47,29 @@
     categoryTableViewController.managedObjectContext = self.managedObjectContext;
     [categoriesNavCon pushViewController:categoryTableViewController animated:NO];
     [categoryTableViewController release];
+	
+//ck add noteviewcontroller to UINavigationController...keep the heiarchail style when clicking links?
+	UINavigationController *noteNavCon = [[UINavigationController alloc] init];
+    NoteViewController *noteViewController = [NoteViewController alloc] ;
+                                                         //       initWithStyle:UITableViewStylePlain
+                                                           //     inManagedContext:self.managedObjectContext];
     
+    noteViewController.managedObjectContext = __managedObjectContext;
+    [noteNavCon pushViewController:noteViewController animated:NO];
+    [noteViewController release];
+	//also can release the new navcon here rather than later
+	[noteNavCon release];
+	///////end my new UIcontroller..  
+	
+	
     UINavigationController *allNotesNavCon = [[UINavigationController alloc] init];
     NotesTableViewController *notesTableViewController = [[NotesTableViewController alloc]
                                                           initWithStyle:UITableViewStylePlain
                                                           inManagedContext:self.managedObjectContext
                                                           withCategory:nil];
-    
+	//ck added this setter
+    notesTableViewController.managedObjectContext = self.managedObjectContext;
+	
     [allNotesNavCon pushViewController:notesTableViewController animated:NO];
     [notesTableViewController release];
     

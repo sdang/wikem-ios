@@ -50,6 +50,33 @@ inManagedObjectContext:(NSManagedObjectContext *)context
     return note;
 }
 
+
+//ck : return a note given a name and a context
++ (Note *)noteFromName:(NSString *)name
+inManagedObjectContext:(NSManagedObjectContext *)context
+{
+    Note *note = nil;
+    
+    // request category of title
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    request.entity = [NSEntityDescription entityForName:@"Note" inManagedObjectContext:context];
+    request.predicate = [NSPredicate predicateWithFormat:@"name = %@", name];
+    request.fetchBatchSize = 1;
+    
+    NSError *error = nil;
+    note = [[context executeFetchRequest:request error:&error] lastObject];
+    
+    if (!error && !note) {
+        // no note..
+      //  note = [NSEntityDescription insertNewObjectForEntityForName:@"Note" inManagedObjectContext:context];
+        return nil;
+    }
+    
+    [request release];
+    return note;
+}
+
+
 - (NSString *) getFirstLetter {
     [self willAccessValueForKey:@"firstLetter"];
     NSString *firstLetter = [[self name] substringToIndex:1];

@@ -17,5 +17,10 @@
 
 @property (retain) IBOutlet UIWebView *webView;
 @property (retain) Note *note;
+//adda context for notes, initialize it in appdelegate
+@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
+
+
+- (NSString*) convertURLString: (NSString *) myString ;
 
 @end
