@@ -10,26 +10,49 @@
 
 @synthesize fetchedResultsController;
 @synthesize titleKey, subtitleKey, searchKey;
+//
+@synthesize mySearchBar;
 
 - (void)createSearchBar
 {
 	if (self.searchKey.length) {
 		if (self.tableView && !self.tableView.tableHeaderView) {
-			UISearchBar *searchBar = [[[UISearchBar alloc] init] autorelease];
-			[[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
+	//	if (self.tableView && self.tableView.tableHeaderView) {
+
+	//		UISearchBar *searchBar = [[[UISearchBar alloc] init] autorelease];
+			mySearchBar = [[[UISearchBar alloc] init] autorelease];
+			mySearchBar.delegate = self;
+
+			
+			
+			[[UISearchDisplayController alloc] initWithSearchBar:mySearchBar contentsController:self];
 			self.searchDisplayController.searchResultsDelegate = self;
 			self.searchDisplayController.searchResultsDataSource = self;
 			self.searchDisplayController.delegate = self;
-			searchBar.frame = CGRectMake(0, 0, 0, 38);
-			self.tableView.tableHeaderView = searchBar;
+			mySearchBar.frame = CGRectMake(0, 0, 0, 38);
+			self.tableView.tableHeaderView = mySearchBar;
+			
+			//try to change search button to say 'done'
+			for (UIView *searchBarSubview in [mySearchBar subviews]) {
+				if ([searchBarSubview conformsToProtocol:@protocol(UITextInputTraits)]) {
+					@try {
+						[(UITextField *)searchBarSubview setReturnKeyType:UIReturnKeyDone];
+					}
+					@catch (NSException * e) {
+						// ignore exception
+					}
+				}
+			}
+			
 		}
-	} else {
+	} else { NSLog(@"er... no tableheader view");
 		self.tableView.tableHeaderView = nil;
 	}
 }
 
 - (void)setSearchKey:(NSString *)aKey
 {
+	
 	[searchKey release];
 	searchKey = [aKey copy];
 	[self createSearchBar];
@@ -290,7 +313,22 @@
 {
     [self.tableView endUpdates];
 }
+#pragma mark SearchBarDelegate stuff
+/*
+//these are UISearchBarDelegate
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    // Existing code
+	NSLog(@"cancel button clicked");
+	searchBar.text = @"";
+	//[self searchBar:searchBar activate:NO];
+	[searchBar setHidden:YES];
 
+	
+	[searchBar setShowsCancelButton:NO animated:YES];
+    [searchBar resignFirstResponder];
+	
+	
+}*/
 #pragma mark dealloc
 
 - (void)dealloc
@@ -301,6 +339,7 @@
 	[titleKey release];
 	[currentSearchText release];
 	[normalPredicate release];
+	[mySearchBar release];
     [super dealloc];
 }
 

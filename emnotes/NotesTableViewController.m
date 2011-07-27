@@ -9,6 +9,7 @@
 #import "NotesTableViewController.h"
 #import "NoteViewController.h"
 #import "Note.h"
+#import "CategoryTableViewController.h"
 
 @implementation NotesTableViewController
 
@@ -16,6 +17,7 @@
 //ck : makes default setters and getters..
 @synthesize managedObjectContext;
 
+@synthesize focusSearchBar;
 
 - (void)setupTabBarItem
 {
@@ -33,10 +35,33 @@
     if (self) {
         [self setupTabBarItem];
         self.searchKey = @"name";
+		//
+		
         self.title = self.tabBarItem.title;
         // Custom initialization
+		//NSLog(@"initwstle no params");
+		//focusSearchBar = FALSE;
     }
     return self;
+}
+//ck...place this in init with sytle?
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+        UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(gotoSearch)];
+        self.navigationItem.rightBarButtonItem = editButton;
+        [editButton release];
+        
+    }
+    return self;
+}
+- (void)gotoSearch
+{ 
+ 	[self.mySearchBar becomeFirstResponder];
+
+
 }
 
 - (void)dealloc
@@ -45,6 +70,21 @@
     [super dealloc];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    NSLog(@"view did appear");
+	if (focusSearchBar == TRUE){
+		[self.mySearchBar becomeFirstResponder];
+		NSLog(@"FOCUS IT");
+		//reset it
+		focusSearchBar = FALSE;
+	}
+	
+}
+- (void)viewDidLoad 
+{
+	
+	
+}
 - (void)viewDidUnload
 {
     [super viewDidUnload];
@@ -67,9 +107,11 @@
             cacheName = [NSString stringWithString:category.title];
             sectionName = nil; 
         } else {
+			NSLog(@"init notestableviewcontroller");
             sectionName = @"getFirstLetter";
             cacheName = @"notes";
             request.predicate = nil;
+			 
         }
         
         request.fetchBatchSize = 20;
@@ -85,7 +127,8 @@
         [sortDescriptor release];
         [request release];
         [frc release];
-    }
+		
+     }
     return self;
 }
 
@@ -103,6 +146,23 @@
 {
 	return UITableViewCellAccessoryNone;
 }
+
+#pragma mark SearchBarDelegate stuff
+
+//these are UISearchBarDelegate
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+	// Existing code
+	NSLog(@"cancel button clicked");
+	//[self.view removeFromSuperview]; 
+	
+	[self.navigationController dismissModalViewControllerAnimated:YES];
+	[self.searchDisplayController setActive:NO];
+
+	[self.navigationController popViewControllerAnimated:YES];    
+
+ 	
+}
+
 
 
 @end

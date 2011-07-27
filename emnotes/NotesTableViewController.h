@@ -17,7 +17,7 @@
 //ck add a context
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 
-
+@property BOOL *focusSearchBar;
 - (id)initWithStyle:(UITableViewStyle)style inManagedContext:(NSManagedObjectContext *)context withCategory:(Category *)category;
 
 @end

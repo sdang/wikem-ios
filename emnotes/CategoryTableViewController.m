@@ -17,6 +17,44 @@
 @synthesize managedObjectContext;
 @synthesize notesTableViewController;
 
+
+//ck...place this in init with sytle?
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+        UIBarButtonItem *sButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(gotoSearch)];
+        self.navigationItem.rightBarButtonItem = sButton;
+        [sButton release];
+        
+    }
+    return self;
+}
+- (void)gotoSearch
+{ 
+	
+	
+    NotesTableViewController *noteTableViewController = [[NotesTableViewController alloc] initWithStyle:UITableViewStylePlain 
+                                                                                       inManagedContext:[self.fetchedResultsController managedObjectContext] 
+														         withCategory:nil];
+    //set the noteTableView to focus
+	noteTableViewController.focusSearchBar = TRUE;
+	self.notesTableViewController = noteTableViewController;
+    [self.navigationController pushViewController:noteTableViewController animated:YES];
+    [noteTableViewController release];
+ 
+}
+
+
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    // Existing code
+	self.searchKey = nil;
+
+ }
+
+
 - (id)initWithStyle:(UITableViewStyle)style inManagedContext:(NSManagedObjectContext *)context
 {
     if ((self = [self initWithStyle:style])) {
@@ -31,7 +69,7 @@
                                            initWithFetchRequest:request
                                            managedObjectContext:context
                                            sectionNameKeyPath:nil 
-                                     //      cacheName:@"categories"];
+                                     //      cacheName:@"categories"]; 
 										   cacheName:nil];
         
         self.fetchedResultsController = frc;
@@ -59,7 +97,7 @@
                           initWithTitle:@"Categories"
                           image:[UIImage imageNamed:@"33-cabinet.png"]
                           tag:0];
-    self.searchKey = @"title";
+   // self.searchKey = @"title";
     self.tabBarItem = item;
     [item release];
 }

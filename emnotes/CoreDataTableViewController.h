@@ -7,7 +7,7 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 
-@interface CoreDataTableViewController : UITableViewController <NSFetchedResultsControllerDelegate, UISearchDisplayDelegate>
+@interface CoreDataTableViewController : UITableViewController <NSFetchedResultsControllerDelegate, UISearchDisplayDelegate, UISearchBarDelegate>
 {
 	NSPredicate *normalPredicate;
 	NSString *currentSearchText;
@@ -26,6 +26,8 @@
 @property (copy) NSString *subtitleKey;
 // key to use when searching the table (should usually be the same as displayKey); if nil, no searching allowed
 @property (copy) NSString *searchKey;
+
+@property (copy) UISearchBar *mySearchBar;
 
 // gets accessory type (e.g. disclosure indicator) for the given managedObject (default DisclosureIndicator)
 - (UITableViewCellAccessoryType)accessoryTypeForManagedObject:(NSManagedObject *)managedObject;

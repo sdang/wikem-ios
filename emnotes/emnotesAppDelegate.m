@@ -167,7 +167,8 @@
 - (void)awakeFromNib
 {
     /*
-     Typically you should set up the Core Data stack here, usually by passing the managed object context to the first view controller.
+     Typically you should set up the Core Data stack here, 
+	 usually by passing the managed object context to the first view controller.
      self.<#View controller#>.managedObjectContext = self.managedObjectContext;
     */
 }
