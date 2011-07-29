@@ -16,6 +16,7 @@
 #import "Note.h"
 //add import now that we alloc a context
 #import "NoteViewController.h"
+#import "MyTabBarController.h"
 
 @implementation emnotesAppDelegate
 
@@ -85,7 +86,9 @@
     updateViewController.persistentStoreCoordinator = self.persistentStoreCoordinator;
     self.uVC = updateViewController;
     
-    self.tabBar = [[UITabBarController alloc] init];
+   // self.tabBar = [[UITabBarController alloc] init];
+	 self.tabBar = [[MyTabBarController alloc] init];
+
     self.tabBar.delegate = self;
     
     tabBar.viewControllers = [NSArray arrayWithObjects:categoriesNavCon, allNotesNavCon, personalNotesNavCon, updateViewController, nil];
@@ -116,6 +119,8 @@
         [(UINavigationController *)viewController popToRootViewControllerAnimated:NO];
     }
 }
+
+ 
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {

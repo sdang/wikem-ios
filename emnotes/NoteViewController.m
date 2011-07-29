@@ -22,6 +22,9 @@
 		[webView setDelegate:self]
 		 }return self;
 }*/
+
+ 
+
 - (void)editNote
 {
     
@@ -185,7 +188,8 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    //return (interfaceOrientation == UIInterfaceOrientationPortrait);
+	return YES;
 }
 
 //unescape these url encoded characters

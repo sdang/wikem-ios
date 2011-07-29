@@ -108,7 +108,12 @@
     if (self) {
         // Custom initialization
         [self setupTabBarItem];
-        self.title = self.tabBarItem.title;
+		//[NSString stringWithFormat:@"%@/%@/%@", three, two, one];
+
+		NSString *wikem = @"WikEM ";
+		NSString *titlestring = self.tabBarItem.title;
+		
+        self.title = [NSString stringWithFormat:@"%@%@", wikem, titlestring];
     }
     return self;
 }
