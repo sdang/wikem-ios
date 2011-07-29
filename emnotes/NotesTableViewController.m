@@ -120,8 +120,8 @@
                                            initWithFetchRequest:request
                                            managedObjectContext:context
                                            sectionNameKeyPath:sectionName
-                                           cacheName:cacheName];
-										  // cacheName:nil];
+                                        //   cacheName:cacheName];
+										   cacheName:nil];
         
         self.fetchedResultsController = frc;
         [sortDescriptor release];
@@ -131,6 +131,15 @@
      }
     return self;
 }
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    // Return YES for supported orientations
+    //return (interfaceOrientation == UIInterfaceOrientationPortrait);
+	return YES;
+}
+
+
 
 - (void)managedObjectSelected:(NSManagedObject *)managedObject
 { 

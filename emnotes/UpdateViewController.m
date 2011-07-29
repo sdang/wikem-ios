@@ -322,7 +322,7 @@
 - (void)addNoteFromXMLElement:(TBXMLElement *)subElement context:(NSManagedObjectContext *)managedObjectContext
 
 {	NSString *thename = [NSString stringWithString: [TBXML textForElement:[TBXML childElementNamed:@"name" parentElement:subElement]]];
-    NSLog(thename);
+   // NSLog(thename);
     
 
 
@@ -581,6 +581,24 @@ inManagedObjectContext:managedObjectContext];
         [self animateInUpdaterButton];
     }
 }
+- (void)viewWillAppear:(BOOL)animated{
+	
+	UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+	
+	if (orientation == UIDeviceOrientationLandscapeLeft) {
+		[self.view setTransform:CGAffineTransformMakeRotation(M_PI/-2.0)];
+	} else if (orientation == UIDeviceOrientationLandscapeRight) {
+		[self.view setTransform:CGAffineTransformMakeRotation(M_PI/2.0)];
+	}
+	
+	else if (orientation == UIDeviceOrientationPortraitUpsideDown) {
+		[self.view setTransform:CGAffineTransformMakeRotation(M_PI)];
+	} else if (orientation == UIDeviceOrientationPortrait) {
+		[self.view setTransform:CGAffineTransformMakeRotation(0.0)];
+	}
+	
+
+}
 
 - (void)viewDidAppear:(BOOL)animated {
     
@@ -628,7 +646,8 @@ inManagedObjectContext:managedObjectContext];
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return NO; 
+	//return (interfaceOrientation != UIInterfaceOrientationPortrait);
 }
 
 @end

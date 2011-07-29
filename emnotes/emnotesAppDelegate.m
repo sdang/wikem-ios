@@ -88,11 +88,11 @@
     
    // self.tabBar = [[UITabBarController alloc] init];
 	 self.tabBar = [[MyTabBarController alloc] init];
-
+ 	
     self.tabBar.delegate = self;
     
     tabBar.viewControllers = [NSArray arrayWithObjects:categoriesNavCon, allNotesNavCon, personalNotesNavCon, updateViewController, nil];
-    
+ 
     [categoriesNavCon release];
     [allNotesNavCon release];
     [personalNotesNavCon release];
@@ -118,6 +118,19 @@
     if ([viewController isKindOfClass:[UINavigationController class]]) {
         [(UINavigationController *)viewController popToRootViewControllerAnimated:NO];
     }
+	
+	
+	
+		NSUInteger indexOfTab = [tabBarController.viewControllers indexOfObject:viewController];
+		NSLog(@"Tab index = %u (%u)", indexOfTab);
+	if(indexOfTab ==3){ //ie we are in update view. try force portrait only
+		tabBar.dontrotate = TRUE;
+		
+	}else{
+		tabBar.dontrotate = FALSE;
+	}
+	
+	
 }
 
  

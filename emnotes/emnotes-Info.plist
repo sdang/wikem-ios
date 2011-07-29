@@ -87,6 +87,7 @@ li li li {
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
+		<string></string>
 	</array>
 	<key>UTExportedTypeDeclarations</key>
 	<array/>

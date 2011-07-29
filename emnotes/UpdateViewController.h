@@ -40,6 +40,8 @@
 @property (assign) BOOL ranInitialSetup;
 @property (assign) BOOL displayingLicense;
 
+
+
 - (void)userDidAcceptLicense:(BOOL)status;
 - (IBAction)clearWikEMData;
 - (IBAction)parseXMLDatabaseFile;
