@@ -118,7 +118,7 @@
 		//todo decode
 		
 		//get the note with the title of link... if it exists. 
-		Note* newNote = [Note noteFromName:convertedString inManagedObjectContext:managedObjectContext ]; 
+		Note* newNote = [self noteFromName:convertedString inManagedObjectContext:managedObjectContext ]; 
 		
 		
 		
@@ -219,4 +219,29 @@
 	
     return [temp autorelease];
 }
+
+- (Note *)noteFromName:(NSString *)name
+inManagedObjectContext:(NSManagedObjectContext *)context
+{
+    Note *note = nil;
+    
+    // request category of title
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    request.entity = [NSEntityDescription entityForName:@"Note" inManagedObjectContext:context];
+    request.predicate = [NSPredicate predicateWithFormat:@"name = %@", name];
+    request.fetchBatchSize = 1;
+    
+    NSError *error = nil;
+    note = [[context executeFetchRequest:request error:&error] lastObject];
+    
+    if (!error && !note) {
+        // no note..
+		//  note = [NSEntityDescription insertNewObjectForEntityForName:@"Note" inManagedObjectContext:context];
+        return nil;
+    }
+    
+    [request release];
+    return note;
+}
+
 @end

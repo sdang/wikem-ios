@@ -311,7 +311,8 @@
 
     NSDictionary *infoFileContents = nil;
     if (size && lastUpdate) {
-        infoFileContents = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:size], @"size", [NSNumber numberWithInt:lastUpdate], @"lastUpdate", nil];
+        infoFileContents = 
+		[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:size], @"size", [NSNumber numberWithInt:lastUpdate], @"lastUpdate", nil];
     } 
     
     return infoFileContents;
@@ -319,15 +320,31 @@
 
 
 - (void)addNoteFromXMLElement:(TBXMLElement *)subElement context:(NSManagedObjectContext *)managedObjectContext
-{
-    NSString *content = [NSString stringWithString:[TBXML textForElement:[TBXML childElementNamed:@"content" parentElement:subElement]]];
-    NSSet *categories = [NSSet setWithObject:[Category categoryWithTitle:[TBXML textForElement:[TBXML childElementNamed:@"folder" parentElement:subElement]] inManagedObjectContext:managedObjectContext]];
-    if (![[categories anyObject] isKindOfClass:[Category class]]) {
-        NSLog(@"Found a note without a category");
-        categories = [NSSet setWithObject:[Category categoryWithTitle:@"Uncategorized" inManagedObjectContext:managedObjectContext]];
-    }
+
+{	NSString *thename = [NSString stringWithString: [TBXML textForElement:[TBXML childElementNamed:@"name" parentElement:subElement]]];
+    NSLog(thename);
     
-    [Note noteWithName:[TBXML textForElement:[TBXML childElementNamed:@"name" parentElement:subElement]]
+
+
+NSString *content = [NSString stringWithString:[TBXML textForElement:[TBXML childElementNamed:@"content" parentElement:subElement]]];
+	NSSet *categories = [NSSet setWithObject:[Category categoryWithTitle:@"Uncategorized" inManagedObjectContext:managedObjectContext]];
+
+	@try
+    {	TBXMLElement *folder = [TBXML childElementNamed:@"folder" parentElement:subElement];
+		if (folder != nil){
+			categories = [NSSet setWithObject:[Category categoryWithTitle:[TBXML textForElement:[TBXML childElementNamed:@"folder" parentElement:subElement]] inManagedObjectContext:managedObjectContext]];
+			if (![[categories anyObject] isKindOfClass:[Category class]]) {
+			NSLog(@"Found a note without a category");
+			categories = [NSSet setWithObject:[Category categoryWithTitle:@"Uncategorized" inManagedObjectContext:managedObjectContext]];
+		}
+		}
+    }
+    @catch(NSException* ex)
+    {
+        NSLog(@"caught exception at addnotefrom xmlelement");
+    }
+
+    [Note noteWithName:thename
                 author:[TBXML textForElement:[TBXML childElementNamed:@"author" parentElement:subElement]]
                content:[content stringByDecodingHTMLEntities]
             lastUpdate:[NSDate date]
@@ -387,6 +404,7 @@ inManagedObjectContext:managedObjectContext];
                 TBXMLElement *subElement = categories->firstChild;
                 do {
                     NSString *title = [NSString stringWithString:[TBXML valueOfAttributeNamed:@"title" forElement:subElement]];
+			//		NSLog(title);
                     [Category categoryWithTitle:title inManagedObjectContext:managedObjectContext];
                 } while ((subElement = subElement->nextSibling));
                 
@@ -394,10 +412,17 @@ inManagedObjectContext:managedObjectContext];
                [self updateProgressBar:0.2 message:@"Updating WikEM Notes"];
                 TBXMLElement *notes = [TBXML childElementNamed:@"pages" parentElement:tbxml.rootXMLElement];
                 subElement = notes->firstChild;
-                float i = 0.0;
-                do {
+                if (subElement ==nil){NSLog("subelement is nil!!!");}
+				
+				float i = 0.0;
+				NSLog(@"ok...now parse notes in do while");
+                do { 
+					NSLog(@"ok...nowinside do while");
+
                     [self addNoteFromXMLElement:subElement context:managedObjectContext];
                     i++;
+					NSLog(@"ok...nowinside do while");
+
                     [self updateProgressBar:(0.8*(i/totalNotes))+0.2 message:@"Updating WikEM Notes"];
                     
                 } while ((subElement = subElement->nextSibling));
@@ -406,6 +431,8 @@ inManagedObjectContext:managedObjectContext];
                 [self disableAllTabBarItems:NO];
                 self.ranInitialSetup = YES;
                 
+				//
+				NSLog(@"asldkjflaskdjfalskfjd");
                 NSUserDefaults *prefsThread = [NSUserDefaults standardUserDefaults];
                 [prefsThread setInteger:[[NSDate date] timeIntervalSince1970] forKey:@"lastDatabaseUpdate"];
                 [prefsThread setInteger:databaseGenerationTime forKey:@"lastDatabaseGenerationTime"];

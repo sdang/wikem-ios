@@ -120,8 +120,8 @@
                                            initWithFetchRequest:request
                                            managedObjectContext:context
                                            sectionNameKeyPath:sectionName
-                                        //   cacheName:cacheName];
-										   cacheName:nil];
+                                           cacheName:cacheName];
+										  // cacheName:nil];
         
         self.fetchedResultsController = frc;
         [sortDescriptor release];
@@ -157,7 +157,7 @@
 	
 	[self.navigationController dismissModalViewControllerAnimated:YES];
 	[self.searchDisplayController setActive:NO];
-
+//need this or crash
 	[self.navigationController popViewControllerAnimated:YES];    
 
  	
