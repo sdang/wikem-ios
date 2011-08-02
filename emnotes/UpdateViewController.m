@@ -262,6 +262,7 @@
 - (NSDictionary *)checkUpdateAvailable
 {
     NSDictionary *infoFileContents = [self parseXMLInfoFile];
+	BOOL *imagesAvailable = [self parseXMLImagesFile];
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     
     
@@ -288,6 +289,55 @@
         [self updateAvailable:NO];
         return [NSDictionary dictionaryWithObject:@"" forKey:@"size"];
     }
+}
+
+//@"images_url", parse to save images
+// TODO: go through xml and only write if file doesn't exist. 
+//will need directions to use distinct file names on upload at wikem.org
+- (BOOL *)parseXMLImagesFile {
+	NSFileManager* filemanager = [NSFileManager defaultManager];
+	//get the path of current users documents folder for read/write
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory , NSUserDomainMask, YES);
+	NSString* documentsDir = [paths objectAtIndex:0];
+	
+	if (![filemanager isReadableFileAtPath:documentsDir] || ![filemanager isWritableFileAtPath:documentsDir]) 
+	{NSLog(@"uh oh. documents path is either not readable and/or writeable");
+		return FALSE;
+	}
+    NSString *imagesFile = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"images_url"];
+	NSURL *theURL = [NSURL URLWithString:imagesFile];
+    NSString *content = [NSString stringWithContentsOfURL:theURL encoding:NSUTF8StringEncoding error:NULL];
+	
+    
+    TBXML *tbxml = [TBXML tbxmlWithXMLString:content]; 
+   TBXMLElement *query = [TBXML childElementNamed:@"query" parentElement:tbxml.rootXMLElement];
+	TBXMLElement *allimages = query->firstChild;
+	TBXMLElement *subElement = allimages->firstChild;
+	if (subElement ==nil){NSLog(@"subelement is nil!!!");}
+//for some sort of progressbar for images	
+	float i = 0.0;
+	NSString *name;
+	NSString *url;
+		
+	NSLog(@"ok...now parse images in do while");	
+ 
+	do { 
+		NSLog(@"ok...nowinside do while");
+		name = [TBXML valueOfAttributeNamed:@"name" forElement:subElement];  	
+		url =  [TBXML valueOfAttributeNamed:@"url" forElement:subElement]; 
+		
+		//save the image if it already doesn't exist
+		if (![filemanager fileExistsAtPath:documentsDir]){
+			NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+			UIImage *theImage = [UIImage imageWithData:imageData];
+			[filemanager createFileAtPath:documentsDir contents:imageData attributes:nil];
+			i++;//some sort of progress bar later?
+  		}
+		else{ NSLog(@"?file already exists?");
+		}
+	} while ((subElement = subElement->nextSibling));
+	
+	return TRUE;	 
 }
 
 - (NSDictionary *)parseXMLInfoFile {
@@ -412,7 +462,7 @@ inManagedObjectContext:managedObjectContext];
                [self updateProgressBar:0.2 message:@"Updating WikEM Notes"];
                 TBXMLElement *notes = [TBXML childElementNamed:@"pages" parentElement:tbxml.rootXMLElement];
                 subElement = notes->firstChild;
-                if (subElement ==nil){NSLog("subelement is nil!!!");}
+                if (subElement ==nil){NSLog(@"subelement is nil!!!");}
 				
 				float i = 0.0;
 				NSLog(@"ok...now parse notes in do while");
@@ -601,7 +651,7 @@ inManagedObjectContext:managedObjectContext];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    
+    // TODO: make welcome screen explaining update stuff 
     if (!self.ranInitialSetup && !self.displayingLicense) {
         [self disableAllTabBarItems:YES];
         self.licenseViewController = [[AcceptLicense alloc] init];

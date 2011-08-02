@@ -41,6 +41,8 @@
 	<string>http://www.wikem.org/w/index.php?title=%@&amp;action=edit</string>
 	<key>base_url</key>
 	<string>http://www.wikem.org</string>
+	<key>images_url</key>
+	<string>http://www.wikem.org/w/api.php?action=query&amp;prop=images&amp;list=allimages&amp;ailimit=500&amp;format=xml</string>
 	<key>link_base_url</key>
 	<string>/wiki/</string>
 	<key>head_css_string</key>
