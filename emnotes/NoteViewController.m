@@ -89,24 +89,33 @@
 		
 		//a link was clicked, intercept it...unfortunately, no nsurlrequest.method for getting the title="bla" attribute
 		//so will need to process string before trying to search->return a note with given name
+		
+ 		//get the path of current users documents folder for read/write
+	//	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory , NSUserDomainMask, YES);
+	////	NSString* documentsDir = [paths objectAtIndex:0];
+		
 		NSURL *url = request.URL;
 		NSString *urlString = url.absoluteString;
+		//NSLog(@"docdir is:");
 		NSLog(urlString);
 		// remove baseurl, which was needed to load images
-		NSString *myString = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"base_url"];
-		NSString *myString2 = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"link_base_url"];
+	//	NSString *myString = [[[NSBundle mainBundle] infoDictionary] objectForKey:documentsDir];
+	/*	NSString *myString2 = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"link_base_url"];
 
-		urlString = [urlString stringByReplacingOccurrencesOfString:myString
+		urlString = [urlString stringByReplacingOccurrencesOfString:documentsDir
 											 withString:@""];
 		NSLog(urlString);
 		
 		urlString = [urlString stringByReplacingOccurrencesOfString:myString2
 														 withString:@""];
 		NSLog(urlString);
+*/
+//from appledocs use		NSString *documentFilename = [documentPath lastPathComponent];
+		NSString *imagefilestring = [urlString lastPathComponent];
+		NSLog(imagefilestring);
 
-		
 		//convert encoded characters in the link
-		NSString *convertedString = [self convertURLString:urlString];
+		NSString *convertedString = [self convertURLString:imagefilestring];
 		NSLog(convertedString);
 
 		//get a note with this name
@@ -166,12 +175,47 @@
 //what is the url ?? ck
 	NSLog(@"wth is the url anyways??????");
 	
+	//ck instead of baseurl as www.wikem... will try native images using local url
+ 	//get the path of current users documents folder for read/write
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory , NSUserDomainMask, YES);
+	NSString* imagePath = [paths objectAtIndex:0];
+	
+	NSLog(imagePath);
+	/*
+	 TODO : remove. test code
+	 */
+	NSFileManager* fileManager = [NSFileManager defaultManager];
+		//NSString* wikipath = [documentsDir stringByAppendingString:@"/wiki/"];
+
+	for (NSString* fileName in [fileManager contentsOfDirectoryAtPath:imagePath error:nil]) {
+		NSLog(fileName);
+	}
+	
+	
+	
 //baseurl now loaded, assuming inernet connection can get images 
-	NSString *myString = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"base_url"];
-	NSURL *testURL = [NSURL URLWithString:myString];
+//	NSString *myString = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"base_url"];
+	NSURL *testURL = [NSURL fileURLWithPath:imagePath];
+	
+	webView.dataDetectorTypes = UIDataDetectorTypeLink;
+	
+	
+	
+	NSURL *url = [NSURL URLWithString: [imagePath lastPathComponent] relativeToURL: [NSURL fileURLWithPath: [imagePath stringByDeletingLastPathComponent] isDirectory: YES]];
+
+	
+	imagePath = [imagePath stringByReplacingOccurrencesOfString:@"/" withString:@"//"];
+	imagePath = [imagePath stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+
+	NSLog(imagePath);
+	
+	
+	
 	//as baseURL changes, need to add css as a string...not as a 'link'
-    [webView loadHTMLString:[self.note formattedContent] baseURL:testURL]; //instead of resourceBaseURL
-    self.title = self.note.name;
+    [webView loadHTMLString:[self.note formattedContent] baseURL:testURL];
+		//[NSURL URLWithString:[NSString stringWithFormat:@"file:/%@//",imagePath]]];
+	 
+	 self.title = self.note.name;
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 }

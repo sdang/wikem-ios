@@ -304,6 +304,21 @@
 	{NSLog(@"uh oh. documents path is either not readable and/or writeable");
 		return FALSE;
 	}
+	
+	[filemanager changeCurrentDirectoryPath: documentsDir];
+
+	/*NSString *wikipath = [documentsDir stringByAppendingString:@"/wiki/"];
+	NSLog(@"appendingstring?:");
+	NSLog(wikipath);
+		//check if wiki dir exists
+		if (![filemanager fileExistsAtPath:@"wiki/"])
+		{
+		//if not create one
+			[filemanager createDirectoryAtPath:@"wiki" withIntermediateDirectories:YES attributes:nil error:nil];
+		}
+	[filemanager changeCurrentDirectoryPath: wikipath];
+	 
+	*/
     NSString *imagesFile = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"images_url"];
 	NSURL *theURL = [NSURL URLWithString:imagesFile];
     NSString *content = [NSString stringWithContentsOfURL:theURL encoding:NSUTF8StringEncoding error:NULL];
@@ -326,11 +341,15 @@
 		name = [TBXML valueOfAttributeNamed:@"name" forElement:subElement];  	
 		url =  [TBXML valueOfAttributeNamed:@"url" forElement:subElement]; 
 		
-		//save the image if it already doesn't exist
-		if (![filemanager fileExistsAtPath:documentsDir]){
+		//save the image if it already doesn't exist, but first check the path
+	//	NSString *temppath = [NSString stringWithFormat:@"%@/%@", wikipath, url];
+		NSString *temppath = [documentsDir stringByAppendingString:name];
+		NSLog(temppath);
+
+		if (![filemanager fileExistsAtPath:temppath]){
 			NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
-			UIImage *theImage = [UIImage imageWithData:imageData];
-			[filemanager createFileAtPath:documentsDir contents:imageData attributes:nil];
+		//	UIImage *theImage = [UIImage imageWithData:imageData];
+			[filemanager createFileAtPath:name contents:imageData attributes:nil];
 			i++;//some sort of progress bar later?
   		}
 		else{ NSLog(@"?file already exists?");
@@ -465,13 +484,10 @@ inManagedObjectContext:managedObjectContext];
                 if (subElement ==nil){NSLog(@"subelement is nil!!!");}
 				
 				float i = 0.0;
-				NSLog(@"ok...now parse notes in do while");
                 do { 
-					NSLog(@"ok...nowinside do while");
 
                     [self addNoteFromXMLElement:subElement context:managedObjectContext];
                     i++;
-					NSLog(@"ok...nowinside do while");
 
                     [self updateProgressBar:(0.8*(i/totalNotes))+0.2 message:@"Updating WikEM Notes"];
                     
@@ -481,8 +497,7 @@ inManagedObjectContext:managedObjectContext];
                 [self disableAllTabBarItems:NO];
                 self.ranInitialSetup = YES;
                 
-				//
-				NSLog(@"asldkjflaskdjfalskfjd");
+				
                 NSUserDefaults *prefsThread = [NSUserDefaults standardUserDefaults];
                 [prefsThread setInteger:[[NSDate date] timeIntervalSince1970] forKey:@"lastDatabaseUpdate"];
                 [prefsThread setInteger:databaseGenerationTime forKey:@"lastDatabaseGenerationTime"];
