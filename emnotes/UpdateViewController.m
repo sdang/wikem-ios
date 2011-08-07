@@ -262,7 +262,7 @@
 - (NSDictionary *)checkUpdateAvailable
 {
     NSDictionary *infoFileContents = [self parseXMLInfoFile];
-	BOOL *imagesAvailable = [self parseXMLImagesFile];
+	//bool *imagesAvailable = [self parseXMLImagesFile];
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     
     
@@ -294,7 +294,7 @@
 //@"images_url", parse to save images
 // TODO: go through xml and only write if file doesn't exist. 
 //will need directions to use distinct file names on upload at wikem.org
-- (BOOL *)parseXMLImagesFile {
+- (bool *)parseXMLImagesFile {
 	NSFileManager* filemanager = [NSFileManager defaultManager];
 	//get the path of current users documents folder for read/write
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory , NSUserDomainMask, YES);
@@ -302,23 +302,11 @@
 	
 	if (![filemanager isReadableFileAtPath:documentsDir] || ![filemanager isWritableFileAtPath:documentsDir]) 
 	{NSLog(@"uh oh. documents path is either not readable and/or writeable");
-		return FALSE;
+		return false;
 	}
-	
+	//changing documents allows us to just use the filename and not worry about appending paths
 	[filemanager changeCurrentDirectoryPath: documentsDir];
 
-	/*NSString *wikipath = [documentsDir stringByAppendingString:@"/wiki/"];
-	NSLog(@"appendingstring?:");
-	NSLog(wikipath);
-		//check if wiki dir exists
-		if (![filemanager fileExistsAtPath:@"wiki/"])
-		{
-		//if not create one
-			[filemanager createDirectoryAtPath:@"wiki" withIntermediateDirectories:YES attributes:nil error:nil];
-		}
-	[filemanager changeCurrentDirectoryPath: wikipath];
-	 
-	*/
     NSString *imagesFile = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"images_url"];
 	NSURL *theURL = [NSURL URLWithString:imagesFile];
     NSString *content = [NSString stringWithContentsOfURL:theURL encoding:NSUTF8StringEncoding error:NULL];
@@ -334,29 +322,24 @@
 	NSString *name;
 	NSString *url;
 		
-	NSLog(@"ok...now parse images in do while");	
- 
+  
 	do { 
-		NSLog(@"ok...nowinside do while");
-		name = [TBXML valueOfAttributeNamed:@"name" forElement:subElement];  	
+ 		name = [TBXML valueOfAttributeNamed:@"name" forElement:subElement];  	
 		url =  [TBXML valueOfAttributeNamed:@"url" forElement:subElement]; 
 		
 		//save the image if it already doesn't exist, but first check the path
-	//	NSString *temppath = [NSString stringWithFormat:@"%@/%@", wikipath, url];
-		NSString *temppath = [documentsDir stringByAppendingString:name];
-		NSLog(temppath);
-
+  
 		if ([filemanager fileExistsAtPath:name] == NO){
 			NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
-		//	UIImage *theImage = [UIImage imageWithData:imageData];
-			[filemanager createFileAtPath:name contents:imageData attributes:nil];
+ 			[filemanager createFileAtPath:name contents:imageData attributes:nil];
 			i++;//some sort of progress bar later?
+			NSLog(@"created image file");
   		}
-		else{ NSLog(@"?file already exists?");
+		else{ NSLog(@"file already exists?");
 		}
 	} while ((subElement = subElement->nextSibling));
 	
-	return TRUE;	 
+	return false;	 
 }
 
 - (NSDictionary *)parseXMLInfoFile {
@@ -391,23 +374,22 @@
 - (void)addNoteFromXMLElement:(TBXMLElement *)subElement context:(NSManagedObjectContext *)managedObjectContext
 
 {	NSString *thename = [NSString stringWithString: [TBXML textForElement:[TBXML childElementNamed:@"name" parentElement:subElement]]];
-   // NSLog(thename);
     
 
 
-NSString *content = [NSString stringWithString:[TBXML textForElement:[TBXML childElementNamed:@"content" parentElement:subElement]]];
+	NSString *content = [NSString stringWithString:[TBXML textForElement:[TBXML childElementNamed:@"content" parentElement:subElement]]];
 	NSSet *categories = [NSSet setWithObject:[Category categoryWithTitle:@"Uncategorized" inManagedObjectContext:managedObjectContext]];
 
 	@try
     {	TBXMLElement *folder = [TBXML childElementNamed:@"folder" parentElement:subElement];
 		if (folder != nil){
-	//		NSString *folderText = [TBXML textForElement:folder];
-	//		NSArray *chunks = [folderText componentsSeparatedByString: @"|"];
+			NSString *folderText = [TBXML textForElement:folder];
+			NSArray *chunks = [folderText componentsSeparatedByString: @"|"];
 			categories = [NSSet setWithObject:[Category categoryWithTitle:[TBXML textForElement:[TBXML childElementNamed:@"folder" parentElement:subElement]] inManagedObjectContext:managedObjectContext]];
 			if (![[categories anyObject] isKindOfClass:[Category class]]) {
-			NSLog(@"Found a note without a category");
+			NSLog(@"Found a note with a foldertag and empty..no  category");
 			categories = [NSSet setWithObject:[Category categoryWithTitle:@"Uncategorized" inManagedObjectContext:managedObjectContext]];
-		}
+			}
 		}
     }
     @catch(NSException* ex)
@@ -447,6 +429,7 @@ inManagedObjectContext:managedObjectContext];
         
         [self updateProgressBar:0.0 message:@"Downloading WikEM Database"];
         
+
         NSManagedObjectContext *managedObjectContext = [[[NSManagedObjectContext alloc] init] autorelease];
         [managedObjectContext setPersistentStoreCoordinator:self.persistentStoreCoordinator];
         NSLog(@"Running parse xml");
@@ -494,6 +477,10 @@ inManagedObjectContext:managedObjectContext];
                     [self updateProgressBar:(0.8*(i/totalNotes))+0.2 message:@"Updating WikEM Notes"];
                     
                 } while ((subElement = subElement->nextSibling));
+				//almost done
+				[self updateProgressBar:1 message:@"Downloading Images"];
+				[self parseXMLImagesFile];
+
                 [self updateProgressBar:1 message:@"Done"];
                 [managedObjectContext save:nil];
                 [self disableAllTabBarItems:NO];
@@ -511,6 +498,7 @@ inManagedObjectContext:managedObjectContext];
         }
     });
     dispatch_release(parseQueue);
+
 }
 
 - (IBAction)clearWikEMData
