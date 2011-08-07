@@ -172,26 +172,11 @@
         managedObjectContext = [(emnotesAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext]; 
         NSLog(@"After managedObjectContext: %@",  managedObjectContext);
 	}
-//what is the url ?? ck
-	NSLog(@"wth is the url anyways??????");
 	
 	//ck instead of baseurl as www.wikem... will try native images using local url
  	//get the path of current users documents folder for read/write
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory , NSUserDomainMask, YES);
 	NSString* imagePath = [paths objectAtIndex:0];
-	
-//	NSLog(imagePath);
-	/*
-	 TODO : remove. test code
-	 */
-	NSFileManager* fileManager = [NSFileManager defaultManager];
-		//NSString* wikipath = [documentsDir stringByAppendingString:@"/wiki/"];
-
-	 
-	
-	
-//baseurl now loaded, assuming inernet connection can get images 
-//	NSString *myString = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"base_url"];
 	NSURL *testURL = [NSURL fileURLWithPath:imagePath];
 	
 	webView.dataDetectorTypes = UIDataDetectorTypeLink;

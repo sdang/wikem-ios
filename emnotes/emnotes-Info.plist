@@ -34,7 +34,7 @@
 	<key>CFBundleVersion</key>
 	<string>2.0</string>
 	<key>database_url</key>
-	<string>http://dl.wikem.org/files/db-update.xml</string>
+	<string>http://dl.wikem.org/files/test.xml</string>
 	<key>info_url</key>
 	<string>http://dl.wikem.org/files/info.xml</string>
 	<key>edit_note_url</key>

@@ -290,10 +290,7 @@
         return [NSDictionary dictionaryWithObject:@"" forKey:@"size"];
     }
 }
-
-//@"images_url", parse to save images
-// TODO: go through xml and only write if file doesn't exist. 
-//will need directions to use distinct file names on upload at wikem.org
+ 
 - (bool *)parseXMLImagesFile {
 	NSFileManager* filemanager = [NSFileManager defaultManager];
 	//get the path of current users documents folder for read/write
@@ -385,7 +382,20 @@
 		if (folder != nil){
 			NSString *folderText = [TBXML textForElement:folder];
 			NSArray *chunks = [folderText componentsSeparatedByString: @"|"];
-			categories = [NSSet setWithObject:[Category categoryWithTitle:[TBXML textForElement:[TBXML childElementNamed:@"folder" parentElement:subElement]] inManagedObjectContext:managedObjectContext]];
+			
+			NSMutableArray *array = [[NSMutableArray alloc] init ];
+		//	Category *categoryObjects[[chunks count]];
+		//	int i =0;
+			for (id object in chunks) {
+				NSLog(object);
+				[array addObject:  [Category categoryWithTitle:object inManagedObjectContext:managedObjectContext]];
+
+			}
+ 			
+			categories = [NSSet setWithArray:array];
+			[array release]; //crash?
+			
+			//categories = [NSSet setWithObject:[Category categoryWithTitle:[TBXML textForElement:[TBXML childElementNamed:@"folder" parentElement:subElement]] inManagedObjectContext:managedObjectContext]];
 			if (![[categories anyObject] isKindOfClass:[Category class]]) {
 			NSLog(@"Found a note with a foldertag and empty..no  category");
 			categories = [NSSet setWithObject:[Category categoryWithTitle:@"Uncategorized" inManagedObjectContext:managedObjectContext]];
@@ -477,7 +487,7 @@ inManagedObjectContext:managedObjectContext];
                     [self updateProgressBar:(0.8*(i/totalNotes))+0.2 message:@"Updating WikEM Notes"];
                     
                 } while ((subElement = subElement->nextSibling));
-				//almost done
+				//TODO : still don't know why no access to images first time... then works second update
 				[self updateProgressBar:1 message:@"Downloading Images"];
 				[self parseXMLImagesFile];
 
