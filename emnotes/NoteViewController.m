@@ -180,17 +180,14 @@
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory , NSUserDomainMask, YES);
 	NSString* imagePath = [paths objectAtIndex:0];
 	
-	NSLog(imagePath);
+//	NSLog(imagePath);
 	/*
 	 TODO : remove. test code
 	 */
 	NSFileManager* fileManager = [NSFileManager defaultManager];
 		//NSString* wikipath = [documentsDir stringByAppendingString:@"/wiki/"];
 
-	for (NSString* fileName in [fileManager contentsOfDirectoryAtPath:imagePath error:nil]) {
-		NSLog(fileName);
-	}
-	
+	 
 	
 	
 //baseurl now loaded, assuming inernet connection can get images 
@@ -200,15 +197,13 @@
 	webView.dataDetectorTypes = UIDataDetectorTypeLink;
 	
 	
-	
+	/* these steps recommeneded for old sdk. completely unnecessary. 
+	 Just make sure use fileURLWithPath NOT URL from string.
 	NSURL *url = [NSURL URLWithString: [imagePath lastPathComponent] relativeToURL: [NSURL fileURLWithPath: [imagePath stringByDeletingLastPathComponent] isDirectory: YES]];
-
-	
-	imagePath = [imagePath stringByReplacingOccurrencesOfString:@"/" withString:@"//"];
+	 imagePath = [imagePath stringByReplacingOccurrencesOfString:@"/" withString:@"//"];
 	imagePath = [imagePath stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
-
-	NSLog(imagePath);
-	
+	 NSLog(imagePath);
+	*/
 	
 	
 	//as baseURL changes, need to add css as a string...not as a 'link'
@@ -271,7 +266,7 @@
 - (Note *)noteFromName:(NSString *)name
 inManagedObjectContext:(NSManagedObjectContext *)context
 {
-    Note *note = nil;
+    Note *note2 = nil;
     
     // request category of title
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -280,16 +275,16 @@ inManagedObjectContext:(NSManagedObjectContext *)context
     request.fetchBatchSize = 1;
     
     NSError *error = nil;
-    note = [[context executeFetchRequest:request error:&error] lastObject];
+    note2 = [[context executeFetchRequest:request error:&error] lastObject];
     
-    if (!error && !note) {
+    if (!error && !note2) {
         // no note..
 		//  note = [NSEntityDescription insertNewObjectForEntityForName:@"Note" inManagedObjectContext:context];
         return nil;
     }
     
     [request release];
-    return note;
+    return note2;
 }
 
 @end

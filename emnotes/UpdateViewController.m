@@ -346,7 +346,7 @@
 		NSString *temppath = [documentsDir stringByAppendingString:name];
 		NSLog(temppath);
 
-		if (![filemanager fileExistsAtPath:temppath]){
+		if ([filemanager fileExistsAtPath:name] == NO){
 			NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
 		//	UIImage *theImage = [UIImage imageWithData:imageData];
 			[filemanager createFileAtPath:name contents:imageData attributes:nil];
@@ -401,6 +401,8 @@ NSString *content = [NSString stringWithString:[TBXML textForElement:[TBXML chil
 	@try
     {	TBXMLElement *folder = [TBXML childElementNamed:@"folder" parentElement:subElement];
 		if (folder != nil){
+	//		NSString *folderText = [TBXML textForElement:folder];
+	//		NSArray *chunks = [folderText componentsSeparatedByString: @"|"];
 			categories = [NSSet setWithObject:[Category categoryWithTitle:[TBXML textForElement:[TBXML childElementNamed:@"folder" parentElement:subElement]] inManagedObjectContext:managedObjectContext]];
 			if (![[categories anyObject] isKindOfClass:[Category class]]) {
 			NSLog(@"Found a note without a category");
