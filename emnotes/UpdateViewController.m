@@ -14,6 +14,10 @@
 #import "AcceptLicense.h"
 #import "AboutWikemViewController.h"
 
+//ck
+#import "NoteViewController.h"
+#import "VariableStore.h"
+
 @implementation UpdateViewController
 @synthesize currentDatabaseCreatedLabel;
 @synthesize lastUpdateCheckLabel;
@@ -487,10 +491,13 @@ inManagedObjectContext:managedObjectContext];
                     [self updateProgressBar:(0.8*(i/totalNotes))+0.2 message:@"Updating WikEM Notes"];
                     
                 } while ((subElement = subElement->nextSibling));
-				//TODO : still don't know why no access to images first time... then works second update
+				
+//ck: after finish parsing xml. dl images. also set my singleton boolean so can communicate need for cache cleanup
+				[VariableStore sharedInstance].notesViewNeedsCacheReset=YES;
+				
 				[self updateProgressBar:1 message:@"Downloading Images"];
 				[self parseXMLImagesFile];
-
+//ok now done.
                 [self updateProgressBar:1 message:@"Done"];
                 [managedObjectContext save:nil];
                 [self disableAllTabBarItems:NO];
@@ -543,6 +550,8 @@ inManagedObjectContext:managedObjectContext];
         NSLog(@"Deleted All Notes");
     // });
     // dispatch_release(deleteQueue);
+	
+
 }
 
 #pragma mark - Tab Bar Controls

@@ -10,6 +10,7 @@
 #import "NoteViewController.h"
 #import "Note.h"
 #import "CategoryTableViewController.h"
+#import "VariableStore.h"
 
 @implementation NotesTableViewController
 
@@ -78,6 +79,16 @@
 		//reset it
 		focusSearchBar = FALSE;
 	}
+	//check to see if updates made and cache needs to be deleted
+	if ([VariableStore sharedInstance].notesViewNeedsCacheReset==YES){
+		//delete cache 'nil' specifies deletes all cache files
+		[NSFetchedResultsController deleteCacheWithName:nil];  
+		
+		//reset the bool to NO
+		[VariableStore sharedInstance].notesViewNeedsCacheReset=NO;
+		NSLog(@"cache deleted");
+	}
+	
 	
 }
 - (void)viewDidLoad 
@@ -100,7 +111,15 @@
         request.sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
         NSString *cacheName = nil;
         NSString *sectionName = nil;
-        
+        //check to see if updates made and cache needs to be deleted. also check every instance viewdidappear
+		if ([VariableStore sharedInstance].notesViewNeedsCacheReset==YES){
+			//delete cache 'nil' specifies deletes all cache files
+			[NSFetchedResultsController deleteCacheWithName:nil];  
+			
+			//reset the bool to NO
+			[VariableStore sharedInstance].notesViewNeedsCacheReset=NO;
+			NSLog(@"cache deleted");
+		}
         if (category) {
             request.predicate = [NSPredicate predicateWithFormat:@"%@ in categories", category];
             self.title = category.title;
@@ -120,9 +139,10 @@
                                            initWithFetchRequest:request
                                            managedObjectContext:context
                                            sectionNameKeyPath:sectionName
-                                        //   cacheName:cacheName];
-										   cacheName:nil];
-        
+                                           cacheName:cacheName];
+										  // cacheName:nil];
+
+
         self.fetchedResultsController = frc;
         [sortDescriptor release];
         [request release];

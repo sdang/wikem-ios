@@ -73,6 +73,7 @@
 		94EFE5F8134DA10400B1CBDB /* Close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94EFE5F6134DA10400B1CBDB /* Close@2x.png */; };
 		94EFE5FB134DA10B00B1CBDB /* WikEM.org.png in Resources */ = {isa = PBXBuildFile; fileRef = 94EFE5F9134DA10B00B1CBDB /* WikEM.org.png */; };
 		94EFE5FC134DA10B00B1CBDB /* WikEM.org@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94EFE5FA134DA10B00B1CBDB /* WikEM.org@2x.png */; };
+		CA1E098414048C220096CBA5 /* VariableStore.m in Sources */ = {isa = PBXBuildFile; fileRef = CA1E098314048C220096CBA5 /* VariableStore.m */; };
 		CA59411F13E2861500A82040 /* MyTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA59411E13E2861500A82040 /* MyTabBarController.m */; };
 /* End PBXBuildFile section */
 
@@ -165,6 +166,8 @@
 		94EFE5F6134DA10400B1CBDB /* Close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Close@2x.png"; sourceTree = "<group>"; };
 		94EFE5F9134DA10B00B1CBDB /* WikEM.org.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WikEM.org.png; sourceTree = "<group>"; };
 		94EFE5FA134DA10B00B1CBDB /* WikEM.org@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WikEM.org@2x.png"; sourceTree = "<group>"; };
+		CA1E098214048C220096CBA5 /* VariableStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VariableStore.h; sourceTree = "<group>"; };
+		CA1E098314048C220096CBA5 /* VariableStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VariableStore.m; sourceTree = "<group>"; };
 		CA59411B13E2855800A82040 /* MyTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTabBarController.h; sourceTree = "<group>"; };
 		CA59411E13E2861500A82040 /* MyTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTabBarController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -237,6 +240,8 @@
 				94DA2FEC13468F8D00862F48 /* MainWindow.xib */,
 				CA59411B13E2855800A82040 /* MyTabBarController.h */,
 				CA59411E13E2861500A82040 /* MyTabBarController.m */,
+				CA1E098214048C220096CBA5 /* VariableStore.h */,
+				CA1E098314048C220096CBA5 /* VariableStore.m */,
 			);
 			name = WikEM;
 			sourceTree = "<group>";
@@ -507,6 +512,7 @@
 				94EFE5ED134D790100B1CBDB /* EditNoteViewController.m in Sources */,
 				94EFE5F3134D8A9900B1CBDB /* PersonalNotesViewController.m in Sources */,
 				CA59411F13E2861500A82040 /* MyTabBarController.m in Sources */,
+				CA1E098414048C220096CBA5 /* VariableStore.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
