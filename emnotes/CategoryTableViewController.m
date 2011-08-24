@@ -10,6 +10,7 @@
 #import "NotesTableViewController.h"
 #import "Category.h"
 #import "CoreDataTableViewController.h"
+#import "VariableStore.h"
 
 @implementation CategoryTableViewController
 
@@ -33,10 +34,20 @@
 }
 - (void)gotoSearch
 { 
+//First do some maintenance. check if needs a new cache
+	if ([VariableStore sharedInstance].categoryViewNeedsCacheReset==YES){
+		//delete cache 'nil' specifies deletes all cache files
+		[NSFetchedResultsController deleteCacheWithName:nil];  
+		
+		//reset the bool to NO
+		[VariableStore sharedInstance].categoryViewNeedsCacheReset=NO;
+		NSLog(@"cache deleted");
+	}
 	
+//now start a new notetableviewcontroller	
 	
     NotesTableViewController *noteTableViewController = [[NotesTableViewController alloc] initWithStyle:UITableViewStylePlain 
-                                                                                       inManagedContext:[self.fetchedResultsController managedObjectContext] 
+														inManagedContext:[self.fetchedResultsController managedObjectContext] 
 														         withCategory:nil];
     //set the noteTableView to focus
 	noteTableViewController.focusSearchBar = TRUE;

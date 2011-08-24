@@ -12,7 +12,7 @@
 //	BOOL notesViewNeedsCacheReset;
 //@synthesize used for properties makes automatic getter and setter :)
 @synthesize notesViewNeedsCacheReset;
-
+@synthesize categoryViewNeedsCacheReset;
 
 static VariableStore* myInstance = nil;
 
@@ -32,9 +32,6 @@ static VariableStore* myInstance = nil;
 		if (nil == myInstance) {
         myInstance  = [[[self class] alloc] init];
 		
-        // initialize variables here
-		//BOOL notesViewNeedsCacheReset = NO;
-
 		}
 		// return the instance of this class
 		return myInstance;
@@ -66,12 +63,9 @@ static VariableStore* myInstance = nil;
 	if (self !=nil) {
 		//initialize stuff here
 		notesViewNeedsCacheReset = NO;
+		categoryViewNeedsCacheReset = NO;
 	}
 	return self;
 }				  
-				  
-//getters
-- (BOOL*) notesViewNeedsCacheReset {
-    return notesViewNeedsCacheReset;
-}
+	 
 @end

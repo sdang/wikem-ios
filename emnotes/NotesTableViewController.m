@@ -72,10 +72,10 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    NSLog(@"view did appear");
+  //  NSLog(@"view did appear");
 	if (focusSearchBar == TRUE){
 		[self.mySearchBar becomeFirstResponder];
-		NSLog(@"FOCUS IT");
+	//	NSLog(@"FOCUS IT");
 		//reset it
 		focusSearchBar = FALSE;
 	}

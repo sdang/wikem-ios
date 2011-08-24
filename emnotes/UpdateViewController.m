@@ -231,7 +231,7 @@
         [self animateInNoUpdateText:@"Update Available"];
         [self updateAvailable:YES];
     } else if ([infoFileContents count] == 1) {
-        [self animateInNoUpdateText:@"Database is Up to Date"];
+        [self animateInNoUpdateText:@"Database is up to date"];
     } else {
         [self animateInNoUpdateText:@"Error Checking for Update"];
     }
@@ -264,7 +264,9 @@
 }
 
 - (NSDictionary *)checkUpdateAvailable
-{
+{//check update available uses last update time compared with the epoch on the info.xml file
+	//do not use lastDatabaseGeneratedTime, as we no longer regenerate the XML unless needed in future
+	
     NSDictionary *infoFileContents = [self parseXMLInfoFile];
 	//bool *imagesAvailable = [self parseXMLImagesFile];
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
@@ -286,7 +288,9 @@
     [prefs synchronize];
     [self updateUpdateTimes];
     
-    if (NSOrderedDescending == [infoGenerationTime compare:[NSNumber numberWithInt:[prefs integerForKey:@"lastDatabaseGenerationTime"]]]) {
+	if (NSOrderedDescending == [infoGenerationTime compare:[NSNumber numberWithInt:[prefs integerForKey:@"lastDatabaseUpdate"]]]) {
+
+    //if (NSOrderedDescending == [infoGenerationTime compare:[NSNumber numberWithInt:[prefs integerForKey:@"lastDatabaseGenerationTime"]]]) {
         [self updateAvailable:YES];
         return infoFileContents;
     } else {
@@ -336,7 +340,7 @@
 			i++;//some sort of progress bar later?
 			NSLog(@"created image file");
   		}
-		else{ NSLog(@"file already exists?");
+		else{ NSLog(@"file already exists");
 		}
 	} while ((subElement = subElement->nextSibling));
 	
@@ -363,10 +367,16 @@
     }
 
     NSDictionary *infoFileContents = nil;
-    if (size && lastUpdate) {
+ //   if (size && lastUpdate) {
+//ck:new xml 'num' attribute is now useless and can be zero. no longer keeps track of +- wikem pages bc Sabin's code counts xml page-nodes
+
+	if(lastUpdate){
         infoFileContents = 
 		[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:size], @"size", [NSNumber numberWithInt:lastUpdate], @"lastUpdate", nil];
     } 
+	else{
+		NSLog(@"info xml issues!");
+	}
     
     return infoFileContents;
 }
@@ -391,7 +401,7 @@
 		//	Category *categoryObjects[[chunks count]];
 		//	int i =0;
 			for (id object in chunks) {
-				NSLog(object);
+		//		NSLog(object);
 				[array addObject:  [Category categoryWithTitle:object inManagedObjectContext:managedObjectContext]];
 
 			}
@@ -458,6 +468,7 @@ inManagedObjectContext:managedObjectContext];
         if (tbxml.rootXMLElement) {
             
             // extract : <root created="1301616061">
+			//no longer rebuild the database, so will keep the last date of the old script...
             int databaseGenerationTime = [[TBXML valueOfAttributeNamed:@"created" forElement:tbxml.rootXMLElement] intValue];
             
             if (! databaseGenerationTime) {
@@ -494,6 +505,8 @@ inManagedObjectContext:managedObjectContext];
 				
 //ck: after finish parsing xml. dl images. also set my singleton boolean so can communicate need for cache cleanup
 				[VariableStore sharedInstance].notesViewNeedsCacheReset=YES;
+				[VariableStore sharedInstance].categoryViewNeedsCacheReset=YES;
+
 				
 				[self updateProgressBar:1 message:@"Downloading Images"];
 				[self parseXMLImagesFile];
