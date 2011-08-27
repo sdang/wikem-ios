@@ -23,5 +23,6 @@
 
 
 - (NSString*) convertURLString: (NSString *) myString ;
+- (Note *)noteFromName:(NSString *)name;
 
 @end

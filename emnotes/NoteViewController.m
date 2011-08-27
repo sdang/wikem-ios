@@ -109,7 +109,7 @@
 		//todo decode
 		
 		//get the note with the title of link... if it exists. 
-		Note* newNote = [self noteFromName:convertedString inManagedObjectContext:managedObjectContext ]; 
+		Note* newNote = [self noteFromName:convertedString ]; 
 		
 		
 		
@@ -149,7 +149,7 @@
 	if (managedObjectContext == nil) 
 	{ 
         managedObjectContext = [(emnotesAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext]; 
-        NSLog(@"After managedObjectContext: %@",  managedObjectContext);
+        //NSLog(@"After managedObjectContext: %@",  managedObjectContext);
 	}
 	
 	//ck instead of baseurl as www.wikem... will try native images using local url
@@ -172,8 +172,8 @@
 	
 	//as baseURL changes, need to add css as a string...not as a 'link'
     [webView loadHTMLString:[self.note formattedContent] baseURL:testURL];
-		//[NSURL URLWithString:[NSString stringWithFormat:@"file:/%@//",imagePath]]];
-	 
+ 	 
+	//this alone does not zoom appropriately. added meta 'viewport' tag for html5 in header to make work
 	self.webView.scalesPageToFit = YES;
 	
 	 self.title = self.note.name;
@@ -232,18 +232,18 @@
 }
 
 - (Note *)noteFromName:(NSString *)name
-inManagedObjectContext:(NSManagedObjectContext *)context
+//inManagedObjectContext:(NSManagedObjectContext *)context
 {
     Note *note2 = nil;
     
     // request category of title
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    request.entity = [NSEntityDescription entityForName:@"Note" inManagedObjectContext:context];
+    request.entity = [NSEntityDescription entityForName:@"Note" inManagedObjectContext:managedObjectContext];
     request.predicate = [NSPredicate predicateWithFormat:@"name = %@", name];
     request.fetchBatchSize = 1;
     
     NSError *error = nil;
-    note2 = [[context executeFetchRequest:request error:&error] lastObject];
+    note2 = [[managedObjectContext executeFetchRequest:request error:&error] lastObject];
     
     if (!error && !note2) {
         // no note..
@@ -253,6 +253,10 @@ inManagedObjectContext:(NSManagedObjectContext *)context
     
     [request release];
     return note2;
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+	[[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"WebKitCacheModelPreferenceKey"];
 }
 
 @end
