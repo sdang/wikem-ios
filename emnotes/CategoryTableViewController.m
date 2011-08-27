@@ -25,7 +25,8 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        UIBarButtonItem *sButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(gotoSearch)];
+        UIBarButtonItem *sButton = 
+		    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(gotoSearch)];
         self.navigationItem.rightBarButtonItem = sButton;
         [sButton release];
         
@@ -38,11 +39,10 @@
 	if ([VariableStore sharedInstance].categoryViewNeedsCacheReset==YES){
 		//delete cache 'nil' specifies deletes all cache files
 		[NSFetchedResultsController deleteCacheWithName:nil];  
-		
 		//reset the bool to NO
 		[VariableStore sharedInstance].categoryViewNeedsCacheReset=NO;
 		NSLog(@"cache deleted");
-	}
+		}
 	
 //now start a new notetableviewcontroller	
 	
@@ -52,7 +52,9 @@
     //set the noteTableView to focus
 	noteTableViewController.focusSearchBar = TRUE;
 	self.notesTableViewController = noteTableViewController;
-    [self.navigationController pushViewController:noteTableViewController animated:YES];
+    [self.navigationController pushViewController:noteTableViewController animated:NO];
+	//[self.navigationController pushViewController:noteTableViewController animated:YES];
+
     [noteTableViewController release];
  
 }
@@ -95,10 +97,12 @@
 {
     
     NotesTableViewController *noteTableViewController = [[NotesTableViewController alloc] initWithStyle:UITableViewStylePlain 
-                                                                                       inManagedContext:[self.fetchedResultsController managedObjectContext] 
-                                                                                           withCategory:(Category *)managedObject];
+																inManagedContext:[self.fetchedResultsController managedObjectContext] 
+																			withCategory:(Category *)managedObject];
     self.notesTableViewController = noteTableViewController;
-    [self.navigationController pushViewController:noteTableViewController animated:YES];
+  //  [self.navigationController pushViewController:noteTableViewController animated:YES];
+	[self.navigationController pushViewController:noteTableViewController animated:NO];
+
     [noteTableViewController release];
 }
 
@@ -119,7 +123,6 @@
     if (self) {
         // Custom initialization
         [self setupTabBarItem];
-		//[NSString stringWithFormat:@"%@/%@/%@", three, two, one];
 
 		NSString *wikem = @"WikEM ";
 		NSString *titlestring = self.tabBarItem.title;

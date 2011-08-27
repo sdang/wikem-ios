@@ -51,9 +51,10 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(gotoSearch)];
-        self.navigationItem.rightBarButtonItem = editButton;
-        [editButton release];
+        UIBarButtonItem *searchButton = 
+			[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(gotoSearch)];
+        self.navigationItem.rightBarButtonItem = searchButton;
+        [searchButton release];
         
     }
     return self;
@@ -140,8 +141,8 @@
                                            managedObjectContext:context
                                            sectionNameKeyPath:sectionName
                                            cacheName:cacheName];
-										  // cacheName:nil];
-
+										 //  cacheName:nil];
+//ck:cache headache..
 
         self.fetchedResultsController = frc;
         [sortDescriptor release];
@@ -167,7 +168,9 @@
 	noteViewController.managedObjectContext = self.managedObjectContext;
 //i hope that passed the correct context along...
 	noteViewController.note = (Note *)managedObject;
-    [self.navigationController pushViewController:noteViewController animated:YES];
+   // [self.navigationController pushViewController:noteViewController animated:YES];
+	[self.navigationController pushViewController:noteViewController animated:NO];
+
     [noteViewController release];
 }
 
@@ -184,12 +187,19 @@
 	NSLog(@"cancel button clicked");
 	//[self.view removeFromSuperview]; 
 	
-	[self.navigationController dismissModalViewControllerAnimated:YES];
+//	[self.navigationController dismissModalViewControllerAnimated:YES];
 	[self.searchDisplayController setActive:NO];
 //need this or crash
-	[self.navigationController popViewControllerAnimated:YES];    
+//	[self.navigationController popViewControllerAnimated:YES];    
 
  	
+	
+	
+	
+	[self.navigationController dismissModalViewControllerAnimated:NO];
+	[self.navigationController popViewControllerAnimated:NO];    
+
+
 }
 
 

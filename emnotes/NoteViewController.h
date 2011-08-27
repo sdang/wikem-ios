@@ -19,6 +19,7 @@
 @property (retain) Note *note;
 //adda context for notes, initialize it in appdelegate
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
+@property(nonatomic) BOOL scalesPageToFit;
 
 
 - (NSString*) convertURLString: (NSString *) myString ;

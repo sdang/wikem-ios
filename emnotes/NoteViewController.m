@@ -14,6 +14,9 @@
 @synthesize webView, note;
 //ck add initializer for new context for this class
 @synthesize managedObjectContext;
+@synthesize scalesPageToFit;
+
+
 
 /*
 -(id)init{
@@ -83,40 +86,16 @@
 
 //ck : as this wv already a uiwebviewdelegate, can call this BEFORE any wv loads
 - (BOOL)webView:(UIWebView*)webView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType {
+	
 	if(navigationType == UIWebViewNavigationTypeLinkClicked) {
-		
-		//todo...if internal link with a #...ignore... so menu links don't need 2 clicks
-		
-		//a link was clicked, intercept it...unfortunately, no nsurlrequest.method for getting the title="bla" attribute
-		//so will need to process string before trying to search->return a note with given name
-		
- 		//get the path of current users documents folder for read/write
-	//	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory , NSUserDomainMask, YES);
-	////	NSString* documentsDir = [paths objectAtIndex:0];
-		
 		NSURL *url = request.URL;
 		NSString *urlString = url.absoluteString;
-		//NSLog(@"docdir is:");
-		NSLog(urlString);
-		// remove baseurl, which was needed to load images
-	//	NSString *myString = [[[NSBundle mainBundle] infoDictionary] objectForKey:documentsDir];
-	/*	NSString *myString2 = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"link_base_url"];
 
-		urlString = [urlString stringByReplacingOccurrencesOfString:documentsDir
-											 withString:@""];
-		NSLog(urlString);
-		
-		urlString = [urlString stringByReplacingOccurrencesOfString:myString2
-														 withString:@""];
-		NSLog(urlString);
-*/
 //from appledocs use		NSString *documentFilename = [documentPath lastPathComponent];
 		NSString *imagefilestring = [urlString lastPathComponent];
-		NSLog(imagefilestring);
 
 		//convert encoded characters in the link
 		NSString *convertedString = [self convertURLString:imagefilestring];
-		NSLog(convertedString);
 
 		//get a note with this name
 		//		
@@ -195,6 +174,8 @@
     [webView loadHTMLString:[self.note formattedContent] baseURL:testURL];
 		//[NSURL URLWithString:[NSString stringWithFormat:@"file:/%@//",imagePath]]];
 	 
+	self.webView.scalesPageToFit = YES;
+	
 	 self.title = self.note.name;
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -213,6 +194,8 @@
 {
     // Return YES for supported orientations
     //return (interfaceOrientation == UIInterfaceOrientationPortrait);
+	[self.webView reload];
+	
 	return YES;
 }
 
