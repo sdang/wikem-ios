@@ -153,13 +153,14 @@
     return self;
 }
 
+/*doesn't need. call rotate through the parent tabbarview
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
     //return (interfaceOrientation == UIInterfaceOrientationPortrait);
 	return YES;
 }
-
+*/
 
 
 - (void)managedObjectSelected:(NSManagedObject *)managedObject

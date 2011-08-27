@@ -146,11 +146,12 @@
     self.notesTableViewController = nil;
 }
 
+/* don't need. put in the parent tabbar class
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
     //return (interfaceOrientation == UIInterfaceOrientationPortrait);
 	return YES;
-}
+}*/
 
 @end

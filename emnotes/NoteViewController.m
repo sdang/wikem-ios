@@ -189,7 +189,7 @@
     // e.g. self.myOutlet = nil;
     self.webView = nil;
 }
-
+/*don't put here. use one in parent tab bar.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
@@ -197,7 +197,7 @@
 	[self.webView reload];
 	
 	return YES;
-}
+}*/
 
 //unescape these url encoded characters
 - (NSString*) convertURLString: (NSString *) myString {
