@@ -119,8 +119,11 @@
 - (void)searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller
 {
 	// reset the fetch controller for the main (non-searching) table view
+ 	NSLog(@"will end search");
 	[self fetchedResultsControllerForTableView:self.tableView];
 }
+ 
+ 
 
 - (void)setFetchedResultsController:(NSFetchedResultsController *)controller
 {

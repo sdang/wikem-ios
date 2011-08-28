@@ -60,7 +60,7 @@
     [noteViewController release];
 	//also can release the new navcon here rather than later
 	[noteNavCon release];
-	///////end my new UIcontroller..  
+	///////end my new UIcontrol ler..  
 	
 	
     UINavigationController *allNotesNavCon = [[UINavigationController alloc] init];
