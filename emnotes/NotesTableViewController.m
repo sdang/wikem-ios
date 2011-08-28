@@ -106,11 +106,16 @@
 - (id)initWithStyle:(UITableViewStyle)style inManagedContext:(NSManagedObjectContext *)context withCategory:(Category *)category
 {
     if ((self = [self initWithStyle:style])) {
+	@try{
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
+		NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+ 
+
         request.entity = [NSEntityDescription entityForName:@"Note" inManagedObjectContext:context];
-        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
         request.sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-        NSString *cacheName = nil;
+      
+	 
+		NSString *cacheName = nil;
         NSString *sectionName = nil;
         //check to see if updates made and cache needs to be deleted. also check every instance viewdidappear
 		if ([VariableStore sharedInstance].notesViewNeedsCacheReset==YES){
@@ -121,18 +126,20 @@
 			[VariableStore sharedInstance].notesViewNeedsCacheReset=NO;
 			NSLog(@"cache deleted");
 		}
-        if (category) {
-            request.predicate = [NSPredicate predicateWithFormat:@"%@ in categories", category];
-            self.title = category.title;
-            cacheName = [NSString stringWithString:category.title];
-            sectionName = nil; 
-        } else {
-			NSLog(@"init notestableviewcontroller");
-            sectionName = @"getFirstLetter";
-            cacheName = @"notes";
-            request.predicate = nil;
+		
+		 
+			if (category) {
+				request.predicate = [NSPredicate predicateWithFormat:@"%@ in categories", category];
+				self.title = category.title;
+				cacheName = [NSString stringWithString:category.title];
+				sectionName = nil; 
+				} else {
+				NSLog(@"init notestableviewcontroller");
+				sectionName = @"getFirstLetter";
+				cacheName = @"notes";
+				request.predicate = nil;
 			 
-        }
+				}
         
         request.fetchBatchSize = 20;
         
@@ -142,26 +149,41 @@
                                            sectionNameKeyPath:sectionName
                                            cacheName:cacheName];
 										 //  cacheName:nil];
-//ck:cache headache..
-
-        self.fetchedResultsController = frc;
-        [sortDescriptor release];
-        [request release];
-        [frc release];
+			self.fetchedResultsController = frc;
+			[sortDescriptor release];
+			[request release];
+			[frc release];
+			
+			
+ 	}@catch (NSException * e) {
+		if([[e name] isEqualToString:NSInternalInconsistencyException]){
+			[NSFetchedResultsController deleteCacheWithName:nil];  
+			
+			[self.tableView reloadData];
+			NSLog(@"ck:request failed when requesting predicate, reload data with cleaned cache");
+		}
+		else { @throw e;}
+	}
+		
+		
+       
 		
      }
     return self;
 }
 
-/*doesn't need. call rotate through the parent tabbarview
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+- (void)didReceiveMemoryWarning
 {
-    // Return YES for supported orientations
-    //return (interfaceOrientation == UIInterfaceOrientationPortrait);
-	return YES;
+    // Releases the view if it doesn't have a superview.
+    [super didReceiveMemoryWarning];
+    
+    // Release any cached data, images, etc that aren't in use.
+ 		//delete cache 'nil' specifies deletes all cache files
+		[NSFetchedResultsController deleteCacheWithName:nil];  
+		
+  		NSLog(@"cache deleted");
+		
 }
-*/
-
 
 - (void)managedObjectSelected:(NSManagedObject *)managedObject
 { 
@@ -191,12 +213,7 @@
 //	[self.navigationController dismissModalViewControllerAnimated:YES];
 	[self.searchDisplayController setActive:NO];
 //need this or crash
-//	[self.navigationController popViewControllerAnimated:YES];    
 
- 	
-	
-	
-	
 	[self.navigationController dismissModalViewControllerAnimated:NO];
 	[self.navigationController popViewControllerAnimated:NO];    
 

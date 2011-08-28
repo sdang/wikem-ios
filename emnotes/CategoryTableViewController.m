@@ -45,17 +45,26 @@
 		}
 	
 //now start a new notetableviewcontroller	
-	
-    NotesTableViewController *noteTableViewController = [[NotesTableViewController alloc] initWithStyle:UITableViewStylePlain 
+	@try{
+		NotesTableViewController *noteTableViewController = [[NotesTableViewController alloc] initWithStyle:UITableViewStylePlain 
 														inManagedContext:[self.fetchedResultsController managedObjectContext] 
 														         withCategory:nil];
-    //set the noteTableView to focus
-	noteTableViewController.focusSearchBar = TRUE;
-	self.notesTableViewController = noteTableViewController;
-    [self.navigationController pushViewController:noteTableViewController animated:NO];
+		//set the noteTableView to focus
+		noteTableViewController.focusSearchBar = TRUE;
+		self.notesTableViewController = noteTableViewController;
+		[self.navigationController pushViewController:noteTableViewController animated:NO];
 	//[self.navigationController pushViewController:noteTableViewController animated:YES];
 
-    [noteTableViewController release];
+		[noteTableViewController release];
+	}@catch (NSException * e) {
+		if([[e name] isEqualToString:NSInternalInconsistencyException]){
+			[NSFetchedResultsController deleteCacheWithName:nil];  
+			
+			[self.tableView reloadData];
+			NSLog(@"ck:request failed when requesting predicate, reload data with cleaned cache");
+		}
+		else { @throw e;}
+	}
  
 }
 
@@ -146,12 +155,17 @@
     self.notesTableViewController = nil;
 }
 
-/* don't need. put in the parent tabbar class
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+- (void)didReceiveMemoryWarning
 {
-    // Return YES for supported orientations
-    //return (interfaceOrientation == UIInterfaceOrientationPortrait);
-	return YES;
-}*/
+    // Releases the view if it doesn't have a superview.
+    [super didReceiveMemoryWarning];
+    
+    // Release any cached data, images, etc that aren't in use.
+	//delete cache 'nil' specifies deletes all cache files
+	[NSFetchedResultsController deleteCacheWithName:nil];  
+	
+	NSLog(@"cache deleted");
+	
+}
 
 @end

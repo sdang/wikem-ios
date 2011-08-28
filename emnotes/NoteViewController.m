@@ -75,11 +75,21 @@
 }
 
 - (void)didReceiveMemoryWarning
-{
+{	
+	NSLog(@"didreceivememory warning in noteview");
+	
+	
+	NSAutoreleasePool *pool;
+    pool = [[NSAutoreleasePool alloc] init];
+   
+    /* if anything is in the pool..drain it*/
+    [pool drain];
+	
     // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
     
     // Release any cached data, images, etc that aren't in use.
+	
 }
 
 #pragma mark - View lifecycle
@@ -128,6 +138,11 @@
 
 			NoteViewController *noteViewController2 = [[NoteViewController alloc] init];
 			noteViewController2.note = newNote;
+			
+			//release pointer here? No. 
+			//    dunno why but when go back to table view from note it crashes...
+			//[newNote release];
+			
 			[self.navigationController pushViewController:noteViewController2 animated:YES];
 			[noteViewController2 release];
 		}else {
@@ -141,9 +156,10 @@
 	return YES;
 }
 
-//after a webivew loaded calls this
-- (void)viewDidLoad 
-{
+//after a webivew loaded calls this- (void)viewDidLoad but don't useAlways try to write only UI initialisation code in viewDidLoad. If you write code to alloc/init a variable in your viewDidLoad, then when the method is invoked a second time the variable will be alloc/init'd again causing a memory leak. 
+//If you really do need to alloc/init your member variable in viewdidload , do it only if it is not already allocated.
+
+-(void)viewDidAppear:(BOOL)animated{
 	
 //per recs try adding the context here...assuming it wasnt loaded right
 	if (managedObjectContext == nil) 
@@ -186,7 +202,7 @@
 
     [super viewDidUnload];
     // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
+    //eg. self.myOutlet = nil;
     self.webView = nil;
 }
 /*don't put here. use one in parent tab bar.
@@ -255,6 +271,11 @@
     return note2;
 }
 
+/*the key property which leads to this leak is the WebKitCacheModelPreferenceKey application setting.
+ And when you open a link in a UIWebView, this property is automatically set to the value "1". 
+ So, the solution is to set it back to 0 everytime you open a link. 
+ You may easily do this by adding a UIWebViewDelegate to your UIWebView :
+*/ 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
 	[[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"WebKitCacheModelPreferenceKey"];
 }

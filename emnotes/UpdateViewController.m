@@ -507,18 +507,35 @@ inManagedObjectContext:managedObjectContext];
 				[VariableStore sharedInstance].notesViewNeedsCacheReset=YES;
 				[VariableStore sharedInstance].categoryViewNeedsCacheReset=YES;
 
-				
+				if(self.ranInitialSetup == YES)
+				{
 				[self updateProgressBar:1 message:@"Downloading Images"];
 				[self parseXMLImagesFile];
+				}
 //ok now done.
                 [self updateProgressBar:1 message:@"Done"];
                 [managedObjectContext save:nil];
                 [self disableAllTabBarItems:NO];
+				
+				
+				
+				NSUserDefaults *prefsThread = [NSUserDefaults standardUserDefaults];
+
+				//on first run set the update time to an old time...otw won't update online immediately 
+				if(self.ranInitialSetup == NO)
+				{
+					NSLog(@"asldkfjlsadkjf");
+					[prefsThread setInteger:databaseGenerationTime forKey:@"lastDatabaseUpdate"];
+				}
+				else{
+					[prefsThread setInteger:[[NSDate date] timeIntervalSince1970] forKey:@"lastDatabaseUpdate"];
+
+				}
                 self.ranInitialSetup = YES;
                 
 				
-                NSUserDefaults *prefsThread = [NSUserDefaults standardUserDefaults];
-                [prefsThread setInteger:[[NSDate date] timeIntervalSince1970] forKey:@"lastDatabaseUpdate"];
+      //          NSUserDefaults *prefsThread = [NSUserDefaults standardUserDefaults];
+                //[prefsThread setInteger:[[NSDate date] timeIntervalSince1970] forKey:@"lastDatabaseUpdate"];
                 [prefsThread setInteger:databaseGenerationTime forKey:@"lastDatabaseGenerationTime"];
                 [prefsThread setBool:self.ranInitialSetup forKey:@"ranInitialSetup"];
                 [prefsThread synchronize];

@@ -75,7 +75,17 @@
 - (void)performFetchForTableView:(UITableView *)tableView
 {
 	NSError *error = nil;
-	[self.fetchedResultsController performFetch:&error];
+	@try{
+		[self.fetchedResultsController performFetch:&error];
+	}@catch (NSException * e) {
+		if([[e name] isEqualToString:NSInternalInconsistencyException]){
+			[NSFetchedResultsController deleteCacheWithName:nil];  
+			
+			//[self.tableView reloadData];
+			NSLog(@"ck:exceptino thrown in coredatatableviewcontorller, reload data with cleaned cache");
+		}
+		else { @throw e;}
+	}
 	if (error) {
 		NSLog(@"[CoreDataTableViewController performFetchForTableView:] %@ (%@)", [error localizedDescription], [error localizedFailureReason]);
 	}
