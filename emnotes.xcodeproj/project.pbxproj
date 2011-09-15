@@ -170,6 +170,7 @@
 		CA1E098314048C220096CBA5 /* VariableStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VariableStore.m; sourceTree = "<group>"; };
 		CA59411B13E2855800A82040 /* MyTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTabBarController.h; sourceTree = "<group>"; };
 		CA59411E13E2861500A82040 /* MyTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTabBarController.m; sourceTree = "<group>"; };
+		CA792BA6140A96690038CE27 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -311,18 +312,21 @@
 		94DA2FC913468F8D00862F48 = {
 			isa = PBXGroup;
 			children = (
+				CA792BA6140A96690038CE27 /* Entitlements.plist */,
 				94DA2FE013468F8D00862F48 /* emnotes */,
 				94DA2FD713468F8D00862F48 /* Frameworks */,
-				94DA2FD513468F8D00862F48 /* Products */,
+				94DA2FD513468F8D00862F48 /* Busby */,
 			);
 			sourceTree = "<group>";
 		};
-		94DA2FD513468F8D00862F48 /* Products */ = {
+		94DA2FD513468F8D00862F48 /* Busby */ = {
 			isa = PBXGroup;
 			children = (
 				94DA2FD413468F8D00862F48 /* WikEM.app */,
 			);
-			name = Products;
+			includeInIndex = 1;
+			name = Busby;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		94DA2FD713468F8D00862F48 /* Frameworks */ = {
@@ -426,7 +430,7 @@
 				en,
 			);
 			mainGroup = 94DA2FC913468F8D00862F48;
-			productRefGroup = 94DA2FD513468F8D00862F48 /* Products */;
+			productRefGroup = 94DA2FD513468F8D00862F48 /* Busby */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -574,6 +578,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_ENTITLEMENTS = "~/emnotes/Entitlements.plist";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -589,6 +594,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_ENTITLEMENTS = "~/emnotes/Entitlements.plist";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "emnotes/emnotes-Prefix.pch";
@@ -600,7 +606,7 @@
 			};
 			name = Release;
 		};
-		CABB49A71404DC0E005DC9C0 /* Ad Hoc */ = {
+		CA792BBD140A9A570038CE27 /* Ad Hoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -615,19 +621,18 @@
 			};
 			name = "Ad Hoc";
 		};
-		CABB49A81404DC0E005DC9C0 /* Ad Hoc */ = {
+		CA792BBE140A9A570038CE27 /* Ad Hoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_ENTITLEMENTS = "~/emnotes/Entitlements.plist";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "emnotes/emnotes-Prefix.pch";
 				INFOPLIST_FILE = "emnotes/emnotes-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.1;
 				PRODUCT_NAME = WikEM;
-				PROVISIONING_PROFILE = "";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				SKIP_INSTALL = NO;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
@@ -641,7 +646,7 @@
 			buildConfigurations = (
 				94DA2FF213468F8D00862F48 /* Debug */,
 				94DA2FF313468F8D00862F48 /* Release */,
-				CABB49A71404DC0E005DC9C0 /* Ad Hoc */,
+				CA792BBD140A9A570038CE27 /* Ad Hoc */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -651,7 +656,7 @@
 			buildConfigurations = (
 				94DA2FF513468F8D00862F48 /* Debug */,
 				94DA2FF613468F8D00862F48 /* Release */,
-				CABB49A81404DC0E005DC9C0 /* Ad Hoc */,
+				CA792BBE140A9A570038CE27 /* Ad Hoc */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

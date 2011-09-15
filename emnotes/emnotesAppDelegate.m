@@ -1,4 +1,4 @@
-//
+//////
 //  emnotesAppDelegate.m
 //  emnotes
 //
@@ -49,6 +49,7 @@
     [categoriesNavCon pushViewController:categoryTableViewController animated:NO];
     [categoryTableViewController release];
 	
+	/*
 //ck add noteviewcontroller to UINavigationController...keep the heiarchail style when clicking links?
 	UINavigationController *noteNavCon = [[UINavigationController alloc] init];
     NoteViewController *noteViewController = [NoteViewController alloc] ;
@@ -59,8 +60,8 @@
     [noteNavCon pushViewController:noteViewController animated:NO];
     [noteViewController release];
 	//also can release the new navcon here rather than later
-	[noteNavCon release];
-	///////end my new UIcontrol ler..  
+	[noteNavCon release];*/
+	///////end my new UIcontrol ler. .  ..
 	
 	
     UINavigationController *allNotesNavCon = [[UINavigationController alloc] init];
