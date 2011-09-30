@@ -73,8 +73,7 @@
     self.uVC = updateViewController;
     
     self.tabBar = [[UITabBarController alloc] init];
-	// self.tabBar = [[MyTabBarController alloc] init];
- 	
+  	
     self.tabBar.delegate = self;
     
     tabBar.viewControllers = [NSArray arrayWithObjects:categoriesNavCon, allNotesNavCon, personalNotesNavCon, updateViewController, nil];
@@ -100,8 +99,12 @@
 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
 {
+	NSLog(@"didSelectViewController");
+
     // if we're a navigation controller, pop back to root
     if ([viewController isKindOfClass:[UINavigationController class]]) {
+		NSLog(@"should pop if navigation class");
+
         [(UINavigationController *)viewController popToRootViewControllerAnimated:NO];
     }
 	

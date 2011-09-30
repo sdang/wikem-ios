@@ -68,8 +68,12 @@
     [tabBarItem release];
     [super dealloc];
 }
+-(void)viewDidDisappear:(BOOL)animated{
+	NSLog(@"viewdid disappear");
 
+}
 - (void)viewDidAppear:(BOOL)animated {
+	NSLog(@"viewdid appear");
  //ck, will focus search bar if pressed search button in category tab.
 	if ([VariableStore sharedInstance].focusSearchBar == TRUE){
 		[self.mySearchBar becomeFirstResponder];
@@ -92,7 +96,7 @@
 }
 - (void)viewDidLoad 
 {
-	
+ 
 	
 }
 - (void)viewDidUnload

@@ -55,7 +55,6 @@
 		94DA301613468FE900862F48 /* UpdateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94DA300E13468FE900862F48 /* UpdateViewController.m */; };
 		94DA301713468FE900862F48 /* UpdateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94DA300F13468FE900862F48 /* UpdateViewController.xib */; };
 		94DA3023134691DE00862F48 /* info.xml in Resources */ = {isa = PBXBuildFile; fileRef = 94DA3021134691DE00862F48 /* info.xml */; };
-		94DA3024134691DE00862F48 /* database.xml in Resources */ = {isa = PBXBuildFile; fileRef = 94DA3022134691DE00862F48 /* database.xml */; };
 		94E6959A1346BCE8008DF6ED /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E695991346BCE8008DF6ED /* Category.m */; };
 		94E6959D1346BD46008DF6ED /* CoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E6959B1346BD46008DF6ED /* CoreDataTableViewController.m */; };
 		94E695A01346CB35008DF6ED /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E6959F1346CB35008DF6ED /* Note.m */; };
@@ -74,6 +73,7 @@
 		94EFE5FB134DA10B00B1CBDB /* WikEM.org.png in Resources */ = {isa = PBXBuildFile; fileRef = 94EFE5F9134DA10B00B1CBDB /* WikEM.org.png */; };
 		94EFE5FC134DA10B00B1CBDB /* WikEM.org@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94EFE5FA134DA10B00B1CBDB /* WikEM.org@2x.png */; };
 		CA1E098414048C220096CBA5 /* VariableStore.m in Sources */ = {isa = PBXBuildFile; fileRef = CA1E098314048C220096CBA5 /* VariableStore.m */; };
+		CA2E1FFF14366E3200BFE933 /* database.xml in Resources */ = {isa = PBXBuildFile; fileRef = CA2E1FFE14366E3200BFE933 /* database.xml */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -136,7 +136,6 @@
 		94DA300E13468FE900862F48 /* UpdateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateViewController.m; sourceTree = "<group>"; };
 		94DA300F13468FE900862F48 /* UpdateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UpdateViewController.xib; sourceTree = "<group>"; };
 		94DA3021134691DE00862F48 /* info.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = info.xml; sourceTree = "<group>"; };
-		94DA3022134691DE00862F48 /* database.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = database.xml; sourceTree = "<group>"; };
 		94E695981346BCE8008DF6ED /* Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Category.h; sourceTree = "<group>"; };
 		94E695991346BCE8008DF6ED /* Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Category.m; sourceTree = "<group>"; };
 		94E6959B1346BD46008DF6ED /* CoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataTableViewController.m; sourceTree = "<group>"; };
@@ -167,6 +166,7 @@
 		94EFE5FA134DA10B00B1CBDB /* WikEM.org@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WikEM.org@2x.png"; sourceTree = "<group>"; };
 		CA1E098214048C220096CBA5 /* VariableStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VariableStore.h; sourceTree = "<group>"; };
 		CA1E098314048C220096CBA5 /* VariableStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VariableStore.m; sourceTree = "<group>"; };
+		CA2E1FFE14366E3200BFE933 /* database.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = database.xml; path = ../database.xml; sourceTree = SOURCE_ROOT; };
 		CA792BA6140A96690038CE27 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -280,9 +280,9 @@
 		940640BF134CE897008E4461 /* InitialData */ = {
 			isa = PBXGroup;
 			children = (
+				CA2E1FFE14366E3200BFE933 /* database.xml */,
 				94DA2FE313468F8D00862F48 /* InfoPlist.strings */,
 				94DA3021134691DE00862F48 /* info.xml */,
-				94DA3022134691DE00862F48 /* database.xml */,
 				94DA2FE213468F8D00862F48 /* emnotes-Info.plist */,
 			);
 			name = InitialData;
@@ -449,7 +449,6 @@
 				94DA301513468FE900862F48 /* PersonalNotesTableViewController.xib in Resources */,
 				94DA301713468FE900862F48 /* UpdateViewController.xib in Resources */,
 				94DA3023134691DE00862F48 /* info.xml in Resources */,
-				94DA3024134691DE00862F48 /* database.xml in Resources */,
 				94234C8F134A640900D241B5 /* AcceptLicense.xib in Resources */,
 				94234C92134A6EA300D241B5 /* disclaimer.html in Resources */,
 				94234C9B134AA33D00D241B5 /* WikEM-Logo@2x.png in Resources */,
@@ -480,6 +479,7 @@
 				94EFE5F8134DA10400B1CBDB /* Close@2x.png in Resources */,
 				94EFE5FB134DA10B00B1CBDB /* WikEM.org.png in Resources */,
 				94EFE5FC134DA10B00B1CBDB /* WikEM.org@2x.png in Resources */,
+				CA2E1FFF14366E3200BFE933 /* database.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
