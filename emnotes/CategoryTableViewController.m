@@ -45,7 +45,13 @@
 		}
 	
 //now start a new notetableviewcontroller	
-	@try{
+	//noteTableViewController.focusSearchBar = TRUE;
+	[VariableStore sharedInstance].focusSearchBar = TRUE;
+	NSLog(@"categorytable view set focus to true");
+	[self.parentViewController.tabBarController setSelectedIndex:1];
+
+
+	/*	@try{
 		NotesTableViewController *noteTableViewController = [[NotesTableViewController alloc] initWithStyle:UITableViewStylePlain 
 														inManagedContext:[self.fetchedResultsController managedObjectContext] 
 														         withCategory:nil];
@@ -64,7 +70,7 @@
 			NSLog(@"ck:request failed when requesting predicate, reload data with cleaned cache");
 		}
 		else { @throw e;}
-	}
+	}*/
  
 }
 

@@ -13,6 +13,7 @@
 //@synthesize used for properties makes automatic getter and setter :)
 @synthesize notesViewNeedsCacheReset;
 @synthesize categoryViewNeedsCacheReset;
+@synthesize focusSearchBar;
 
 static VariableStore* myInstance = nil;
 
@@ -64,6 +65,7 @@ static VariableStore* myInstance = nil;
 		//initialize stuff here
 		notesViewNeedsCacheReset = NO;
 		categoryViewNeedsCacheReset = NO;
+		focusSearchBar = NO;
 	}
 	return self;
 }				  

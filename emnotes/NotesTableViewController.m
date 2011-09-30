@@ -18,8 +18,7 @@
 //ck : makes default setters and getters..
 @synthesize managedObjectContext;
 
-@synthesize focusSearchBar;
-
+ 
 - (void)setupTabBarItem
 {
     UITabBarItem *item = [[UITabBarItem alloc]
@@ -39,9 +38,7 @@
 		//
 		
         self.title = self.tabBarItem.title;
-        // Custom initialization
-		//NSLog(@"initwstle no params");
-		//focusSearchBar = FALSE;
+        
     }
     return self;
 }
@@ -73,12 +70,13 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-  //  NSLog(@"view did appear");
-	if (focusSearchBar == TRUE){
+ //ck, will focus search bar if pressed search button in category tab.
+	if ([VariableStore sharedInstance].focusSearchBar == TRUE){
 		[self.mySearchBar becomeFirstResponder];
-	//	NSLog(@"FOCUS IT");
-		//reset it
-		focusSearchBar = FALSE;
+ 		//reset it
+		[VariableStore sharedInstance].focusSearchBar = FALSE;
+		NSLog(@"categorytable view set focus to false");
+
 	}
 	//check to see if updates made and cache needs to be deleted
 	if ([VariableStore sharedInstance].notesViewNeedsCacheReset==YES){

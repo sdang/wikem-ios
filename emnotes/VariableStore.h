@@ -17,6 +17,7 @@
     // Place any "global" variables here
 	BOOL notesViewNeedsCacheReset;
 	BOOL categoryViewNeedsCacheReset;
+	BOOL focusSearchBar;
 }
 
 //class methods... ie static methods
@@ -29,5 +30,6 @@
 //public properties
 @property BOOL notesViewNeedsCacheReset;
 @property BOOL categoryViewNeedsCacheReset;
+@property BOOL focusSearchBar;
 
 @end
