@@ -264,6 +264,8 @@
     if (!error && !note2) {
         // no note..
 		//  note = [NSEntityDescription insertNewObjectForEntityForName:@"Note" inManagedObjectContext:context];
+		[request release];
+
         return nil;
     }
     

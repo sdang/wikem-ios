@@ -48,22 +48,7 @@
     categoryTableViewController.managedObjectContext = self.managedObjectContext;
     [categoriesNavCon pushViewController:categoryTableViewController animated:NO];
     [categoryTableViewController release];
-	
-	/*
-//ck add noteviewcontroller to UINavigationController...keep the heiarchail style when clicking links?
-	UINavigationController *noteNavCon = [[UINavigationController alloc] init];
-    NoteViewController *noteViewController = [NoteViewController alloc] ;
-                                                         //       initWithStyle:UITableViewStylePlain
-                                                           //     inManagedContext:self.managedObjectContext];
-    
-    noteViewController.managedObjectContext = __managedObjectContext;
-    [noteNavCon pushViewController:noteViewController animated:NO];
-    [noteViewController release];
-	//also can release the new navcon here rather than later
-	[noteNavCon release];*/
-	///////end my new UIcontrol ler. .  ..
-	
-	
+		
     UINavigationController *allNotesNavCon = [[UINavigationController alloc] init];
     NotesTableViewController *notesTableViewController = [[NotesTableViewController alloc]
                                                           initWithStyle:UITableViewStylePlain
@@ -124,12 +109,12 @@
 	
 		NSUInteger indexOfTab = [tabBarController.viewControllers indexOfObject:viewController];
 		NSLog(@"Tab index = %u (%u)", indexOfTab);
-	if(indexOfTab ==3){ //ie we are in update view. try force portrait only
+	/*if(indexOfTab ==3){ //ie we are in update view. try force portrait only
 		tabBar.dontrotate = TRUE;
 		
 	}else{
 		tabBar.dontrotate = FALSE;
-	}
+	}*/
 	
 	
 }

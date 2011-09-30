@@ -226,6 +226,8 @@
 
 - (IBAction)runUpdateCheck:(id)sender
 {
+	//ck: this is the method called by pressing the update button (not updatedownloadbutton)
+	
     NSDictionary *infoFileContents = [self checkUpdateAvailable];
     if ([infoFileContents count] == 2) {
         [self animateInNoUpdateText:@"Update Available"];
@@ -272,13 +274,13 @@
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     
     
-    NSNumber *totalNumberOfNotes = nil;
+  //  NSNumber *totalNumberOfNotes = nil;
     NSNumber *infoGenerationTime = nil;
     
     if (infoFileContents) {
         // update last update check time, only update last check if we have data
         [prefs setInteger:[[NSDate date] timeIntervalSince1970] forKey:@"lastDatabaseCheck"];
-        totalNumberOfNotes = [infoFileContents objectForKey:@"size"];
+  //      totalNumberOfNotes = [infoFileContents objectForKey:@"size"];
         infoGenerationTime = [infoFileContents objectForKey:@"lastUpdate"];
     } else {
         NSLog(@"Error parsing info file");
@@ -340,7 +342,7 @@
 			i++;//some sort of progress bar later?
 			NSLog(@"created image file");
   		}
-		else{ NSLog(@"file already exists");
+		else{ //NSLog(@"no image downlaoded file already exists");
 		}
 	} while ((subElement = subElement->nextSibling));
 	
@@ -445,6 +447,9 @@ inManagedObjectContext:managedObjectContext];
     return content;
 }
 
+
+/* called by touch of button 'download update'... see the xib file (interface builder), file owner connections
+ */
 - (void)parseXMLDatabaseFile {
     
     dispatch_queue_t parseQueue = dispatch_queue_create("Parse XML Queue", NULL);
@@ -481,12 +486,15 @@ inManagedObjectContext:managedObjectContext];
                 [self updateProgressBar:0.1 message:@"Updating Categories"];
                 TBXMLElement *categories = [TBXML childElementNamed:@"categories" parentElement:tbxml.rootXMLElement];
                 TBXMLElement *subElement = categories->firstChild;
+				NSLog(@"ok now updating categories");
+
                 do {
                     NSString *title = [NSString stringWithString:[TBXML valueOfAttributeNamed:@"title" forElement:subElement]];
-			//		NSLog(title);
+				//	NSLog(title);
                     [Category categoryWithTitle:title inManagedObjectContext:managedObjectContext];
                 } while ((subElement = subElement->nextSibling));
-                
+				NSLog(@"ok now updating notes");
+
                 // Parse Notes
                [self updateProgressBar:0.2 message:@"Updating WikEM Notes"];
                 TBXMLElement *notes = [TBXML childElementNamed:@"pages" parentElement:tbxml.rootXMLElement];
@@ -502,17 +510,12 @@ inManagedObjectContext:managedObjectContext];
                     [self updateProgressBar:(0.8*(i/totalNotes))+0.2 message:@"Updating WikEM Notes"];
                     
                 } while ((subElement = subElement->nextSibling));
-				
-//ck: after finish parsing xml. dl images. also set my singleton boolean so can communicate need for cache cleanup
+				NSLog(@"ok done w notes");
+
+//ck: after finish parsing xml.  set my singleton boolean so can communicate need for cache cleanup
 				[VariableStore sharedInstance].notesViewNeedsCacheReset=YES;
 				[VariableStore sharedInstance].categoryViewNeedsCacheReset=YES;
 
-				if(self.ranInitialSetup == YES)
-				{
-				[self updateProgressBar:1 message:@"Downloading Images"];
-				[self parseXMLImagesFile];
-				}
-//ok now done.
                 [self updateProgressBar:1 message:@"Done"];
                 [managedObjectContext save:nil];
                 [self disableAllTabBarItems:NO];
@@ -524,7 +527,7 @@ inManagedObjectContext:managedObjectContext];
 				//on first run set the update time to an old time...otw won't update online immediately 
 				if(self.ranInitialSetup == NO)
 				{
-					NSLog(@"asldkfjlsadkjf");
+					//NSLog(@"asldkfjlsadkjf");
 					[prefsThread setInteger:databaseGenerationTime forKey:@"lastDatabaseUpdate"];
 				}
 				else{
@@ -541,6 +544,16 @@ inManagedObjectContext:managedObjectContext];
                 [prefsThread synchronize];
                 [self updateUpdateTimes];
                 [self updateAvailable:NO];
+				
+				//user is now released from this updaterview but images will still dl behind scenes
+				//the NSData downloader is asyncrhonus already on another thread. nice.
+				//now after resease the other tab bar items and updated text, 
+				//dl images in background
+				 
+					//[self updateProgressBar:1 message:@"Downloading Images"];
+					[self parseXMLImagesFile];
+				
+				//ok now done.
             }
         }
     });
