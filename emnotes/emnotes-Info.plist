@@ -6,12 +6,19 @@
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
 	<string>${PRODUCT_NAME}</string>
+	<key>CFBundleDocumentTypes</key>
+	<array/>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFile</key>
 	<string></string>
+	<key>CFBundleIconFiles</key>
+	<array>
+		<string>WikEMIcon.png</string>
+		<string>WikEMIcon@2x.png</string>
+	</array>
 	<key>CFBundleIdentifier</key>
-	<string>com.sabindang.${PRODUCT_NAME:rfc1034identifier}</string>
+	<string>com.sabindang.com.emnotes</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -19,11 +26,21 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>2.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array/>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
+	<string>2.0</string>
+	<key>database_url</key>
+	<string>http://dl.wikem.org/database.xml</string>
+	<key>info_url</key>
+	<string>http://dl.wikem.org/info.xml</string>
+	<key>edit_note_url</key>
+	<string>http://www.wikem.org/w/index.php?title=%@&amp;action=edit</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.medical</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSMainNibFile</key>
@@ -31,8 +48,10 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UTExportedTypeDeclarations</key>
+	<array/>
+	<key>UTImportedTypeDeclarations</key>
+	<array/>
 </dict>
 </plist>

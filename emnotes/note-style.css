@@ -1,0 +1,14 @@
+body { font-family: arial }
+.editsection {display: none}
+p,ol,li,ul,a {font-size: 12pt }
+h2 { font-size: 14pt; border-top:1px solid #DBDEE2; padding-top: 10px; color: darkblue }
+h3 { font-size: 12pt; color: darkgray }
+#toc { width: 100% };
+/*
+div { font-family: arial; }
+p { margin-top: 0px; margin-bottom: 0px }
+h4 {margin-top: 0px; margin-bottom: 0px; color: navy }
+h3 {margin-top: 0px; margin-bottom: 0px }
+h2 {margin-top: 0px; margin-bottom: 0px }
+
+*/

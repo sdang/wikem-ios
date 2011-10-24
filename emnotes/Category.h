@@ -1,23 +1,21 @@
 //
 //  Category.h
-//  TabViewTest
+//  emnotes
 //
 //  Created by Sabin Dang on 4/1/11.
-//  Copyright 2011 sabindang.com. All rights reserved.
+//  Copyright (c) 2011 sabindang.com. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 
 
-@interface Category : NSObject {
-    @private
-    NSArray *categories;
+@interface Category : NSManagedObject {
+@private
 }
 
-@property (retain) NSArray *categories;
+@property (nonatomic, retain) NSString * title;
 
-- (int)totalNumberOfCategories;
-- (NSString *)nameOfCategory:(int)categoryIndex;
-- (int)numberOfNotesInCategory:(int)categoryIndex;
++ (Category *)categoryWithTitle:(NSString *)title inManagedObjectContext:(NSManagedObjectContext *)context;
 
 @end

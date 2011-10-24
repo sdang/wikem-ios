@@ -7,12 +7,54 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TBXML.h"
+#import "AcceptLicense.h"
+#import "AboutWikemViewController.h"
 
-
-@interface UpdateViewController : UIViewController {
-    
+@interface UpdateViewController : UIViewController <AcceptLicenseDelegate> {
+    AcceptLicense *licenseViewController;
+    NSPersistentStoreCoordinator *persistentStoreCoordinator;
+    UIProgressView *progressBar;
+    UIButton *updaterButton;
+    UILabel *progressText;
+    BOOL ranInitialSetup;
+    BOOL displayingLicense;
+    UILabel *currentDatabaseCreatedLabel;
+    UILabel *lastUpdateCheckLabel;
+    UILabel *lastUpdatePerformedLabel;
+    UILabel *noUpdateLabel;
 }
 
-@property (retain) UITabBarItem *tabBarItem;
+
+@property (nonatomic, retain) AcceptLicense *licenseViewController;
+@property (nonatomic, retain) UITabBarItem *tabBarItem;
+@property (nonatomic, retain) IBOutlet UILabel *noUpdateLabel;
+@property (nonatomic, retain) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (nonatomic, retain) IBOutlet UILabel *currentDatabaseCreatedLabel;
+@property (nonatomic, retain) IBOutlet UILabel *lastUpdateCheckLabel;
+@property (nonatomic, retain) IBOutlet UILabel *lastUpdatePerformedLabel;
+@property (nonatomic, retain) IBOutlet UIProgressView *progressBar;
+@property (nonatomic, retain) IBOutlet UILabel *progressText;
+@property (nonatomic, retain) IBOutlet UIButton *updaterButton;
+
+@property (assign) BOOL ranInitialSetup;
+@property (assign) BOOL displayingLicense;
+
+- (void)userDidAcceptLicense:(BOOL)status;
+- (IBAction)clearWikEMData;
+- (IBAction)parseXMLDatabaseFile;
+- (IBAction)runUpdateCheck:(id)sender;
+- (IBAction)displayAboutWikEMView:(id)sender;
+
+- (void)addNoteFromXMLElement:(TBXMLElement *)subElement context:(NSManagedObjectContext *)managedContextIndex;
+- (void)updateAvailable:(BOOL)status;
+- (NSDictionary *)checkUpdateAvailable;
+- (void)disableAllTabBarItems:(BOOL)status;
+- (void)updateProgressBar:(float)currentProgress message:(NSString *)messageString;
+- (NSDictionary *)parseXMLInfoFile;
+- (void)animateInNoUpdateText:(NSString *)updateMessage;
+- (void)animateOutNoUpdateText;
+- (void)autoUpdateCheck;
+
 
 @end

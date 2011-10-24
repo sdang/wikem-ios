@@ -7,6 +7,32 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		940640DE134CFD81008E4461 /* AboutWikemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 940640DC134CFD81008E4461 /* AboutWikemViewController.m */; };
+		940640DF134CFD81008E4461 /* AboutWikemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 940640DD134CFD81008E4461 /* AboutWikemViewController.xib */; };
+		9421A3C9134D316D0031D4AB /* ElevatedBar.png in Resources */ = {isa = PBXBuildFile; fileRef = 9421A3C8134D316D0031D4AB /* ElevatedBar.png */; };
+		9421A3CD134D3D780031D4AB /* DownloadUpdateButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9421A3CB134D3D780031D4AB /* DownloadUpdateButton@2x.png */; };
+		9421A3CE134D3D780031D4AB /* DownloadUpdateButtonHighlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9421A3CC134D3D780031D4AB /* DownloadUpdateButtonHighlighted@2x.png */; };
+		9421A3D1134D3E260031D4AB /* DownloadUpdateButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 9421A3CF134D3E250031D4AB /* DownloadUpdateButton.png */; };
+		9421A3D2134D3E260031D4AB /* DownloadUpdateButtonHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 9421A3D0134D3E250031D4AB /* DownloadUpdateButtonHighlighted.png */; };
+		9421A3DB134D42340031D4AB /* AboutWikEMButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 9421A3D9134D42330031D4AB /* AboutWikEMButton.png */; };
+		9421A3DC134D42340031D4AB /* AboutWikEMButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9421A3DA134D42330031D4AB /* AboutWikEMButton@2x.png */; };
+		9421A3DF134D42C30031D4AB /* UpdateButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 9421A3DD134D42C20031D4AB /* UpdateButton.png */; };
+		9421A3E0134D42C30031D4AB /* UpdateButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9421A3DE134D42C20031D4AB /* UpdateButton@2x.png */; };
+		9421A3E3134D46810031D4AB /* AcceptButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 9421A3E1134D46810031D4AB /* AcceptButton.png */; };
+		9421A3E4134D46810031D4AB /* AcceptButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9421A3E2134D46810031D4AB /* AcceptButton@2x.png */; };
+		9421A3E6134D47760031D4AB /* InfoBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 9421A3E5134D47760031D4AB /* InfoBackground.png */; };
+		94234C8E134A640900D241B5 /* AcceptLicense.m in Sources */ = {isa = PBXBuildFile; fileRef = 94234C8C134A640900D241B5 /* AcceptLicense.m */; };
+		94234C8F134A640900D241B5 /* AcceptLicense.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94234C8D134A640900D241B5 /* AcceptLicense.xib */; };
+		94234C92134A6EA300D241B5 /* disclaimer.html in Resources */ = {isa = PBXBuildFile; fileRef = 94234C91134A6EA300D241B5 /* disclaimer.html */; };
+		94234C9B134AA33D00D241B5 /* WikEM-Logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94234C99134AA33D00D241B5 /* WikEM-Logo@2x.png */; };
+		94234C9C134AA33D00D241B5 /* WikEM-Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 94234C9A134AA33D00D241B5 /* WikEM-Logo.png */; };
+		94742929134B7C5C00AE579D /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 94742928134B7C5C00AE579D /* Default.png */; };
+		9474292B134B7C6700AE579D /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9474292A134B7C6700AE579D /* Default@2x.png */; };
+		9474292D134B7E9C00AE579D /* note-style.css in Resources */ = {isa = PBXBuildFile; fileRef = 9474292C134B7E9C00AE579D /* note-style.css */; };
+		94742937134B8F4500AE579D /* WikEMIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 94742936134B8F4500AE579D /* WikEMIcon.png */; };
+		94742939134B8F4B00AE579D /* WikEMIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94742938134B8F4B00AE579D /* WikEMIcon@2x.png */; };
+		9474293C134BA6E600AE579D /* wikemUpdaterBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 9474293A134BA6E600AE579D /* wikemUpdaterBackground.png */; };
+		9474293D134BA6E600AE579D /* wikemUpdaterBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9474293B134BA6E600AE579D /* wikemUpdaterBackground@2x.png */; };
 		94DA2FD913468F8D00862F48 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94DA2FD813468F8D00862F48 /* UIKit.framework */; };
 		94DA2FDB13468F8D00862F48 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94DA2FDA13468F8D00862F48 /* Foundation.framework */; };
 		94DA2FDD13468F8D00862F48 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94DA2FDC13468F8D00862F48 /* CoreGraphics.framework */; };
@@ -21,21 +47,64 @@
 		94DA2FFD13468FBA00862F48 /* 179-notepad.png in Resources */ = {isa = PBXBuildFile; fileRef = 94DA2FF913468FBA00862F48 /* 179-notepad.png */; };
 		94DA2FFE13468FBA00862F48 /* 180-stickynote.png in Resources */ = {isa = PBXBuildFile; fileRef = 94DA2FFA13468FBA00862F48 /* 180-stickynote.png */; };
 		94DA300213468FCB00862F48 /* CategoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94DA300013468FCB00862F48 /* CategoryTableViewController.m */; };
-		94DA300313468FCB00862F48 /* CategoryTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94DA300113468FCB00862F48 /* CategoryTableViewController.xib */; };
 		94DA301013468FE900862F48 /* NotesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94DA300513468FE900862F48 /* NotesTableViewController.m */; };
-		94DA301113468FE900862F48 /* NotesTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94DA300613468FE900862F48 /* NotesTableViewController.xib */; };
 		94DA301213468FE900862F48 /* NoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94DA300813468FE900862F48 /* NoteViewController.m */; };
 		94DA301313468FE900862F48 /* NoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94DA300913468FE900862F48 /* NoteViewController.xib */; };
 		94DA301413468FE900862F48 /* PersonalNotesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94DA300B13468FE900862F48 /* PersonalNotesTableViewController.m */; };
 		94DA301513468FE900862F48 /* PersonalNotesTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94DA300C13468FE900862F48 /* PersonalNotesTableViewController.xib */; };
 		94DA301613468FE900862F48 /* UpdateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94DA300E13468FE900862F48 /* UpdateViewController.m */; };
 		94DA301713468FE900862F48 /* UpdateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94DA300F13468FE900862F48 /* UpdateViewController.xib */; };
-		94DA301C1346906300862F48 /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 94DA30191346906300862F48 /* Category.m */; };
-		94DA301D1346906300862F48 /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 94DA301B1346906300862F48 /* Note.m */; };
+		94DA3023134691DE00862F48 /* info.xml in Resources */ = {isa = PBXBuildFile; fileRef = 94DA3021134691DE00862F48 /* info.xml */; };
+		94DA3024134691DE00862F48 /* database.xml in Resources */ = {isa = PBXBuildFile; fileRef = 94DA3022134691DE00862F48 /* database.xml */; };
+		94E6959A1346BCE8008DF6ED /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E695991346BCE8008DF6ED /* Category.m */; };
+		94E6959D1346BD46008DF6ED /* CoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E6959B1346BD46008DF6ED /* CoreDataTableViewController.m */; };
+		94E695A01346CB35008DF6ED /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E6959F1346CB35008DF6ED /* Note.m */; };
+		94E695B51346ED1D008DF6ED /* NSDataAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E695B21346ED1D008DF6ED /* NSDataAdditions.m */; };
+		94E695B61346ED1D008DF6ED /* TBXML.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E695B41346ED1D008DF6ED /* TBXML.m */; };
+		94E695B91346ED44008DF6ED /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 94E695B81346ED44008DF6ED /* libz.dylib */; };
+		94E695BC134703C8008DF6ED /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E695BB134703C8008DF6ED /* NSString+HTML.m */; };
+		94E695BF13470417008DF6ED /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E695BE13470416008DF6ED /* GTMNSString+HTML.m */; };
+		94EFE5E8134D71D400B1CBDB /* PersonalNote.m in Sources */ = {isa = PBXBuildFile; fileRef = 94EFE5E7134D71D400B1CBDB /* PersonalNote.m */; };
+		94EFE5ED134D790100B1CBDB /* EditNoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94EFE5EB134D790100B1CBDB /* EditNoteViewController.m */; };
+		94EFE5EE134D790100B1CBDB /* EditNoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94EFE5EC134D790100B1CBDB /* EditNoteViewController.xib */; };
+		94EFE5F3134D8A9900B1CBDB /* PersonalNotesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94EFE5F1134D8A9900B1CBDB /* PersonalNotesViewController.m */; };
+		94EFE5F4134D8A9900B1CBDB /* PersonalNotesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94EFE5F2134D8A9900B1CBDB /* PersonalNotesViewController.xib */; };
+		94EFE5F7134DA10400B1CBDB /* Close.png in Resources */ = {isa = PBXBuildFile; fileRef = 94EFE5F5134DA10400B1CBDB /* Close.png */; };
+		94EFE5F8134DA10400B1CBDB /* Close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94EFE5F6134DA10400B1CBDB /* Close@2x.png */; };
+		94EFE5FB134DA10B00B1CBDB /* WikEM.org.png in Resources */ = {isa = PBXBuildFile; fileRef = 94EFE5F9134DA10B00B1CBDB /* WikEM.org.png */; };
+		94EFE5FC134DA10B00B1CBDB /* WikEM.org@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94EFE5FA134DA10B00B1CBDB /* WikEM.org@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		94DA2FD413468F8D00862F48 /* emnotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = emnotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		940640DB134CFD81008E4461 /* AboutWikemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutWikemViewController.h; sourceTree = "<group>"; };
+		940640DC134CFD81008E4461 /* AboutWikemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutWikemViewController.m; sourceTree = "<group>"; };
+		940640DD134CFD81008E4461 /* AboutWikemViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutWikemViewController.xib; sourceTree = "<group>"; };
+		9421A3C8134D316D0031D4AB /* ElevatedBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ElevatedBar.png; sourceTree = "<group>"; };
+		9421A3CB134D3D780031D4AB /* DownloadUpdateButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DownloadUpdateButton@2x.png"; sourceTree = "<group>"; };
+		9421A3CC134D3D780031D4AB /* DownloadUpdateButtonHighlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DownloadUpdateButtonHighlighted@2x.png"; sourceTree = "<group>"; };
+		9421A3CF134D3E250031D4AB /* DownloadUpdateButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DownloadUpdateButton.png; sourceTree = "<group>"; };
+		9421A3D0134D3E250031D4AB /* DownloadUpdateButtonHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DownloadUpdateButtonHighlighted.png; sourceTree = "<group>"; };
+		9421A3D9134D42330031D4AB /* AboutWikEMButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AboutWikEMButton.png; sourceTree = "<group>"; };
+		9421A3DA134D42330031D4AB /* AboutWikEMButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AboutWikEMButton@2x.png"; sourceTree = "<group>"; };
+		9421A3DD134D42C20031D4AB /* UpdateButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UpdateButton.png; sourceTree = "<group>"; };
+		9421A3DE134D42C20031D4AB /* UpdateButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UpdateButton@2x.png"; sourceTree = "<group>"; };
+		9421A3E1134D46810031D4AB /* AcceptButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AcceptButton.png; sourceTree = "<group>"; };
+		9421A3E2134D46810031D4AB /* AcceptButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AcceptButton@2x.png"; sourceTree = "<group>"; };
+		9421A3E5134D47760031D4AB /* InfoBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = InfoBackground.png; sourceTree = "<group>"; };
+		94234C8B134A640900D241B5 /* AcceptLicense.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AcceptLicense.h; sourceTree = "<group>"; };
+		94234C8C134A640900D241B5 /* AcceptLicense.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AcceptLicense.m; sourceTree = "<group>"; };
+		94234C8D134A640900D241B5 /* AcceptLicense.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AcceptLicense.xib; sourceTree = "<group>"; };
+		94234C91134A6EA300D241B5 /* disclaimer.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = disclaimer.html; sourceTree = "<group>"; };
+		94234C99134AA33D00D241B5 /* WikEM-Logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WikEM-Logo@2x.png"; sourceTree = "<group>"; };
+		94234C9A134AA33D00D241B5 /* WikEM-Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WikEM-Logo.png"; sourceTree = "<group>"; };
+		94742928134B7C5C00AE579D /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../Default.png; sourceTree = "<group>"; };
+		9474292A134B7C6700AE579D /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../Default@2x.png"; sourceTree = "<group>"; };
+		9474292C134B7E9C00AE579D /* note-style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "note-style.css"; sourceTree = "<group>"; };
+		94742936134B8F4500AE579D /* WikEMIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = WikEMIcon.png; path = ../WikEMIcon.png; sourceTree = "<group>"; };
+		94742938134B8F4B00AE579D /* WikEMIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "WikEMIcon@2x.png"; path = "../WikEMIcon@2x.png"; sourceTree = "<group>"; };
+		9474293A134BA6E600AE579D /* wikemUpdaterBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wikemUpdaterBackground.png; sourceTree = "<group>"; };
+		9474293B134BA6E600AE579D /* wikemUpdaterBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wikemUpdaterBackground@2x.png"; sourceTree = "<group>"; };
+		94DA2FD413468F8D00862F48 /* WikEM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WikEM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		94DA2FD813468F8D00862F48 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		94DA2FDA13468F8D00862F48 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		94DA2FDC13468F8D00862F48 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -54,10 +123,8 @@
 		94DA2FFA13468FBA00862F48 /* 180-stickynote.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "180-stickynote.png"; sourceTree = "<group>"; };
 		94DA2FFF13468FCB00862F48 /* CategoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryTableViewController.h; sourceTree = "<group>"; };
 		94DA300013468FCB00862F48 /* CategoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryTableViewController.m; sourceTree = "<group>"; };
-		94DA300113468FCB00862F48 /* CategoryTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoryTableViewController.xib; sourceTree = "<group>"; };
 		94DA300413468FE900862F48 /* NotesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotesTableViewController.h; sourceTree = "<group>"; };
 		94DA300513468FE900862F48 /* NotesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotesTableViewController.m; sourceTree = "<group>"; };
-		94DA300613468FE900862F48 /* NotesTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotesTableViewController.xib; sourceTree = "<group>"; };
 		94DA300713468FE900862F48 /* NoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteViewController.h; sourceTree = "<group>"; };
 		94DA300813468FE900862F48 /* NoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteViewController.m; sourceTree = "<group>"; };
 		94DA300913468FE900862F48 /* NoteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoteViewController.xib; sourceTree = "<group>"; };
@@ -67,10 +134,36 @@
 		94DA300D13468FE900862F48 /* UpdateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateViewController.h; sourceTree = "<group>"; };
 		94DA300E13468FE900862F48 /* UpdateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateViewController.m; sourceTree = "<group>"; };
 		94DA300F13468FE900862F48 /* UpdateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UpdateViewController.xib; sourceTree = "<group>"; };
-		94DA30181346906300862F48 /* Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Category.h; sourceTree = "<group>"; };
-		94DA30191346906300862F48 /* Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Category.m; sourceTree = "<group>"; };
-		94DA301A1346906300862F48 /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
-		94DA301B1346906300862F48 /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
+		94DA3021134691DE00862F48 /* info.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = info.xml; sourceTree = "<group>"; };
+		94DA3022134691DE00862F48 /* database.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = database.xml; sourceTree = "<group>"; };
+		94E695981346BCE8008DF6ED /* Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Category.h; sourceTree = "<group>"; };
+		94E695991346BCE8008DF6ED /* Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Category.m; sourceTree = "<group>"; };
+		94E6959B1346BD46008DF6ED /* CoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataTableViewController.m; sourceTree = "<group>"; };
+		94E6959C1346BD46008DF6ED /* CoreDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataTableViewController.h; sourceTree = "<group>"; };
+		94E6959E1346CB35008DF6ED /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
+		94E6959F1346CB35008DF6ED /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
+		94E695B11346ED1D008DF6ED /* NSDataAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDataAdditions.h; sourceTree = "<group>"; };
+		94E695B21346ED1D008DF6ED /* NSDataAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDataAdditions.m; sourceTree = "<group>"; };
+		94E695B31346ED1D008DF6ED /* TBXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBXML.h; sourceTree = "<group>"; };
+		94E695B41346ED1D008DF6ED /* TBXML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBXML.m; sourceTree = "<group>"; };
+		94E695B81346ED44008DF6ED /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		94E695BA134703C8008DF6ED /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HTML.h"; sourceTree = "<group>"; };
+		94E695BB134703C8008DF6ED /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HTML.m"; sourceTree = "<group>"; };
+		94E695BD13470416008DF6ED /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTMNSString+HTML.h"; sourceTree = "<group>"; };
+		94E695BE13470416008DF6ED /* GTMNSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSString+HTML.m"; sourceTree = "<group>"; };
+		94E695C013470425008DF6ED /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
+		94EFE5E6134D71D400B1CBDB /* PersonalNote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalNote.h; sourceTree = "<group>"; };
+		94EFE5E7134D71D400B1CBDB /* PersonalNote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalNote.m; sourceTree = "<group>"; };
+		94EFE5EA134D790100B1CBDB /* EditNoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditNoteViewController.h; sourceTree = "<group>"; };
+		94EFE5EB134D790100B1CBDB /* EditNoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditNoteViewController.m; sourceTree = "<group>"; };
+		94EFE5EC134D790100B1CBDB /* EditNoteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditNoteViewController.xib; sourceTree = "<group>"; };
+		94EFE5F0134D8A9900B1CBDB /* PersonalNotesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalNotesViewController.h; sourceTree = "<group>"; };
+		94EFE5F1134D8A9900B1CBDB /* PersonalNotesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalNotesViewController.m; sourceTree = "<group>"; };
+		94EFE5F2134D8A9900B1CBDB /* PersonalNotesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonalNotesViewController.xib; sourceTree = "<group>"; };
+		94EFE5F5134DA10400B1CBDB /* Close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Close.png; sourceTree = "<group>"; };
+		94EFE5F6134DA10400B1CBDB /* Close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Close@2x.png"; sourceTree = "<group>"; };
+		94EFE5F9134DA10B00B1CBDB /* WikEM.org.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WikEM.org.png; sourceTree = "<group>"; };
+		94EFE5FA134DA10B00B1CBDB /* WikEM.org@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WikEM.org@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +171,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94E695B91346ED44008DF6ED /* libz.dylib in Frameworks */,
 				94DA2FD913468F8D00862F48 /* UIKit.framework in Frameworks */,
 				94DA2FDB13468F8D00862F48 /* Foundation.framework in Frameworks */,
 				94DA2FDD13468F8D00862F48 /* CoreGraphics.framework in Frameworks */,
@@ -88,6 +182,122 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		940640BA134CE577008E4461 /* ListViews */ = {
+			isa = PBXGroup;
+			children = (
+				94DA300C13468FE900862F48 /* PersonalNotesTableViewController.xib */,
+				94E6959B1346BD46008DF6ED /* CoreDataTableViewController.m */,
+				94E6959C1346BD46008DF6ED /* CoreDataTableViewController.h */,
+				94DA2FFF13468FCB00862F48 /* CategoryTableViewController.h */,
+				94DA300013468FCB00862F48 /* CategoryTableViewController.m */,
+				94DA300413468FE900862F48 /* NotesTableViewController.h */,
+				94DA300513468FE900862F48 /* NotesTableViewController.m */,
+			);
+			name = ListViews;
+			sourceTree = "<group>";
+		};
+		940640BB134CE596008E4461 /* UpdaterView */ = {
+			isa = PBXGroup;
+			children = (
+				94234C91134A6EA300D241B5 /* disclaimer.html */,
+				94DA300D13468FE900862F48 /* UpdateViewController.h */,
+				94DA300E13468FE900862F48 /* UpdateViewController.m */,
+				94234C8B134A640900D241B5 /* AcceptLicense.h */,
+				94234C8C134A640900D241B5 /* AcceptLicense.m */,
+				94234C8D134A640900D241B5 /* AcceptLicense.xib */,
+				94DA300F13468FE900862F48 /* UpdateViewController.xib */,
+				940640DB134CFD81008E4461 /* AboutWikemViewController.h */,
+				940640DC134CFD81008E4461 /* AboutWikemViewController.m */,
+				940640DD134CFD81008E4461 /* AboutWikemViewController.xib */,
+			);
+			name = UpdaterView;
+			sourceTree = "<group>";
+		};
+		940640BC134CE5D5008E4461 /* NoteView */ = {
+			isa = PBXGroup;
+			children = (
+				9474292C134B7E9C00AE579D /* note-style.css */,
+				94DA300913468FE900862F48 /* NoteViewController.xib */,
+				94DA300713468FE900862F48 /* NoteViewController.h */,
+				94DA300813468FE900862F48 /* NoteViewController.m */,
+			);
+			name = NoteView;
+			sourceTree = "<group>";
+		};
+		940640BD134CE85E008E4461 /* WikEM */ = {
+			isa = PBXGroup;
+			children = (
+				94DA2FE613468F8D00862F48 /* emnotes-Prefix.pch */,
+				94DA2FE713468F8D00862F48 /* main.m */,
+				94DA2FE913468F8D00862F48 /* emnotesAppDelegate.h */,
+				94DA2FEA13468F8D00862F48 /* emnotesAppDelegate.m */,
+				94DA2FEC13468F8D00862F48 /* MainWindow.xib */,
+			);
+			name = WikEM;
+			sourceTree = "<group>";
+		};
+		940640BE134CE87B008E4461 /* UIGraphicalElements */ = {
+			isa = PBXGroup;
+			children = (
+				94EFE5F9134DA10B00B1CBDB /* WikEM.org.png */,
+				94EFE5FA134DA10B00B1CBDB /* WikEM.org@2x.png */,
+				94EFE5F5134DA10400B1CBDB /* Close.png */,
+				94EFE5F6134DA10400B1CBDB /* Close@2x.png */,
+				9421A3E1134D46810031D4AB /* AcceptButton.png */,
+				9421A3E5134D47760031D4AB /* InfoBackground.png */,
+				9421A3E2134D46810031D4AB /* AcceptButton@2x.png */,
+				9421A3DD134D42C20031D4AB /* UpdateButton.png */,
+				9421A3DE134D42C20031D4AB /* UpdateButton@2x.png */,
+				9421A3D9134D42330031D4AB /* AboutWikEMButton.png */,
+				9421A3DA134D42330031D4AB /* AboutWikEMButton@2x.png */,
+				9421A3CF134D3E250031D4AB /* DownloadUpdateButton.png */,
+				9421A3D0134D3E250031D4AB /* DownloadUpdateButtonHighlighted.png */,
+				9421A3CB134D3D780031D4AB /* DownloadUpdateButton@2x.png */,
+				9421A3CC134D3D780031D4AB /* DownloadUpdateButtonHighlighted@2x.png */,
+				9421A3C8134D316D0031D4AB /* ElevatedBar.png */,
+				94DA2FF713468FBA00862F48 /* 10-medical.png */,
+				94DA2FF813468FBA00862F48 /* 33-cabinet.png */,
+				94DA2FF913468FBA00862F48 /* 179-notepad.png */,
+				94DA2FFA13468FBA00862F48 /* 180-stickynote.png */,
+				9474293A134BA6E600AE579D /* wikemUpdaterBackground.png */,
+				9474293B134BA6E600AE579D /* wikemUpdaterBackground@2x.png */,
+				94742938134B8F4B00AE579D /* WikEMIcon@2x.png */,
+				94742936134B8F4500AE579D /* WikEMIcon.png */,
+				9474292A134B7C6700AE579D /* Default@2x.png */,
+				94742928134B7C5C00AE579D /* Default.png */,
+				94234C99134AA33D00D241B5 /* WikEM-Logo@2x.png */,
+				94234C9A134AA33D00D241B5 /* WikEM-Logo.png */,
+			);
+			name = UIGraphicalElements;
+			sourceTree = "<group>";
+		};
+		940640BF134CE897008E4461 /* InitialData */ = {
+			isa = PBXGroup;
+			children = (
+				94DA2FE313468F8D00862F48 /* InfoPlist.strings */,
+				94DA3021134691DE00862F48 /* info.xml */,
+				94DA3022134691DE00862F48 /* database.xml */,
+				94DA2FE213468F8D00862F48 /* emnotes-Info.plist */,
+			);
+			name = InitialData;
+			sourceTree = "<group>";
+		};
+		948C0E3B134B60C4007FA6E2 /* Other Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				94E695C013470425008DF6ED /* GTMDefines.h */,
+				94E695BD13470416008DF6ED /* GTMNSString+HTML.h */,
+				94E695BE13470416008DF6ED /* GTMNSString+HTML.m */,
+				94E695BA134703C8008DF6ED /* NSString+HTML.h */,
+				94E695BB134703C8008DF6ED /* NSString+HTML.m */,
+				94E695B11346ED1D008DF6ED /* NSDataAdditions.h */,
+				94E695B21346ED1D008DF6ED /* NSDataAdditions.m */,
+				94E695B31346ED1D008DF6ED /* TBXML.h */,
+				94E695B41346ED1D008DF6ED /* TBXML.m */,
+			);
+			name = "Other Libraries";
+			sourceTree = "<group>";
+		};
 		94DA2FC913468F8D00862F48 = {
 			isa = PBXGroup;
 			children = (
@@ -100,7 +310,7 @@
 		94DA2FD513468F8D00862F48 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				94DA2FD413468F8D00862F48 /* emnotes.app */,
+				94DA2FD413468F8D00862F48 /* WikEM.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -108,6 +318,7 @@
 		94DA2FD713468F8D00862F48 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				94E695B81346ED44008DF6ED /* libz.dylib */,
 				94DA2FD813468F8D00862F48 /* UIKit.framework */,
 				94DA2FDA13468F8D00862F48 /* Foundation.framework */,
 				94DA2FDC13468F8D00862F48 /* CoreGraphics.framework */,
@@ -119,29 +330,13 @@
 		94DA2FE013468F8D00862F48 /* emnotes */ = {
 			isa = PBXGroup;
 			children = (
-				94DA30181346906300862F48 /* Category.h */,
-				94DA30191346906300862F48 /* Category.m */,
-				94DA301A1346906300862F48 /* Note.h */,
-				94DA301B1346906300862F48 /* Note.m */,
-				94DA300413468FE900862F48 /* NotesTableViewController.h */,
-				94DA300513468FE900862F48 /* NotesTableViewController.m */,
-				94DA300613468FE900862F48 /* NotesTableViewController.xib */,
-				94DA300713468FE900862F48 /* NoteViewController.h */,
-				94DA300813468FE900862F48 /* NoteViewController.m */,
-				94DA300913468FE900862F48 /* NoteViewController.xib */,
-				94DA300A13468FE900862F48 /* PersonalNotesTableViewController.h */,
-				94DA300B13468FE900862F48 /* PersonalNotesTableViewController.m */,
-				94DA300C13468FE900862F48 /* PersonalNotesTableViewController.xib */,
-				94DA300D13468FE900862F48 /* UpdateViewController.h */,
-				94DA300E13468FE900862F48 /* UpdateViewController.m */,
-				94DA300F13468FE900862F48 /* UpdateViewController.xib */,
-				94DA2FFF13468FCB00862F48 /* CategoryTableViewController.h */,
-				94DA300013468FCB00862F48 /* CategoryTableViewController.m */,
-				94DA300113468FCB00862F48 /* CategoryTableViewController.xib */,
-				94DA2FE913468F8D00862F48 /* emnotesAppDelegate.h */,
-				94DA2FEA13468F8D00862F48 /* emnotesAppDelegate.m */,
-				94DA2FEC13468F8D00862F48 /* MainWindow.xib */,
-				94DA2FEF13468F8D00862F48 /* emnotes.xcdatamodeld */,
+				940640BD134CE85E008E4461 /* WikEM */,
+				94EFE5EF134D8A2500B1CBDB /* PersonalNotesView */,
+				940640BC134CE5D5008E4461 /* NoteView */,
+				940640BB134CE596008E4461 /* UpdaterView */,
+				940640BA134CE577008E4461 /* ListViews */,
+				948C0E3B134B60C4007FA6E2 /* Other Libraries */,
+				94DA30201346913E00862F48 /* CoreData */,
 				94DA2FE113468F8D00862F48 /* Supporting Files */,
 			);
 			path = emnotes;
@@ -150,16 +345,39 @@
 		94DA2FE113468F8D00862F48 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				94DA2FF713468FBA00862F48 /* 10-medical.png */,
-				94DA2FF813468FBA00862F48 /* 33-cabinet.png */,
-				94DA2FF913468FBA00862F48 /* 179-notepad.png */,
-				94DA2FFA13468FBA00862F48 /* 180-stickynote.png */,
-				94DA2FE213468F8D00862F48 /* emnotes-Info.plist */,
-				94DA2FE313468F8D00862F48 /* InfoPlist.strings */,
-				94DA2FE613468F8D00862F48 /* emnotes-Prefix.pch */,
-				94DA2FE713468F8D00862F48 /* main.m */,
+				940640BF134CE897008E4461 /* InitialData */,
+				940640BE134CE87B008E4461 /* UIGraphicalElements */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		94DA30201346913E00862F48 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				94DA2FEF13468F8D00862F48 /* emnotes.xcdatamodeld */,
+				94E695981346BCE8008DF6ED /* Category.h */,
+				94E695991346BCE8008DF6ED /* Category.m */,
+				94E6959E1346CB35008DF6ED /* Note.h */,
+				94E6959F1346CB35008DF6ED /* Note.m */,
+				94EFE5E6134D71D400B1CBDB /* PersonalNote.h */,
+				94EFE5E7134D71D400B1CBDB /* PersonalNote.m */,
+			);
+			name = CoreData;
+			sourceTree = "<group>";
+		};
+		94EFE5EF134D8A2500B1CBDB /* PersonalNotesView */ = {
+			isa = PBXGroup;
+			children = (
+				94DA300A13468FE900862F48 /* PersonalNotesTableViewController.h */,
+				94DA300B13468FE900862F48 /* PersonalNotesTableViewController.m */,
+				94EFE5EA134D790100B1CBDB /* EditNoteViewController.h */,
+				94EFE5EB134D790100B1CBDB /* EditNoteViewController.m */,
+				94EFE5EC134D790100B1CBDB /* EditNoteViewController.xib */,
+				94EFE5F0134D8A9900B1CBDB /* PersonalNotesViewController.h */,
+				94EFE5F1134D8A9900B1CBDB /* PersonalNotesViewController.m */,
+				94EFE5F2134D8A9900B1CBDB /* PersonalNotesViewController.xib */,
+			);
+			name = PersonalNotesView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -179,7 +397,7 @@
 			);
 			name = emnotes;
 			productName = emnotes;
-			productReference = 94DA2FD413468F8D00862F48 /* emnotes.app */;
+			productReference = 94DA2FD413468F8D00862F48 /* WikEM.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -218,11 +436,41 @@
 				94DA2FFC13468FBA00862F48 /* 33-cabinet.png in Resources */,
 				94DA2FFD13468FBA00862F48 /* 179-notepad.png in Resources */,
 				94DA2FFE13468FBA00862F48 /* 180-stickynote.png in Resources */,
-				94DA300313468FCB00862F48 /* CategoryTableViewController.xib in Resources */,
-				94DA301113468FE900862F48 /* NotesTableViewController.xib in Resources */,
 				94DA301313468FE900862F48 /* NoteViewController.xib in Resources */,
 				94DA301513468FE900862F48 /* PersonalNotesTableViewController.xib in Resources */,
 				94DA301713468FE900862F48 /* UpdateViewController.xib in Resources */,
+				94DA3023134691DE00862F48 /* info.xml in Resources */,
+				94DA3024134691DE00862F48 /* database.xml in Resources */,
+				94234C8F134A640900D241B5 /* AcceptLicense.xib in Resources */,
+				94234C92134A6EA300D241B5 /* disclaimer.html in Resources */,
+				94234C9B134AA33D00D241B5 /* WikEM-Logo@2x.png in Resources */,
+				94234C9C134AA33D00D241B5 /* WikEM-Logo.png in Resources */,
+				94742929134B7C5C00AE579D /* Default.png in Resources */,
+				9474292B134B7C6700AE579D /* Default@2x.png in Resources */,
+				9474292D134B7E9C00AE579D /* note-style.css in Resources */,
+				94742937134B8F4500AE579D /* WikEMIcon.png in Resources */,
+				94742939134B8F4B00AE579D /* WikEMIcon@2x.png in Resources */,
+				9474293C134BA6E600AE579D /* wikemUpdaterBackground.png in Resources */,
+				9474293D134BA6E600AE579D /* wikemUpdaterBackground@2x.png in Resources */,
+				940640DF134CFD81008E4461 /* AboutWikemViewController.xib in Resources */,
+				9421A3C9134D316D0031D4AB /* ElevatedBar.png in Resources */,
+				9421A3CD134D3D780031D4AB /* DownloadUpdateButton@2x.png in Resources */,
+				9421A3CE134D3D780031D4AB /* DownloadUpdateButtonHighlighted@2x.png in Resources */,
+				9421A3D1134D3E260031D4AB /* DownloadUpdateButton.png in Resources */,
+				9421A3D2134D3E260031D4AB /* DownloadUpdateButtonHighlighted.png in Resources */,
+				9421A3DB134D42340031D4AB /* AboutWikEMButton.png in Resources */,
+				9421A3DC134D42340031D4AB /* AboutWikEMButton@2x.png in Resources */,
+				9421A3DF134D42C30031D4AB /* UpdateButton.png in Resources */,
+				9421A3E0134D42C30031D4AB /* UpdateButton@2x.png in Resources */,
+				9421A3E3134D46810031D4AB /* AcceptButton.png in Resources */,
+				9421A3E4134D46810031D4AB /* AcceptButton@2x.png in Resources */,
+				9421A3E6134D47760031D4AB /* InfoBackground.png in Resources */,
+				94EFE5EE134D790100B1CBDB /* EditNoteViewController.xib in Resources */,
+				94EFE5F4134D8A9900B1CBDB /* PersonalNotesViewController.xib in Resources */,
+				94EFE5F7134DA10400B1CBDB /* Close.png in Resources */,
+				94EFE5F8134DA10400B1CBDB /* Close@2x.png in Resources */,
+				94EFE5FB134DA10B00B1CBDB /* WikEM.org.png in Resources */,
+				94EFE5FC134DA10B00B1CBDB /* WikEM.org@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -241,8 +489,18 @@
 				94DA301213468FE900862F48 /* NoteViewController.m in Sources */,
 				94DA301413468FE900862F48 /* PersonalNotesTableViewController.m in Sources */,
 				94DA301613468FE900862F48 /* UpdateViewController.m in Sources */,
-				94DA301C1346906300862F48 /* Category.m in Sources */,
-				94DA301D1346906300862F48 /* Note.m in Sources */,
+				94E6959A1346BCE8008DF6ED /* Category.m in Sources */,
+				94E6959D1346BD46008DF6ED /* CoreDataTableViewController.m in Sources */,
+				94E695A01346CB35008DF6ED /* Note.m in Sources */,
+				94E695B51346ED1D008DF6ED /* NSDataAdditions.m in Sources */,
+				94E695B61346ED1D008DF6ED /* TBXML.m in Sources */,
+				94E695BC134703C8008DF6ED /* NSString+HTML.m in Sources */,
+				94E695BF13470417008DF6ED /* GTMNSString+HTML.m in Sources */,
+				94234C8E134A640900D241B5 /* AcceptLicense.m in Sources */,
+				940640DE134CFD81008E4461 /* AboutWikemViewController.m in Sources */,
+				94EFE5E8134D71D400B1CBDB /* PersonalNote.m in Sources */,
+				94EFE5ED134D790100B1CBDB /* EditNoteViewController.m in Sources */,
+				94EFE5F3134D8A9900B1CBDB /* PersonalNotesViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,7 +538,7 @@
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -294,7 +552,7 @@
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 			};
@@ -309,7 +567,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "emnotes/emnotes-Prefix.pch";
 				INFOPLIST_FILE = "emnotes/emnotes-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				PRODUCT_NAME = WikEM;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -322,7 +581,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "emnotes/emnotes-Prefix.pch";
 				INFOPLIST_FILE = "emnotes/emnotes-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				PRODUCT_NAME = WikEM;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
@@ -347,6 +607,7 @@
 				94DA2FF613468F8D00862F48 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

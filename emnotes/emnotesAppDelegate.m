@@ -11,6 +11,9 @@
 #import "NotesTableViewController.h"
 #import "PersonalNotesTableViewController.h"
 #import "UpdateViewController.h"
+#import "AcceptLicense.h"
+#import "Category.h"
+#import "Note.h"
 
 @implementation emnotesAppDelegate
 
@@ -20,26 +23,48 @@
 @synthesize managedObjectModel=__managedObjectModel;
 @synthesize persistentStoreCoordinator=__persistentStoreCoordinator;
 @synthesize tabBar;
+@synthesize uVC;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    
+    // is this the first time we've been run?
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    BOOL ranInitialSetup = [prefs boolForKey:@"ranInitialSetup"];
+    
+    if (!ranInitialSetup)
+        NSLog(@"This is a first run");
+      
     UINavigationController *categoriesNavCon = [[UINavigationController alloc] init];
-    CategoryTableViewController *categoryTableViewController = [[CategoryTableViewController alloc] initWithStyle:UITableViewStylePlain];
+    CategoryTableViewController *categoryTableViewController = [[CategoryTableViewController alloc] 
+                                                                initWithStyle:UITableViewStylePlain
+                                                                inManagedContext:self.managedObjectContext];
+    
+    categoryTableViewController.managedObjectContext = self.managedObjectContext;
     [categoriesNavCon pushViewController:categoryTableViewController animated:NO];
     [categoryTableViewController release];
     
     UINavigationController *allNotesNavCon = [[UINavigationController alloc] init];
-    NotesTableViewController *notesTableViewController = [[NotesTableViewController alloc] init];
+    NotesTableViewController *notesTableViewController = [[NotesTableViewController alloc]
+                                                          initWithStyle:UITableViewStylePlain
+                                                          inManagedContext:self.managedObjectContext
+                                                          withCategory:nil];
+    
     [allNotesNavCon pushViewController:notesTableViewController animated:NO];
     [notesTableViewController release];
     
     UINavigationController *personalNotesNavCon = [[UINavigationController alloc] init];
-    PersonalNotesTableViewController *personalNotesTableViewController = [[PersonalNotesTableViewController alloc] init];
+    PersonalNotesTableViewController *personalNotesTableViewController = [[PersonalNotesTableViewController alloc]
+                                                                          initWithStyle:UITableViewStylePlain
+                                                                    inManagedContext:self.managedObjectContext];
+    
     [personalNotesNavCon pushViewController:personalNotesTableViewController animated:NO];
     [personalNotesTableViewController release];
     
     UpdateViewController *updateViewController = [[UpdateViewController alloc] init];
+    updateViewController.persistentStoreCoordinator = self.persistentStoreCoordinator;
+    self.uVC = updateViewController;
     
     self.tabBar = [[UITabBarController alloc] init];
     self.tabBar.delegate = self;
@@ -53,6 +78,14 @@
     
     [self.window addSubview:tabBar.view];
     [self.window makeKeyAndVisible];
+    
+    if (!ranInitialSetup) {
+        updateViewController.ranInitialSetup = FALSE;
+        [tabBar setSelectedIndex:3];    
+    } else {
+        updateViewController.ranInitialSetup = TRUE;
+    }
+    
     return YES;
 
 }
@@ -93,6 +126,7 @@
     /*
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
+    [self.uVC autoUpdateCheck];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -107,6 +141,7 @@
     [__managedObjectContext release];
     [__managedObjectModel release];
     [__persistentStoreCoordinator release];
+    [uVC release];
     [super dealloc];
 }
 

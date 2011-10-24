@@ -7,8 +7,8 @@
 //
 
 #import "NotesTableViewController.h"
-#import "Note.h"
 #import "NoteViewController.h"
+#import "Note.h"
 
 @implementation NotesTableViewController
 
@@ -29,6 +29,7 @@
     self = [super initWithStyle:style];
     if (self) {
         [self setupTabBarItem];
+        self.searchKey = @"name";
         self.title = self.tabBarItem.title;
         // Custom initialization
     }
@@ -37,150 +38,65 @@
 
 - (void)dealloc
 {
-    [tabBarItem dealloc];
+    [tabBarItem release];
     [super dealloc];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
-
-#pragma mark - View lifecycle
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
+    self.tabBarItem = nil;
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (id)initWithStyle:(UITableViewStyle)style inManagedContext:(NSManagedObjectContext *)context withCategory:(Category *)category
 {
-    [super viewWillAppear:animated];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-#pragma mark - Table view data source
-
-/*
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
-}
- */
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    // Return the number of rows in the section.
-    return [[Note allNotes] count];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier = @"Cell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+    if ((self = [self initWithStyle:style])) {
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        request.entity = [NSEntityDescription entityForName:@"Note" inManagedObjectContext:context];
+        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+        request.sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+        NSString *cacheName = nil;
+        NSString *sectionName = nil;
+        
+        if (category) {
+            request.predicate = [NSPredicate predicateWithFormat:@"%@ in categories", category];
+            self.title = category.title;
+            cacheName = [NSString stringWithString:category.title];
+            sectionName = nil; 
+        } else {
+            sectionName = @"getFirstLetter";
+            cacheName = @"notes";
+            request.predicate = nil;
+        }
+        
+        request.fetchBatchSize = 20;
+        
+        NSFetchedResultsController *frc = [[NSFetchedResultsController alloc]
+                                           initWithFetchRequest:request
+                                           managedObjectContext:context
+                                           sectionNameKeyPath:sectionName
+                                           cacheName:cacheName];
+        
+        self.fetchedResultsController = frc;
+        [sortDescriptor release];
+        [request release];
+        [frc release];
     }
-    cell.textLabel.text = [[Note allNotes] objectAtIndex:indexPath.row];
-    // Configure the cell...
-    
-    return cell;
+    return self;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-#pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)managedObjectSelected:(NSManagedObject *)managedObject
 {
     NoteViewController *noteViewController = [[NoteViewController alloc] init];
+    noteViewController.note = (Note *)managedObject;
     [self.navigationController pushViewController:noteViewController animated:YES];
     [noteViewController release];
-    
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
 }
+
+- (UITableViewCellAccessoryType)accessoryTypeForManagedObject:(NSManagedObject *)managedObject
+{
+	return UITableViewCellAccessoryNone;
+}
+
 
 @end

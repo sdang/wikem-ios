@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Note.h"
+#import "CoreDataTableViewController.h"
+#import "Category.h"
 
-@interface NotesTableViewController : UITableViewController {
-    
+@interface NotesTableViewController : CoreDataTableViewController {
 }
 
 @property (retain) UITabBarItem *tabBarItem;
+
+- (id)initWithStyle:(UITableViewStyle)style inManagedContext:(NSManagedObjectContext *)context withCategory:(Category *)category;
 
 @end
