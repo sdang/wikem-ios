@@ -161,18 +161,20 @@
 	return YES;
 }
 
+
+
 //after a webivew loaded calls this- (void)viewDidLoad but don't useAlways try to write only UI initialisation code in viewDidLoad. If you write code to alloc/init a variable in your viewDidLoad, then when the method is invoked a second time the variable will be alloc/init'd again causing a memory leak. 
 //If you really do need to alloc/init your member variable in viewdidload , do it only if it is not already allocated.
-
 -(void)viewDidAppear:(BOOL)animated{
-	NSLog(@"noteviewcontroller viewDidAppear");
-//context wont be loaded...so load it here:
+//called everytime view reappears
+    //for first time context wont be loaded...so load it here:
 	if (managedObjectContext == nil) 
 	{   //NSLog(@"managedobjectcontext was nil");
         managedObjectContext = [(emnotesAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext]; 
  	}
 	
-	//ck instead of baseurl as www.wikem... will try native images using local url
+    
+    //ck instead of baseurl as www.wikem... will try native images using local url
  	//get the path of current users documents folder for read/write
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory , NSUserDomainMask, YES);
 	NSString* imagePath = [paths objectAtIndex:0];
@@ -180,42 +182,51 @@
 	
 	webView.dataDetectorTypes = UIDataDetectorTypeLink;
 	
-	 /*ck when traversing lots of links. get to a match for a link. then crash due to uncuaght exception. basically note is nil so calling formattedContent does nothing...
-      
-      THE UNPREDICTABLILITY OF THIS ERROR SEEMS TO BE CHARACTERISITIC OF REQUESTING DEALLOCATED MEMORY... WHICH GIVES THESE TYPES OF UNPREDICTABLE ERRORS...
-      */
+    /*ck when traversing lots of links. get to a match for a link. then crash due to uncuaght exception. basically note is nil so calling formattedContent does nothing...
+     
+     THE UNPREDICTABLILITY OF THIS ERROR SEEMS TO BE CHARACTERISITIC OF REQUESTING DEALLOCATED MEMORY... WHICH GIVES THESE TYPES OF UNPREDICTABLE ERRORS...
+     */
 	if (self.note == nil){
         NSLog(@"ERROR !!!!! why is the note nil?!");
         //don't proceed to load anything. it will crash
-     }
+    }
     else{
-	
+        
         //as baseURL changes, need to add css as a string...not as a 'link'
         [webView loadHTMLString:[self.note formattedContent] baseURL:testURL];
- 	 
+        
         //this alone does not zoom appropriately. added meta 'viewport' tag for html5 in header to make work
         self.webView.scalesPageToFit = YES;
-	
+        
         self.title = self.note.name;
     }
-    [super viewDidLoad];
+
+    
+    
+}
+-(void)viewDidLoad:(BOOL)animated{
+	NSLog(@"noteviewcontroller viewDidLOAD");
+
+	    [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 }
 
 - (void)viewDidUnload
 {
-
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    //eg. self.myOutlet = nil;
     
-    
-  //ck : make these nil. just incase. pointers that are nil can respond with nil, safely, without blowing up. released objects on the other hand will give the crazy errors that i am getting  
+    //ck : make these nil. just incase. pointers that are nil can respond with nil, safely, without blowing up. released objects on the other hand will give the crazy errors that i am getting  
     
     NSLog(@"viewDidUnload");
     self.webView = nil;
     self.note = nil;
     self.managedObjectContext = nil;
+    
+
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    //eg. self.myOutlet = nil;
+    
+ 
  } 
 
 

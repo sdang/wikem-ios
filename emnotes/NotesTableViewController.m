@@ -69,11 +69,11 @@
     [super dealloc];
 }
 -(void)viewDidDisappear:(BOOL)animated{
-	NSLog(@"viewdid disappear");
+	//NSLog(@"viewdid disappear");
 
 }
 - (void)viewDidAppear:(BOOL)animated {
-	NSLog(@"viewdid appear");
+//	NSLog(@"viewdid appear");
  //ck, will focus search bar if pressed search button in category tab.
 	if ([VariableStore sharedInstance].focusSearchBar == TRUE){
 		[self.mySearchBar becomeFirstResponder];
@@ -175,7 +175,7 @@
 }
 
 - (void)didReceiveMemoryWarning
-{
+{ NSLog(@"notestableviewcontroller didreceivemem warning!?!");
     // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
     
