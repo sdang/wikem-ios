@@ -110,8 +110,8 @@
 	
 	
 	
-		NSUInteger indexOfTab = [tabBarController.viewControllers indexOfObject:viewController];
-		NSLog(@"Tab index = %u (%u)", indexOfTab);
+		//NSUInteger indexOfTab = [tabBarController.viewControllers indexOfObject:viewController];
+		//NSLog(@"Tab index = %u (%u)", indexOfTab);
 	/*if(indexOfTab ==3){ //ie we are in update view. try force portrait only
 		tabBar.dontrotate = TRUE;
 		
@@ -254,18 +254,7 @@
     __persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
     if (![__persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error])
     {
-        /*
-         Replace this implementation with code to handle the error appropriately.
-         
-         abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
-         
-         Typical reasons for an error here include:
-         * The persistent store is not accessible;
-         * The schema for the persistent store is incompatible with current managed object model.
-         Check the error message to determine what the actual problem was.
-         
-         
-         If the persistent store is not accessible, there is typically something wrong with the file path. Often, a file URL is pointing into the application's resources directory instead of a writeable directory.
+       /*
          
          If you encounter schema incompatibility errors during development, you can reduce their frequency by:
          * Simply deleting the existing store:
@@ -277,6 +266,22 @@
          Lightweight migration will only work for a limited set of schema changes; consult "Core Data Model Versioning and Data Migration Programming Guide" for details.
          
          */
+        
+        NSLog(@"Error opening the database. Deleting the file and trying again.");
+        
+        //if the app did not quit, show the alert to inform the users that the data have been deleted
+        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Error encountered while reading old database. Please allow all the data to download again. Personal Notes in old version will be deleted." message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] autorelease];
+        [alert show];
+        
+        //delete the sqlite file and try again
+        [[NSFileManager defaultManager] removeItemAtPath:storeURL.path error:nil];
+        if (![__persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }
+        
+        
+        
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }    

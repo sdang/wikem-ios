@@ -120,7 +120,8 @@
 		
 		//get the note with the title of link... if it exists. 
 		Note* newNote = [self noteFromName:convertedString ]; 
-		
+      //  NSLog(@"Retain Count of newNote :%i",[newNote retainCount]);
+
 		
 		
 		/*call a new webview just like the originial call from categorytableview...
@@ -138,17 +139,21 @@
 
 			NoteViewController *noteViewController2 = [[NoteViewController alloc] init];
 			noteViewController2.note = newNote;
-			
-			//release pointer here? No. 
-			//    dunno why but when go back to table view from note it crashes...
-			//[newNote release];
-			
+		 //setter syntax
+ 
 			[self.navigationController pushViewController:noteViewController2 animated:YES];
+            
+            noteViewController2 = nil;
 			[noteViewController2 release];
+        //    NSLog(@"Retain Count :%i",[noteViewController2 retainCount]);
+
 		}else {
 			NSLog(@"no action for the link click");
 			return YES;
 		}
+      //  NSLog(@"Retain Count of newNote :%i",[newNote retainCount]);
+
+        newNote = nil; //not necessarily needed
 
 		return NO;
 	}
@@ -160,13 +165,12 @@
 //If you really do need to alloc/init your member variable in viewdidload , do it only if it is not already allocated.
 
 -(void)viewDidAppear:(BOOL)animated{
-	
-//per recs try adding the context here...assuming it wasnt loaded right
+	NSLog(@"noteviewcontroller viewDidAppear");
+//context wont be loaded...so load it here:
 	if (managedObjectContext == nil) 
-	{ 
+	{   //NSLog(@"managedobjectcontext was nil");
         managedObjectContext = [(emnotesAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext]; 
-        //NSLog(@"After managedObjectContext: %@",  managedObjectContext);
-	}
+ 	}
 	
 	//ck instead of baseurl as www.wikem... will try native images using local url
  	//get the path of current users documents folder for read/write
@@ -176,23 +180,24 @@
 	
 	webView.dataDetectorTypes = UIDataDetectorTypeLink;
 	
+	 /*ck when traversing lots of links. get to a match for a link. then crash due to uncuaght exception. basically note is nil so calling formattedContent does nothing...
+      
+      THE UNPREDICTABLILITY OF THIS ERROR SEEMS TO BE CHARACTERISITIC OF REQUESTING DEALLOCATED MEMORY... WHICH GIVES THESE TYPES OF UNPREDICTABLE ERRORS...
+      */
+	if (self.note == nil){
+        NSLog(@"ERROR !!!!! why is the note nil?!");
+        //don't proceed to load anything. it will crash
+     }
+    else{
 	
-	/* these steps recommeneded for old sdk. completely unnecessary. 
-	 Just make sure use fileURLWithPath NOT URL from string.
-	NSURL *url = [NSURL URLWithString: [imagePath lastPathComponent] relativeToURL: [NSURL fileURLWithPath: [imagePath stringByDeletingLastPathComponent] isDirectory: YES]];
-	 imagePath = [imagePath stringByReplacingOccurrencesOfString:@"/" withString:@"//"];
-	imagePath = [imagePath stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
-	 NSLog(imagePath);
-	*/
-	
-	
-	//as baseURL changes, need to add css as a string...not as a 'link'
-    [webView loadHTMLString:[self.note formattedContent] baseURL:testURL];
+        //as baseURL changes, need to add css as a string...not as a 'link'
+        [webView loadHTMLString:[self.note formattedContent] baseURL:testURL];
  	 
-	//this alone does not zoom appropriately. added meta 'viewport' tag for html5 in header to make work
-	self.webView.scalesPageToFit = YES;
+        //this alone does not zoom appropriately. added meta 'viewport' tag for html5 in header to make work
+        self.webView.scalesPageToFit = YES;
 	
-	 self.title = self.note.name;
+        self.title = self.note.name;
+    }
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 }
@@ -203,17 +208,16 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     //eg. self.myOutlet = nil;
+    
+    
+  //ck : make these nil. just incase. pointers that are nil can respond with nil, safely, without blowing up. released objects on the other hand will give the crazy errors that i am getting  
+    
+    NSLog(@"viewDidUnload");
     self.webView = nil;
-}
-/*don't put here. use one in parent tab bar.
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    //return (interfaceOrientation == UIInterfaceOrientationPortrait);
-	[self.webView reload];
-	
-	return YES;
-}*/
+    self.note = nil;
+    self.managedObjectContext = nil;
+ } 
+
 
 //unescape these url encoded characters
 - (NSString*) convertURLString: (NSString *) myString {
@@ -263,14 +267,27 @@
     
     if (!error && !note2) {
         // no note..
+        //TODO throw a toast or something?
+        
 		//  note = [NSEntityDescription insertNewObjectForEntityForName:@"Note" inManagedObjectContext:context];
 		[request release];
 
         return nil;
     }
-    
-    [request release];
-    return note2;
+    else if (error)
+    { //TODO what to do here?
+     //why would it ever throw an error here
+        NSLog(@"there is an error trying to find a note by title?!");
+        //throw an alert?
+        [request release];
+        return nil;
+    }
+    else{ //default... there is a note
+       // NSLog(@"Retain Count of note2 :%i",[note2 retainCount]);
+
+        [request release];
+        return note2;
+    }
 }
 
 /*the key property which leads to this leak is the WebKitCacheModelPreferenceKey application setting.
