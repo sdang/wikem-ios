@@ -195,7 +195,7 @@
 	noteViewController.note = (Note *)managedObject;
    // [self.navigationController pushViewController:noteViewController animated:YES];
 	[self.navigationController pushViewController:noteViewController animated:NO];
-
+    noteViewController = nil;
     [noteViewController release];
 }
 
