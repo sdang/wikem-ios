@@ -105,6 +105,7 @@
     self.notesTableViewController = noteTableViewController;
   //  [self.navigationController pushViewController:noteTableViewController animated:YES];
 	[self.navigationController pushViewController:noteTableViewController animated:NO];
+    notesTableViewController = nil;
 
     [noteTableViewController release];
 }
