@@ -139,9 +139,10 @@
 
 			NoteViewController *noteViewController2 = [[NoteViewController alloc] init];
 			noteViewController2.note = newNote;
+            noteViewController2.managedObjectContext = self.managedObjectContext;
 		 //setter syntax
  
-			[self.navigationController pushViewController:noteViewController2 animated:YES];
+			[self.navigationController pushViewController:noteViewController2 animated:NO];
             
             noteViewController2 = nil;
 			[noteViewController2 release];
@@ -169,7 +170,7 @@
 //called everytime view reappears
     //for first time context wont be loaded...so load it here:
 	if (managedObjectContext == nil) 
-	{   //NSLog(@"managedobjectcontext was nil");
+	{   NSLog(@"managedobjectcontext was nil so set in viewdidappear of NVC");
         managedObjectContext = [(emnotesAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext]; 
  	}
 	

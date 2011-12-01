@@ -103,6 +103,7 @@
 {
     [super viewDidUnload];
     self.tabBarItem = nil;
+    self.managedObjectContext = nil;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style inManagedContext:(NSManagedObjectContext *)context withCategory:(Category *)category

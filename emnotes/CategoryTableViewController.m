@@ -147,6 +147,7 @@
 {
     [super viewDidUnload];
     self.tabBarItem = nil;
+    self.managedObjectContext = nil;
     self.notesTableViewController = nil;
 }
 
