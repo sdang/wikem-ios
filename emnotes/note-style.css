@@ -1,34 +1,29 @@
-body { font-family: arial }
+<html><head>
+<meta name='viewport' content='initial-scale=1.0, maximum-scale=10.0'/><style type="text/css"> body { font-family: arial }
 .editsection {display: none}
 p,ol,li,ul,a {font-size: 12pt }
 h2 { font-size: 14pt; border-top:1px solid #DBDEE2; padding-top: 10px; color: darkblue }
 h3 { font-size: 12pt; color: darkgray }
-#toc { width: 100% };
+#toc { width: 100% }
+li {   margin-left: .25em;
+    padding-left: .1em; }
+li li {  margin-left: .5em; }
+li li li { margin-left: .2em;}
+li li li li {martin-left:.2em;}
 ol {
-   list-style: decimal;
-   margin-left: 1.25em;
-   padding: 0; }
+    list-style: decimal;
+    margin-left: .5em;
+    padding-left: 0.2em; }
 ol ol {
-   list-style: lower-alpha; 
-   margin-left: 1.75em;}
+    list-style: lower-alpha; 
+    margin-left: .5em;}
 ol ol ol {
-   list-style: lower-roman;
-   margin-left: 1.75em; }
+    list-style: lower-roman;
+    margin-left: .5em; }
 ol ol ol ol {
-   list-style: decimal; 
-    margin-left: 1.25em;}
-   
+    list-style: decimal; 
+    margin-left: .5em;}
 ol ol ol ol ol {
-   list-style: lower-alpha; 
-    margin-left: 1.25em;}
-   
-ol ol ol ol ol ol {
-   list-style: lower-roman; 
-    margin-left: 1.25em;}
-   
-li {
-   padding-left: .25em; }
-li li {
-   padding-left: .1em; }
-li li li {
-   padding-left: 0; }
+    list-style: lower-alpha; 
+    margin-left: 0.2em;} 
+</style></head><script type='text/javascript' src='jquery.mobile-1.0.js'></script><body><div data-role="collapsible-set">

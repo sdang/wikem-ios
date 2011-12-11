@@ -73,8 +73,23 @@
 		94EFE5FB134DA10B00B1CBDB /* WikEM.org.png in Resources */ = {isa = PBXBuildFile; fileRef = 94EFE5F9134DA10B00B1CBDB /* WikEM.org.png */; };
 		94EFE5FC134DA10B00B1CBDB /* WikEM.org@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94EFE5FA134DA10B00B1CBDB /* WikEM.org@2x.png */; };
 		CA1E098414048C220096CBA5 /* VariableStore.m in Sources */ = {isa = PBXBuildFile; fileRef = CA1E098314048C220096CBA5 /* VariableStore.m */; };
+		CA1FAED0148DB7170043F399 /* jquery.mobile-1.0.js in Resources */ = {isa = PBXBuildFile; fileRef = CA1FAECF148DB7170043F399 /* jquery.mobile-1.0.js */; };
+		CA1FAED2148F4A520043F399 /* jquery.mobile-1.0.css in Resources */ = {isa = PBXBuildFile; fileRef = CA1FAED1148F4A520043F399 /* jquery.mobile-1.0.css */; };
+		CA1FAED5148FE98D0043F399 /* jquery.js in Resources */ = {isa = PBXBuildFile; fileRef = CA1FAED4148FE98D0043F399 /* jquery.js */; };
 		CA2E2014143670EB00BFE933 /* database.xml in Resources */ = {isa = PBXBuildFile; fileRef = CA2E2013143670EB00BFE933 /* database.xml */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CA1FAED3148FE5970043F399 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		940640DB134CFD81008E4461 /* AboutWikemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutWikemViewController.h; sourceTree = "<group>"; };
@@ -166,6 +181,10 @@
 		94EFE5FA134DA10B00B1CBDB /* WikEM.org@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WikEM.org@2x.png"; sourceTree = "<group>"; };
 		CA1E098214048C220096CBA5 /* VariableStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VariableStore.h; sourceTree = "<group>"; };
 		CA1E098314048C220096CBA5 /* VariableStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VariableStore.m; sourceTree = "<group>"; };
+		CA1FAECD148DB5B60043F399 /* jquery.mobile-1.0.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "jquery.mobile-1.0.js"; path = "../Downloads/jquery.mobile-1.0.js"; sourceTree = "<group>"; };
+		CA1FAECF148DB7170043F399 /* jquery.mobile-1.0.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = "jquery.mobile-1.0.js"; path = "emnotes/jquery.mobile-1.0.js"; sourceTree = "<group>"; };
+		CA1FAED1148F4A520043F399 /* jquery.mobile-1.0.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = "jquery.mobile-1.0.css"; sourceTree = "<group>"; };
+		CA1FAED4148FE98D0043F399 /* jquery.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = jquery.js; sourceTree = "<group>"; };
 		CA2E2013143670EB00BFE933 /* database.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = database.xml; sourceTree = "<group>"; };
 		CA792BA6140A96690038CE27 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -307,6 +326,10 @@
 		94DA2FC913468F8D00862F48 = {
 			isa = PBXGroup;
 			children = (
+				CA1FAED4148FE98D0043F399 /* jquery.js */,
+				CA1FAED1148F4A520043F399 /* jquery.mobile-1.0.css */,
+				CA1FAECF148DB7170043F399 /* jquery.mobile-1.0.js */,
+				CA1FAECD148DB5B60043F399 /* jquery.mobile-1.0.js */,
 				CA792BA6140A96690038CE27 /* Entitlements.plist */,
 				94DA2FE013468F8D00862F48 /* emnotes */,
 				94DA2FD713468F8D00862F48 /* Frameworks */,
@@ -399,6 +422,7 @@
 				94DA2FD013468F8D00862F48 /* Sources */,
 				94DA2FD113468F8D00862F48 /* Frameworks */,
 				94DA2FD213468F8D00862F48 /* Resources */,
+				CA1FAED3148FE5970043F399 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -440,6 +464,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA1FAED5148FE98D0043F399 /* jquery.js in Resources */,
 				94DA2FE513468F8D00862F48 /* InfoPlist.strings in Resources */,
 				94DA2FEE13468F8D00862F48 /* MainWindow.xib in Resources */,
 				94DA2FFB13468FBA00862F48 /* 10-medical.png in Resources */,
@@ -453,6 +478,7 @@
 				94234C8F134A640900D241B5 /* AcceptLicense.xib in Resources */,
 				94234C92134A6EA300D241B5 /* disclaimer.html in Resources */,
 				94234C9B134AA33D00D241B5 /* WikEM-Logo@2x.png in Resources */,
+				CA1FAED0148DB7170043F399 /* jquery.mobile-1.0.js in Resources */,
 				94234C9C134AA33D00D241B5 /* WikEM-Logo.png in Resources */,
 				94742929134B7C5C00AE579D /* Default.png in Resources */,
 				9474292B134B7C6700AE579D /* Default@2x.png in Resources */,
@@ -477,6 +503,7 @@
 				94EFE5EE134D790100B1CBDB /* EditNoteViewController.xib in Resources */,
 				94EFE5F4134D8A9900B1CBDB /* PersonalNotesViewController.xib in Resources */,
 				94EFE5F7134DA10400B1CBDB /* Close.png in Resources */,
+				CA1FAED2148F4A520043F399 /* jquery.mobile-1.0.css in Resources */,
 				94EFE5F8134DA10400B1CBDB /* Close@2x.png in Resources */,
 				94EFE5FB134DA10B00B1CBDB /* WikEM.org.png in Resources */,
 				94EFE5FC134DA10B00B1CBDB /* WikEM.org@2x.png in Resources */,
@@ -541,7 +568,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: christopher kim (PZ9WXQ99N9)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -551,6 +578,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				PROVISIONING_PROFILE = "0A4C7466-39D7-44E6-BC28-334F59A3C49E";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -559,7 +587,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: christopher kim (PZ9WXQ99N9)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: christopher kim (PZ9WXQ99N9)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
@@ -567,6 +595,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "0A4C7466-39D7-44E6-BC28-334F59A3C49E";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0A4C7466-39D7-44E6-BC28-334F59A3C49E";
 				SDKROOT = iphoneos;
 			};
@@ -610,7 +639,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: christopher kim (PZ9WXQ99N9)";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer: christopher kim (PZ9WXQ99N9)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: christopher kim (PZ9WXQ99N9)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -619,6 +648,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "0A4C7466-39D7-44E6-BC28-334F59A3C49E";
 				"PROVISIONING_PROFILE[sdk=*]" = "0A4C7466-39D7-44E6-BC28-334F59A3C49E";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0A4C7466-39D7-44E6-BC28-334F59A3C49E";
 				SDKROOT = iphoneos;

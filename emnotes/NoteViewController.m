@@ -170,23 +170,30 @@
 //called everytime view reappears
     //for first time context wont be loaded...so load it here:
 	if (managedObjectContext == nil) 
-	{   NSLog(@"managedobjectcontext was nil so set in viewdidappear of NVC");
+	{  // NSLog(@"managedobjectcontext was nil so set in viewdidappear of NVC");
         managedObjectContext = [(emnotesAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext]; 
  	}
 	
+    //for BASEURL to load images and javascript files, will use 'Documents' directory which we can write to, rather than the resource bundle directory. For javascript, will just copy the files onetime...
     
-    //ck instead of baseurl as www.wikem... will try native images using local url
- 	//get the path of current users documents folder for read/write
+    /*NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"jquery" ofType:@"js"];  
+    NSData *myData = [NSData dataWithContentsOfFile:filePath];  
+    if (!myData) {  
+        NSLog(@"goto target, include file in copy build resource...not compiled bundle ");
+     }  else {
+        NSLog(@"file ur looking for exists in bundle directory");
+     // NSURL *testURL = [NSURL fileURLWithPath:filePath];
+
+     }*/
+
+    
+    //get the path of current users Documents folder for read/write
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory , NSUserDomainMask, YES);
 	NSString* imagePath = [paths objectAtIndex:0];
 	NSURL *testURL = [NSURL fileURLWithPath:imagePath];
+ 	webView.dataDetectorTypes = UIDataDetectorTypeLink;
 	
-	webView.dataDetectorTypes = UIDataDetectorTypeLink;
-	
-    /*ck when traversing lots of links. get to a match for a link. then crash due to uncuaght exception. basically note is nil so calling formattedContent does nothing...
      
-     THE UNPREDICTABLILITY OF THIS ERROR SEEMS TO BE CHARACTERISITIC OF REQUESTING DEALLOCATED MEMORY... WHICH GIVES THESE TYPES OF UNPREDICTABLE ERRORS...
-     */
 	if (self.note == nil){
         NSLog(@"ERROR !!!!! why is the note nil?!");
         //don't proceed to load anything. it will crash

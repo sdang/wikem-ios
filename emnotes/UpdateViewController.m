@@ -300,7 +300,54 @@
         return [NSDictionary dictionaryWithObject:@"" forKey:@"size"];
     }
 }
- 
+//set up a xml to contain files to download for javascript or header files
+- (BOOL )parseXMLExtrasFile {
+    NSFileManager* filemanager = [NSFileManager defaultManager];
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory , NSUserDomainMask, YES);
+	NSString* documentsDir = [paths objectAtIndex:0];
+	
+	if (![filemanager isReadableFileAtPath:documentsDir] || ![filemanager isWritableFileAtPath:documentsDir]) 
+	{NSLog(@"uh oh. documents path is either not readable and/or writeable");
+		return false;
+	}
+	[filemanager changeCurrentDirectoryPath: documentsDir];
+    
+    NSString *extrasFile = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"extras_url"];
+	NSURL *theURL = [NSURL URLWithString:extrasFile];
+    NSString *content = [NSString stringWithContentsOfURL:theURL encoding:NSUTF8StringEncoding error:NULL];
+	
+    TBXML *tbxml = [TBXML tbxmlWithXMLString:content]; 
+    
+    TBXMLElement *download = [TBXML childElementNamed:@"download" parentElement:tbxml.rootXMLElement];
+	TBXMLElement *file = download->firstChild;
+    NSString *name;
+	NSString *url;
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    int lastUpdate = 0;
+    BOOL updateprefs;
+	do { 
+ 		name = [TBXML valueOfAttributeNamed:@"name" forElement:file];  	
+		url =  [TBXML valueOfAttributeNamed:@"url" forElement:file]; 
+        lastUpdate = [[TBXML valueOfAttributeNamed:@"epoch" forElement:file] intValue];
+
+        if (lastUpdate > ([prefs integerForKey:@"lastExtraUpdate"])){ 
+		//if ([filemanager fileExistsAtPath:name] == NO){
+            updateprefs = YES;
+			NSData *fileData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+ 			[filemanager createFileAtPath:name contents:fileData attributes:nil];
+ 			NSLog(@"created an extra file!!");
+  		}
+		else{ NSLog(@"no extra downloaded.... up to date");
+		}
+	} while ((file = file->nextSibling));
+	
+    if (updateprefs){ //new update time is now.
+        [prefs setInteger:[[NSDate date] timeIntervalSince1970] forKey:@"lastExtraUpdate"];
+        [prefs synchronize];
+        return YES;
+ }
+    return NO;
+}
 - (bool *)parseXMLImagesFile {
 	NSFileManager* filemanager = [NSFileManager defaultManager];
 	//get the path of current users documents folder for read/write
@@ -551,8 +598,9 @@ inManagedObjectContext:managedObjectContext];
 				//dl images in background
 				 
 					//[self updateProgressBar:1 message:@"Downloading Images"];
-					[self parseXMLImagesFile];
-				
+				[self parseXMLExtrasFile ];	
+                [self parseXMLImagesFile];
+                    
 				//ok now done.
             }
         }
