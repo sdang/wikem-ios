@@ -17,6 +17,8 @@
     // Place any "global" variables here
 	BOOL notesViewNeedsCacheReset;
 	BOOL categoryViewNeedsCacheReset;
+    BOOL searchViewNeedsCacheReset;
+
 	BOOL focusSearchBar;
 }
 
@@ -31,5 +33,6 @@
 @property BOOL notesViewNeedsCacheReset;
 @property BOOL categoryViewNeedsCacheReset;
 @property BOOL focusSearchBar;
+@property BOOL searchViewNeedsCacheReset;
 
 @end

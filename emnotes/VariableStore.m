@@ -14,6 +14,7 @@
 @synthesize notesViewNeedsCacheReset;
 @synthesize categoryViewNeedsCacheReset;
 @synthesize focusSearchBar;
+@synthesize searchViewNeedsCacheReset;
 
 static VariableStore* myInstance = nil;
 
@@ -66,6 +67,7 @@ static VariableStore* myInstance = nil;
 		notesViewNeedsCacheReset = NO;
 		categoryViewNeedsCacheReset = NO;
 		focusSearchBar = NO;
+        searchViewNeedsCacheReset = NO;
 	}
 	return self;
 }				  

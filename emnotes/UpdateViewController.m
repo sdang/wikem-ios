@@ -660,14 +660,14 @@ inManagedObjectContext:managedObjectContext];
         NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
         if (status) {
             // show red dot to indicate update available
-            [[[[[self tabBarController] tabBar] items] objectAtIndex:3] setBadgeValue:@""];
+            [[[[[self tabBarController] tabBar] items] objectAtIndex:4] setBadgeValue:@""];
             
             // show button to allow user to update if it isn't already shown
             [self animateInUpdaterButton];
             [prefs setBool:YES forKey:@"updateAvailable"];
             
         } else {
-            [[[[[self tabBarController] tabBar] items] objectAtIndex:3] setBadgeValue:nil];
+            [[[[[self tabBarController] tabBar] items] objectAtIndex:4] setBadgeValue:nil];
             [prefs setBool:NO forKey:@"updateAvailable"];
         }
         [prefs synchronize];
@@ -686,6 +686,8 @@ inManagedObjectContext:managedObjectContext];
         [[[[[self tabBarController] tabBar] items] objectAtIndex:0] setEnabled:x];
         [[[[[self tabBarController] tabBar] items] objectAtIndex:1] setEnabled:x];
         [[[[[self tabBarController] tabBar] items] objectAtIndex:2] setEnabled:x];
+        [[[[[self tabBarController] tabBar] items] objectAtIndex:3] setEnabled:x];
+
     });
     
 }

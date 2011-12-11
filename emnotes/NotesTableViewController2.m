@@ -82,12 +82,12 @@
         
 	}
 	//check to see if updates made and cache needs to be deleted
-	if ([VariableStore sharedInstance].notesViewNeedsCacheReset==YES){
+	if ([VariableStore sharedInstance].searchViewNeedsCacheReset==YES){
 		//delete cache 'nil' specifies deletes all cache files
 		[NSFetchedResultsController deleteCacheWithName:nil];  
 		
 		//reset the bool to NO
-		[VariableStore sharedInstance].notesViewNeedsCacheReset=NO;
+		[VariableStore sharedInstance].searchViewNeedsCacheReset=NO;
 		NSLog(@"cache deleted");
 	}
 	
@@ -118,14 +118,16 @@
             
             
             NSString *cacheName = nil;
+            cacheName = @"notes2";
+
             NSString *sectionName = nil;
             //check to see if updates made and cache needs to be deleted. also check every instance viewdidappear
-            if ([VariableStore sharedInstance].notesViewNeedsCacheReset==YES){
+            if ([VariableStore sharedInstance].searchViewNeedsCacheReset==YES){
                 //delete cache 'nil' specifies deletes all cache files
-                [NSFetchedResultsController deleteCacheWithName:nil];  
+                [NSFetchedResultsController deleteCacheWithName:cacheName];  
                 
                 //reset the bool to NO
-                [VariableStore sharedInstance].notesViewNeedsCacheReset=NO;
+                [VariableStore sharedInstance].searchViewNeedsCacheReset=NO;
                 NSLog(@"cache deleted");
             }
             
