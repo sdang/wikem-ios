@@ -8,12 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "UpdateViewController.h"
-//#import "MyTabBarController.h"
-
+ 
 @interface emnotesAppDelegate : NSObject <UIApplicationDelegate, UITabBarControllerDelegate> {
         UITabBarController *tabBar;
-	//MyTabBarController *tabBar;
-        UpdateViewController *uVC;
+         UpdateViewController *uVC;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
@@ -23,8 +21,7 @@
 @property (nonatomic, retain, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
 @property (nonatomic, retain) IBOutlet UITabBarController *tabBar;
-//@property (nonatomic, retain) IBOutlet MyTabBarController *tabBar;
-
+ 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
 

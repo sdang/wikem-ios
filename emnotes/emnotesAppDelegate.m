@@ -9,6 +9,8 @@
 #import "emnotesAppDelegate.h"
 #import "CategoryTableViewController.h"
 #import "NotesTableViewController.h"
+#import "NotesTableViewController2.h"
+
 #import "PersonalNotesTableViewController.h"
 #import "UpdateViewController.h"
 #import "AcceptLicense.h"
@@ -60,6 +62,21 @@
     [allNotesNavCon pushViewController:notesTableViewController animated:NO];
     [notesTableViewController release];
     
+    
+///////    //add a second tabbar for all notes
+    
+    UINavigationController *allNotesNavCon2 = [[UINavigationController alloc] init];
+    NotesTableViewController2 *notesTableViewController2 = [[NotesTableViewController2 alloc]
+                                                          initWithStyle:UITableViewStylePlain
+                                                          inManagedContext:self.managedObjectContext
+                                                          withCategory:nil];
+    notesTableViewController2.managedObjectContext = self.managedObjectContext;
+	
+    [allNotesNavCon2 pushViewController:notesTableViewController2 animated:NO];
+    [notesTableViewController2 release];
+    
+
+    
     UINavigationController *personalNotesNavCon = [[UINavigationController alloc] init];
     PersonalNotesTableViewController *personalNotesTableViewController = [[PersonalNotesTableViewController alloc]
                                                                           initWithStyle:UITableViewStylePlain
@@ -76,10 +93,10 @@
   	
     self.tabBar.delegate = self;
     
-    tabBar.viewControllers = [NSArray arrayWithObjects:categoriesNavCon, allNotesNavCon, personalNotesNavCon, updateViewController, nil];
+    tabBar.viewControllers = [NSArray arrayWithObjects:categoriesNavCon, allNotesNavCon, allNotesNavCon2,personalNotesNavCon, updateViewController, nil];
  
     [categoriesNavCon release];
-    [allNotesNavCon release];
+    [allNotesNavCon release]; [allNotesNavCon2 release];
     [personalNotesNavCon release];
     [updateViewController release];
     

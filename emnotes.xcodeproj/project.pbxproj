@@ -77,6 +77,8 @@
 		CA1FAED2148F4A520043F399 /* jquery.mobile-1.0.css in Resources */ = {isa = PBXBuildFile; fileRef = CA1FAED1148F4A520043F399 /* jquery.mobile-1.0.css */; };
 		CA1FAED5148FE98D0043F399 /* jquery.js in Resources */ = {isa = PBXBuildFile; fileRef = CA1FAED4148FE98D0043F399 /* jquery.js */; };
 		CA2E2014143670EB00BFE933 /* database.xml in Resources */ = {isa = PBXBuildFile; fileRef = CA2E2013143670EB00BFE933 /* database.xml */; };
+		CAB8A6A0149481090086FA90 /* NotesTableViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = CAB8A69F149481090086FA90 /* NotesTableViewController2.m */; };
+		CAB8A6A2149485750086FA90 /* 06-magnify.png in Resources */ = {isa = PBXBuildFile; fileRef = CAB8A6A1149485750086FA90 /* 06-magnify.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -187,6 +189,9 @@
 		CA1FAED4148FE98D0043F399 /* jquery.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = jquery.js; sourceTree = "<group>"; };
 		CA2E2013143670EB00BFE933 /* database.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = database.xml; sourceTree = "<group>"; };
 		CA792BA6140A96690038CE27 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
+		CAB8A69E149481090086FA90 /* NotesTableViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotesTableViewController2.h; sourceTree = "<group>"; };
+		CAB8A69F149481090086FA90 /* NotesTableViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotesTableViewController2.m; sourceTree = "<group>"; };
+		CAB8A6A1149485750086FA90 /* 06-magnify.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "06-magnify.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -215,6 +220,8 @@
 				94DA300013468FCB00862F48 /* CategoryTableViewController.m */,
 				94DA300413468FE900862F48 /* NotesTableViewController.h */,
 				94DA300513468FE900862F48 /* NotesTableViewController.m */,
+				CAB8A69E149481090086FA90 /* NotesTableViewController2.h */,
+				CAB8A69F149481090086FA90 /* NotesTableViewController2.m */,
 			);
 			name = ListViews;
 			sourceTree = "<group>";
@@ -272,6 +279,7 @@
 				9421A3E5134D47760031D4AB /* InfoBackground.png */,
 				9421A3E2134D46810031D4AB /* AcceptButton@2x.png */,
 				9421A3DD134D42C20031D4AB /* UpdateButton.png */,
+				CAB8A6A1149485750086FA90 /* 06-magnify.png */,
 				9421A3DE134D42C20031D4AB /* UpdateButton@2x.png */,
 				9421A3D9134D42330031D4AB /* AboutWikEMButton.png */,
 				9421A3DA134D42330031D4AB /* AboutWikEMButton@2x.png */,
@@ -508,6 +516,7 @@
 				94EFE5FB134DA10B00B1CBDB /* WikEM.org.png in Resources */,
 				94EFE5FC134DA10B00B1CBDB /* WikEM.org@2x.png in Resources */,
 				CA2E2014143670EB00BFE933 /* database.xml in Resources */,
+				CAB8A6A2149485750086FA90 /* 06-magnify.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -539,6 +548,7 @@
 				94EFE5ED134D790100B1CBDB /* EditNoteViewController.m in Sources */,
 				94EFE5F3134D8A9900B1CBDB /* PersonalNotesViewController.m in Sources */,
 				CA1E098414048C220096CBA5 /* VariableStore.m in Sources */,
+				CAB8A6A0149481090086FA90 /* NotesTableViewController2.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
