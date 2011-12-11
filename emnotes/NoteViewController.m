@@ -100,40 +100,33 @@
 	if(navigationType == UIWebViewNavigationTypeLinkClicked) {
 		NSURL *url = request.URL;
 		NSString *urlString = url.absoluteString;
-
-//from appledocs use		NSString *documentFilename = [documentPath lastPathComponent];
-		NSString *imagefilestring = [urlString lastPathComponent];
-
+        
+        
+         
+ 		NSString *imagefilestring = [urlString lastPathComponent];
+//first ... if last path component begins with #.. this is just an internal link to an anchor on page
+        if ([imagefilestring hasPrefix:@"#"])
+        {
+            return YES;
+        }
+  //now that not internal anchor, get rid of internal links that also have anchors
+         if ([imagefilestring rangeOfString:@"#"].length > 0)
+        {
+            int indexof = [imagefilestring rangeOfString:@"#"].location;
+         NSString *substring = [imagefilestring substringToIndex:indexof]; 
+        imagefilestring = substring;
+            NSLog(@"ck: had to chop off anchors on internal link");
+    //TODO can do something later with the part of string chopped off... like actually go to that anchor
+         }
+        
 		//convert encoded characters in the link
 		NSString *convertedString = [self convertURLString:imagefilestring];
 
-		//get a note with this name
-		//		
-/*		+ (Note *)noteFromName:(NSString *)name
-	inManagedObjectContext:(NSManagedObjectContext *)context;*/
-		//NSManagedObjectContext* originalContext = [emnotesAppDelegate managedObjectContext];
-	
-		
-		
-		//name of note is from the <name> xml. links will have had characters url encoded
-		//todo decode
+	 
 		
 		//get the note with the title of link... if it exists. 
 		Note* newNote = [self noteFromName:convertedString ]; 
-      //  NSLog(@"Retain Count of newNote :%i",[newNote retainCount]);
-
-		
-		
-		/*call a new webview just like the originial call from categorytableview...
-		 - (void)managedObjectSelected:(NSManagedObject *)managedObject
-		 {
-		 //NSLog 
-		 NoteViewController *noteViewController = [[NoteViewController alloc] init];
-		 noteViewController.note = (Note *)managedObject;
-		 [self.navigationController pushViewController:noteViewController animated:YES];
-		 [noteViewController release];
-		 }
-		 */
+    
 		if (newNote !=nil){
 			NSLog(@"woohoo a match");
 
@@ -150,6 +143,13 @@
 
 		}else {
 			NSLog(@"no action for the link click");
+            
+            UIAlertView *someError = [[UIAlertView alloc] initWithTitle: @"Warning" message: @"sorry. the page which this link refers to may have been redirected." delegate:self cancelButtonTitle: @"Cancel" otherButtonTitles:nil, nil];
+            
+            [someError show];
+            [someError release];
+            
+            
 			return YES;
 		}
       //  NSLog(@"Retain Count of newNote :%i",[newNote retainCount]);
@@ -173,20 +173,7 @@
 	{  // NSLog(@"managedobjectcontext was nil so set in viewdidappear of NVC");
         managedObjectContext = [(emnotesAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext]; 
  	}
-	
-    //for BASEURL to load images and javascript files, will use 'Documents' directory which we can write to, rather than the resource bundle directory. For javascript, will just copy the files onetime...
-    
-    /*NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"jquery" ofType:@"js"];  
-    NSData *myData = [NSData dataWithContentsOfFile:filePath];  
-    if (!myData) {  
-        NSLog(@"goto target, include file in copy build resource...not compiled bundle ");
-     }  else {
-        NSLog(@"file ur looking for exists in bundle directory");
-     // NSURL *testURL = [NSURL fileURLWithPath:filePath];
-
-     }*/
-
-    
+	     
     //get the path of current users Documents folder for read/write
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory , NSUserDomainMask, YES);
 	NSString* imagePath = [paths objectAtIndex:0];

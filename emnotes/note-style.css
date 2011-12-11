@@ -26,4 +26,4 @@ ol ol ol ol {
 ol ol ol ol ol {
     list-style: lower-alpha; 
     margin-left: 0.2em;} 
-</style></head><script type='text/javascript' src='jquery.mobile-1.0.js'></script><body><div data-role="collapsible-set">
+</style> <link rel="stylesheet" href="jquery.mobile-1.0.css" /><script src="jquery.js"></script><script type='text/javascript' src='jquery.mobile-1.0.js'></script></head><body>

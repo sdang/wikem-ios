@@ -300,6 +300,7 @@
         return [NSDictionary dictionaryWithObject:@"" forKey:@"size"];
     }
 }
+/* will implement in future
 //set up a xml to contain files to download for javascript or header files
 - (BOOL )parseXMLExtrasFile {
     NSFileManager* filemanager = [NSFileManager defaultManager];
@@ -347,7 +348,8 @@
         return YES;
  }
     return NO;
-}
+}*/
+
 - (bool *)parseXMLImagesFile {
 	NSFileManager* filemanager = [NSFileManager defaultManager];
 	//get the path of current users documents folder for read/write
@@ -597,8 +599,11 @@ inManagedObjectContext:managedObjectContext];
 				//now after resease the other tab bar items and updated text, 
 				//dl images in background
 				 
-					//[self updateProgressBar:1 message:@"Downloading Images"];
-				[self parseXMLExtrasFile ];	
+ 				//[self parseXMLExtrasFile ];	
+                /*
+                future implementation to use the extras to get new css and javascript functionality. for now, unnecessary unless rendering is tweaked to support this 
+                 */
+                
                 [self parseXMLImagesFile];
                     
 				//ok now done.

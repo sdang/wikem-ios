@@ -26,13 +26,13 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>3.05</string>
+	<string>3.1</string>
 	<key>CFBundleSignature</key>
 	<string>wikem</string>
 	<key>CFBundleURLTypes</key>
 	<array/>
 	<key>CFBundleVersion</key>
-	<string>3.05</string>
+	<string>3.1</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.medical</string>
 	<key>LSRequiresIPhoneOS</key>
@@ -54,7 +54,7 @@
 	<key>base_url</key>
 	<string>http://www.wikem.org</string>
 	<key>database_url</key>
-	<string>http://dl.wikem.org/files/db-testdelete.xml</string>
+	<string>http://dl.wikem.org/files/db-update.xml</string>
 	<key>edit_note_url</key>
 	<string>http://www.wikem.org/w/index.php?title=%@&amp;action=edit</string>
 	<key>head_css_string</key>
@@ -86,8 +86,7 @@ ol ol ol ol {
 ol ol ol ol ol {
     list-style: lower-alpha; 
     margin-left: 0.2em;} 
-&lt;/style&gt; &lt;link rel=&quot;stylesheet&quot; href=&quot;jquery.mobile-1.0.css&quot; /&gt;&lt;script src=&quot;jquery.js&quot;&gt;&lt;/script&gt;&lt;script type=&apos;text/javascript&apos; src=&apos;jquery.mobile-1.0.js&apos;&gt;&lt;/script&gt;&lt;/head&gt;&lt;body&gt;
-</string>
+&lt;/style&gt; &lt;/head&gt;&lt;body&gt;</string>
 	<key>images_url</key>
 	<string>http://www.wikem.org/w/api.php?action=query&amp;prop=images&amp;list=allimages&amp;ailimit=500&amp;format=xml</string>
 	<key>info_url</key>

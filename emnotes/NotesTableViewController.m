@@ -37,8 +37,8 @@
         self.searchKey = @"name";
 		//
 		
-        self.title = self.tabBarItem.title;
-        
+       // self.title = self.tabBarItem.title;
+        self.title = @"WikEM article titles";
     }
     return self;
 }
