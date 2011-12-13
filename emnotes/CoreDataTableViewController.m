@@ -12,6 +12,7 @@
 @synthesize titleKey, subtitleKey, searchKey;
 //
 @synthesize mySearchBar;
+@synthesize searchBarReturnKey;
 
 - (void)createSearchBar
 {
@@ -36,13 +37,20 @@
 			for (UIView *searchBarSubview in [mySearchBar subviews]) {
 				if ([searchBarSubview conformsToProtocol:@protocol(UITextInputTraits)]) {
 					@try {
+                        if (searchBarReturnKey)
+                        {
+                             // default is 'search'
+                        }
+                        else{ //'done' instead of 'search'
+ 
 						[(UITextField *)searchBarSubview setReturnKeyType:UIReturnKeyDone];
+                        }
 					}
 					@catch (NSException * e) {
 						// ignore exception
 					}
 				}
-			}
+			  }
 			
 		}
 	} else { NSLog(@"er... no tableheader view");

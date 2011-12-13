@@ -28,6 +28,9 @@
 @property (copy) NSString *searchKey;
 
 @property (copy) UISearchBar *mySearchBar;
+// allow search bar button to say 'search' or 'done'
+@property(nonatomic) BOOL searchBarReturnKey;
+
 
 // gets accessory type (e.g. disclosure indicator) for the given managedObject (default DisclosureIndicator)
 - (UITableViewCellAccessoryType)accessoryTypeForManagedObject:(NSManagedObject *)managedObject;

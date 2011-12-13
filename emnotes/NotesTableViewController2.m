@@ -29,7 +29,9 @@
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
-{
+{   //set this so searchbar return key no longer says 'DONE'
+    self.searchBarReturnKey = YES;
+
     self = [super initWithStyle:style];
     if (self) {
         [self setupTabBarItem];
@@ -37,6 +39,7 @@
 		//searchkey is string of inherited coredatatableviewcontroller...
 		
         self.title = @"Search within articles";
+        
         
     }
     return self;
@@ -225,7 +228,11 @@
     
     
 }
-
-
-
+//want to return no and not auto refresh when search string changes
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString 
+{
+    NSLog(@"The shouldreloadtableforsearchstring method has been called!");
+    return NO;
+}
+ 
 @end
