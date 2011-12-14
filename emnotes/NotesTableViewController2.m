@@ -228,11 +228,12 @@
     
     
 }
+
 //want to return no and not auto refresh when search string changes
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString 
 {
     NSLog(@"The shouldreloadtableforsearchstring method has been called!");
     return NO;
 }
- 
+
 @end

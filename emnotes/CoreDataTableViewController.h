@@ -18,7 +18,7 @@
 }
 
 // the controller (this class does nothing if this is not set)
-@property (retain) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 
 // key to use when displaying items in the table; defaults to the first sortDescriptor's key
 @property (copy) NSString *titleKey;
