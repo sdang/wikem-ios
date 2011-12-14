@@ -21,7 +21,7 @@
 - (void)setupTabBarItem
 {
     UITabBarItem *item = [[UITabBarItem alloc]
-                          initWithTitle:@"Full Text"
+                          initWithTitle:@"Find"
                           image:[UIImage imageNamed:@"06-magnify.png"]
                           tag:0];
     self.tabBarItem = item;
@@ -38,7 +38,7 @@
         self.searchKey = @"content";
 		//searchkey is string of inherited coredatatableviewcontroller...
 		
-        self.title = @"Search within articles";
+        self.title = @"Search Full Text";
         
         
     }
@@ -77,14 +77,13 @@
 - (void)viewDidAppear:(BOOL)animated {
     //	NSLog(@"viewdid appear");
     //ck, will focus search bar if pressed search button in category tab.
-	if ([VariableStore sharedInstance].focusSearchBar == TRUE){
-		[self.mySearchBar becomeFirstResponder];
- 		//reset it
-		[VariableStore sharedInstance].focusSearchBar = FALSE;
-		NSLog(@"categorytable view set focus to false");
-        
-	}
-	//check to see if updates made and cache needs to be deleted
+    [self.mySearchBar becomeFirstResponder];
+    self.mySearchBar.placeholder = @"Press 'Search' after search term";
+    self.mySearchBar.barStyle = UIBarStyleBlack;
+    self.mySearchBar.translucent = YES;
+  //  self.mySearchBar.tintColor
+
+	 //check to see if updates made and cache needs to be deleted
 	if ([VariableStore sharedInstance].searchViewNeedsCacheReset==YES){
 		//delete cache 'nil' specifies deletes all cache files
 		[NSFetchedResultsController deleteCacheWithName:nil];  

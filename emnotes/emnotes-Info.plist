@@ -26,13 +26,13 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>3.1</string>
+	<string>3.11</string>
 	<key>CFBundleSignature</key>
 	<string>wikem</string>
 	<key>CFBundleURLTypes</key>
 	<array/>
 	<key>CFBundleVersion</key>
-	<string>3.1</string>
+	<string>3.11</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.medical</string>
 	<key>LSRequiresIPhoneOS</key>
@@ -41,11 +41,11 @@
 	<string>MainWindow</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
-		<string>UIInterfaceOrientationPortrait</string>
 		<string></string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
+		<string>UIInterfaceOrientationPortrait</string>
 	</array>
 	<key>UTExportedTypeDeclarations</key>
 	<array/>
@@ -57,9 +57,11 @@
 	<string>http://dl.wikem.org/files/db-update.xml</string>
 	<key>edit_note_url</key>
 	<string>http://www.wikem.org/w/index.php?title=%@&amp;action=edit</string>
+	<key>extras_url</key>
+	<string>http://dl.wikem.org/files/info-extras.xml</string>
 	<key>head_css_string</key>
 	<string>&lt;html&gt;&lt;head&gt;
-&lt;meta name=&apos;viewport&apos; content=&apos;initial-scale=1.0, maximum-scale=10.0&apos;/&gt;&lt;style type=&quot;text/css&quot;&gt; body { font-family: arial }
+&lt;meta name='viewport' content='initial-scale=1.0, maximum-scale=10.0'/&gt;&lt;style type="text/css"&gt; body { font-family: arial }
 .editsection {display: none}
 p,ol,li,ul,a {font-size: 12pt }
 h2 { font-size: 14pt; border-top:1px solid #DBDEE2; padding-top: 10px; color: darkblue }
@@ -91,8 +93,6 @@ ol ol ol ol ol {
 	<string>http://www.wikem.org/w/api.php?action=query&amp;prop=images&amp;list=allimages&amp;ailimit=500&amp;format=xml</string>
 	<key>info_url</key>
 	<string>http://dl.wikem.org/files/info.xml</string>
-	<key>extras_url</key>
-	<string>http://dl.wikem.org/files/info-extras.xml</string>
 	<key>link_base_url</key>
 	<string>/wiki/</string>
 </dict>

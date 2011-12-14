@@ -38,7 +38,7 @@
 		//
 		
        // self.title = self.tabBarItem.title;
-        self.title = @"WikEM article titles";
+        self.title = @"WikEM Titles";
     }
     return self;
 }
@@ -73,6 +73,12 @@
 
 }
 - (void)viewDidAppear:(BOOL)animated {
+    NSLog(@"viewdid appear for notes");
+    self.mySearchBar.placeholder = @"Search article titles";
+    //    self.mySearchBar.barStyle = UIBarStyleBlack;
+    self.mySearchBar.translucent = YES;
+    //  self.mySearchBar.tintColor UIColor
+
 //	NSLog(@"viewdid appear");
  //ck, will focus search bar if pressed search button in category tab.
 	if ([VariableStore sharedInstance].focusSearchBar == TRUE){
