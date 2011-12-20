@@ -3,8 +3,8 @@
 //  emnotes
 //
 //  Created by Busby on 12/10/11.
-//todo get rid of sections and the inbetween lines  
-
+//get rid of scrollview and make overlay
+//also when click on image link...open imagebrowser?
 #import "NotesTableViewController2.h"
 #import "NoteViewController.h"
 #import "Note.h"
@@ -79,7 +79,7 @@
      //ck, will focus search bar if pressed search button in category tab.
     [self.mySearchBar becomeFirstResponder];
     self.mySearchBar.placeholder = @"Press 'Search' after search term";
-    self.mySearchBar.barStyle = UIBarStyleBlack;
+   // self.mySearchBar.barStyle = UIBarStyleBlack;
     self.mySearchBar.translucent = YES;
   //  self.mySearchBar.tintColor
 
@@ -141,10 +141,10 @@
             
                     request.predicate = nil;
                // request.predicate = [NSPredicate predicateWithFormat:@"%@ in content", ];
-                    [request setFetchLimit:40];
+                    [request setFetchLimit:60];
              
             
-            request.fetchBatchSize = 20;
+            request.fetchBatchSize = 30;
             
             NSFetchedResultsController *frc = [[NSFetchedResultsController alloc]
                                                initWithFetchRequest:request
@@ -190,6 +190,7 @@
 
 - (void)managedObjectSelected:(NSManagedObject *)managedObject
 { 
+    //no selecting when typing in this view
     if(!isTyping){
     NoteViewController *noteViewController = [[NoteViewController alloc] init];
 	noteViewController.managedObjectContext = self.managedObjectContext;
@@ -299,6 +300,5 @@
 	if (thumbnail) cell.imageView.image = thumbnail;
 	
 	return cell;
-}
-
+} 
 @end

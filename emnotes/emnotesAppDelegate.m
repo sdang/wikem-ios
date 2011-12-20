@@ -127,7 +127,7 @@
 	
 	
 	
-		//NSUInteger indexOfTab = [tabBarController.viewControllers indexOfObject:viewController];
+		NSUInteger indexOfTab = [tabBarController.viewControllers indexOfObject:viewController];
 		//NSLog(@"Tab index = %u (%u)", indexOfTab);
 	/*if(indexOfTab ==3){ //ie we are in update view. try force portrait only
 		tabBar.dontrotate = TRUE;
@@ -139,7 +139,9 @@
 	
 }
 
- 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {

@@ -373,6 +373,8 @@
 	[mySearchBar release];
     [super dealloc];
 }
-
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+}
 @end
 

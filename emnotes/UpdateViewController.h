@@ -37,6 +37,8 @@
 @property (nonatomic, retain) IBOutlet UILabel *progressText;
 @property (nonatomic, retain) IBOutlet UIButton *updaterButton;
 
+@property (nonatomic, retain) IBOutlet UIImageView *logo;
+
 @property (assign) BOOL ranInitialSetup;
 @property (assign) BOOL displayingLicense;
 

@@ -28,6 +28,8 @@
 @synthesize persistentStoreCoordinator;
 @synthesize updaterButton;
 
+@synthesize logo;
+
 #pragma mark - Progress Bar & Update Button Animation
 
 - (void)animateOutNoUpdateText
@@ -754,8 +756,8 @@ inManagedObjectContext:managedObjectContext];
     }
 }
 - (void)viewWillAppear:(BOOL)animated{
-	
-	UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+
+/*	UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
 	
 	if (orientation == UIDeviceOrientationLandscapeLeft) {
 		[self.view setTransform:CGAffineTransformMakeRotation(M_PI/-2.0)];
@@ -769,10 +771,11 @@ inManagedObjectContext:managedObjectContext];
 		[self.view setTransform:CGAffineTransformMakeRotation(0.0)];
 	}
 	
-
+*/
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    NSLog(@"viewdidappear in upd");
     // TODO: make welcome screen explaining update stuff 
     if (!self.ranInitialSetup && !self.displayingLicense) {
         [self disableAllTabBarItems:YES];
@@ -815,6 +818,9 @@ inManagedObjectContext:managedObjectContext];
     // e.g. self.myOutlet = nil;
 }
 
- 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+
+}
 
 @end
