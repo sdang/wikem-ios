@@ -68,7 +68,7 @@
 }
 
 - (NSString *)titleKey
-{ //NSLog(@"titlekeybeingcalled");
+{  
 	if (!titleKey) {
 		NSArray *sortDescriptors = [self.fetchedResultsController.fetchRequest sortDescriptors];
 		if (sortDescriptors.count) {
@@ -354,23 +354,10 @@
 
 //Typically, you implement this method to perform the text-based search.
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
-{ NSLog(@" asdlfkjasfdl;kjasfd l;kajsdf sbTextdidEND");
+{ //NSLog(@" asdlfkjasfdl;kjasfd l;kajsdf sbTextdidEND");
   
 }
-//You should implement this method to begin the search. Use the text property of the search bar to get the text. You can also send becomeFirstResponder to the search bar to begin editing programmatically.
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
-{
-    NSLog(@"saserchbar saerch button clicked :)");
-    if(self.searchBarReturnKey){
-        NSLog(@"saerchbarreturnkey");
-      
-        
-        [self.searchDisplayController.searchResultsTableView reloadData];
 
-        
-    }
-}
- 
 
 
 #pragma mark dealloc

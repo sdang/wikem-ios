@@ -3,7 +3,7 @@
 //  emnotes
 //
 //  Created by Busby on 12/10/11.
-  
+//todo get rid of sections and the inbetween lines  
 
 #import "NotesTableViewController2.h"
 #import "NoteViewController.h"
@@ -14,7 +14,7 @@
 @implementation NotesTableViewController2
 
 @synthesize tabBarItem;
-//ck : makes default setters and getters..
+@synthesize isTyping;
 @synthesize managedObjectContext;
 
 
@@ -39,9 +39,8 @@
 		//searchkey is string of inherited coredatatableviewcontroller...
 		
         self.title = @"Search Full Text";
-        
-        
-    }
+       // self.searchDisplayController.searchContentsController.view.hidden = YES; 
+            }
     return self;
 }
 //ck...place this in init with sytle?
@@ -75,8 +74,9 @@
     
 }
 - (void)viewDidAppear:(BOOL)animated {
-    //	NSLog(@"viewdid appear");
-    //ck, will focus search bar if pressed search button in category tab.
+    
+   
+     //ck, will focus search bar if pressed search button in category tab.
     [self.mySearchBar becomeFirstResponder];
     self.mySearchBar.placeholder = @"Press 'Search' after search term";
     self.mySearchBar.barStyle = UIBarStyleBlack;
@@ -96,8 +96,16 @@
 	
 }
 - (void)viewDidLoad 
-{
-    
+{ 
+    //the overlay once start searching
+    self.searchDisplayController.searchResultsTableView.backgroundColor = [UIColor darkGrayColor];
+    self.searchDisplayController.searchResultsTableView.separatorColor = [UIColor blackColor];
+
+    //the default tableview just sitting there before the saesrch overlay
+    self.tableView.separatorColor = [UIColor blackColor];
+    self.tableView.backgroundColor = [UIColor blackColor];
+    //  self.searchDisplayController.searchResultsTableView.backgroundColor = [UIColor lightGrayColor];
+    //self.imageView.image = [UIImage imageNamed:@"gradientBackground.png"];
 	
 }
 - (void)viewDidUnload
@@ -119,11 +127,8 @@
             request.sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
             
             
-            NSString *cacheName = nil;
-            cacheName = @"notes2";
-
-            NSString *sectionName = nil;
-            //check to see if updates made and cache needs to be deleted. also check every instance viewdidappear
+            NSString *cacheName = @"notes2";
+             //check to see if updates made and cache needs to be deleted. also check every instance viewdidappear
             if ([VariableStore sharedInstance].searchViewNeedsCacheReset==YES){
                 //delete cache 'nil' specifies deletes all cache files
                 [NSFetchedResultsController deleteCacheWithName:cacheName];  
@@ -134,27 +139,17 @@
             }
             
             
-			if (category) {
-				request.predicate = [NSPredicate predicateWithFormat:@"%@ in categories", category];
-				self.title = category.title;
-				cacheName = [NSString stringWithString:category.title];
-				sectionName = nil; 
-            } else {
-				NSLog(@"init notestableviewcontroller2");
-				sectionName = @"getFirstLetter";
-				cacheName = @"notes2";
-				request.predicate = nil;
+                    request.predicate = nil;
                // request.predicate = [NSPredicate predicateWithFormat:@"%@ in content", ];
-
-                
-            }
+                    [request setFetchLimit:40];
+             
             
             request.fetchBatchSize = 20;
             
             NSFetchedResultsController *frc = [[NSFetchedResultsController alloc]
                                                initWithFetchRequest:request
                                                managedObjectContext:context
-                                               sectionNameKeyPath:sectionName
+                                               sectionNameKeyPath:nil
                                                cacheName:cacheName];
             //  cacheName:nil];
 			self.fetchedResultsController = frc;
@@ -195,6 +190,7 @@
 
 - (void)managedObjectSelected:(NSManagedObject *)managedObject
 { 
+    if(!isTyping){
     NoteViewController *noteViewController = [[NoteViewController alloc] init];
 	noteViewController.managedObjectContext = self.managedObjectContext;
     //i hope that passed the correct context along...
@@ -202,7 +198,7 @@
     // [self.navigationController pushViewController:noteViewController animated:YES];
 	[self.navigationController pushViewController:noteViewController animated:NO];
     noteViewController = nil;
-    [noteViewController release];
+        [noteViewController release];}
 }
 
 - (UITableViewCellAccessoryType)accessoryTypeForManagedObject:(NSManagedObject *)managedObject
@@ -231,8 +227,78 @@
 //want to return no and not auto refresh when search string changes
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString 
 {
-    NSLog(@"The shouldreloadtableforsearchstring method has been called!");
+//while typing also need to keep color scheme here
+    if(isTyping){
+        //do nothing... will unlock screen once done searching
+        
+        //make the search screen exclusive
+     //   self.searchDisplayController.searchResultsTableView.exclusiveTouch = YES;
+
+    }else{
+        self.searchDisplayController.searchResultsTableView.backgroundColor = [UIColor blackColor];
+        self.searchDisplayController.searchResultsTableView.separatorColor = [UIColor blackColor];
+        
+                self.isTyping = YES;
+    }
+       
+   
     return NO;
+}
+//You should implement this method to begin the search. Use the text property of the search bar to get the text. You can also send becomeFirstResponder to the search bar to begin editing programmatically.
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+   
+         //searchResultsTableView is basically an overlay on top of the original tableview
+        self.searchDisplayController.searchResultsTableView.backgroundColor = [UIColor whiteColor];
+        
+        //make table footer... doesnt apear after query..
+        UIView *containerView =
+        [[[UIView alloc]
+          initWithFrame:CGRectMake(0, 0, 300, 60)]
+         autorelease];
+        UILabel *footerLabel =
+        [[[UILabel alloc]
+          initWithFrame:CGRectMake(10, 20, 300, 40)]
+         autorelease];
+        footerLabel.text = NSLocalizedString(@"To find a search term within all WikEM articles, press RETURN/'Search' Key to query ", @"");
+        footerLabel.textColor = [UIColor whiteColor];
+        footerLabel.shadowColor = [UIColor blackColor];
+        footerLabel.shadowOffset = CGSizeMake(0, 1);
+        footerLabel.font = [UIFont boldSystemFontOfSize:22];
+        footerLabel.backgroundColor = [UIColor clearColor];
+        [containerView addSubview:footerLabel];
+        self.searchDisplayController.searchResultsTableView.tableFooterView = containerView;       
+        
+        
+        self.isTyping = NO;
+    
+
+        [self.searchDisplayController.searchResultsTableView reloadData];
+        
+        
+    
+}
+
+//override this method of superclass
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForManagedObject:(NSManagedObject *)managedObject
+{  //NSLog(@"cellformanagedobj");
+    static NSString *ReuseIdentifier = @"CoreDataTableViewCell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ReuseIdentifier];
+    if (cell == nil) {
+		UITableViewCellStyle cellStyle = self.subtitleKey ? UITableViewCellStyleSubtitle : UITableViewCellStyleDefault;
+        cell = [[[UITableViewCell alloc] initWithStyle:cellStyle reuseIdentifier:ReuseIdentifier] autorelease];
+//don't want highlight blue on selection
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    }
+	
+	if (self.titleKey) cell.textLabel.text = [managedObject valueForKey:self.titleKey];
+	if (self.subtitleKey) cell.detailTextLabel.text = [managedObject valueForKey:self.subtitleKey];
+	cell.accessoryType = [self accessoryTypeForManagedObject:managedObject];
+	UIImage *thumbnail = [self thumbnailImageForManagedObject:managedObject];
+	if (thumbnail) cell.imageView.image = thumbnail;
+	
+	return cell;
 }
 
 @end

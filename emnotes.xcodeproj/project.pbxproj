@@ -207,8 +207,8 @@
 			isa = PBXGroup;
 			children = (
 				94DA300C13468FE900862F48 /* PersonalNotesTableViewController.xib */,
-				94E6959B1346BD46008DF6ED /* CoreDataTableViewController.m */,
 				94E6959C1346BD46008DF6ED /* CoreDataTableViewController.h */,
+				94E6959B1346BD46008DF6ED /* CoreDataTableViewController.m */,
 				94DA2FFF13468FCB00862F48 /* CategoryTableViewController.h */,
 				94DA300013468FCB00862F48 /* CategoryTableViewController.m */,
 				94DA300413468FE900862F48 /* NotesTableViewController.h */,
