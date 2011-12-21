@@ -29,6 +29,12 @@
 @synthesize updaterButton;
 
 @synthesize logo;
+@synthesize updatecheckbutton;
+@synthesize datesLabel1;
+@synthesize datesLabel2;
+@synthesize datesLabel3;
+
+
 
 #pragma mark - Progress Bar & Update Button Animation
 
@@ -725,6 +731,13 @@ inManagedObjectContext:managedObjectContext];
     [lastUpdateCheckLabel release];
     [lastUpdatePerformedLabel release];
     [noUpdateLabel release];
+    [logo release];
+    [updatecheckbutton release];
+    [datesLabel1 release];
+    [datesLabel2 release];
+    [datesLabel3 release];
+
+
     [super dealloc];
 }
 
@@ -816,11 +829,77 @@ inManagedObjectContext:managedObjectContext];
     self.updaterButton = nil;
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+    self.logo = nil;
+    self.updatecheckbutton = nil;
+    self.datesLabel1 = nil;
+    self.datesLabel2 = nil;
+    self.datesLabel3 = nil;
+
+
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
-
+  //  return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+    return YES;
 }
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration{
+    /*
+     This method is called from within the animation block that is used to rotate the view. You can override this method and use it to configure additional animations that should occur during the view rotation. For example, you could use it to adjust the zoom level of your content, change the scroller position, or modify other animatable properties of your view.
+    
+     */ //landscape orientation
+    if (interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
+        interfaceOrientation == UIInterfaceOrientationLandscapeRight)
+    { //takes x y width and height as args
+       // self.logo.frame = CGRectMake(56, 20, 326, 71);
+        self.logo.frame = CGRectMake(56, 20, 326, 71);
+
+        self.updatecheckbutton.frame = CGRectMake(310, 200, 151, 45);
+        
+        self.updaterButton.frame = CGRectMake(20, 200, 280, 45);
+
+        
+        self.progressBar.frame = CGRectMake(20, 190, 280, 9);
+
+        
+        self.progressText.frame = CGRectMake(20,194,280,26);   
+        
+        self.noUpdateLabel.frame = CGRectMake(20, 220, 286, 21);
+        //get rid of dates for landscape
+        self.datesLabel1.alpha = 0;
+        self.datesLabel2.alpha = 0;
+        self.datesLabel3.alpha = 0;
+        self.currentDatabaseCreatedLabel.alpha = 0;
+        self.lastUpdateCheckLabel.alpha = 0;
+        self.lastUpdatePerformedLabel.alpha = 0;
+
+
+    }
+    else //portrait
+    {   self.logo.frame = CGRectMake(0, 20, 326, 71);
+        
+        self.updatecheckbutton.frame = CGRectMake(164, 286, 151, 45);
+
+        self.updaterButton.frame = CGRectMake(20, 354, 280, 45);
+        
+        self.progressBar.frame = CGRectMake(20, 348, 280, 9);
+        
+        
+        self.progressText.frame = CGRectMake(20,348,280,26);   
+        
+        self.noUpdateLabel.frame = CGRectMake(20, 248, 286, 21);
+//the dates
+        self.datesLabel1.alpha = 1;
+        self.datesLabel2.alpha = 1;
+        self.datesLabel3.alpha = 1;
+        self.currentDatabaseCreatedLabel.alpha = 1;
+        self.lastUpdateCheckLabel.alpha = 1;
+        self.lastUpdatePerformedLabel.alpha = 1;
+
+
+    }
+    
+}
+
 
 @end

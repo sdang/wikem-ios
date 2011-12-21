@@ -45,11 +45,10 @@
 					<object class="IBUIImageView" id="305604122">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrameSize">{320, 499}</string>
+						<string key="NSFrameSize">{480, 499}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="303053806"/>
-						<int key="IBUIContentMode">9</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<object class="NSCustomResource" key="IBUIImage">
@@ -99,10 +98,10 @@
 					<object class="IBUIImageView" id="87905362">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{0, 339}, {320, 95}}</string>
+						<string key="NSFrame">{{-26, 313}, {320, 95}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="76231564"/>
+						<reference key="NSNextKeyView" ref="630692100"/>
 						<int key="IBUIContentMode">9</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -167,7 +166,7 @@
 						<string key="NSFrame">{{164, 286}, {151, 45}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="87905362"/>
+						<reference key="NSNextKeyView" ref="76231564"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
@@ -362,7 +361,7 @@
 						<string key="NSFrame">{{20, 248}, {286, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="630692100"/>
+						<reference key="NSNextKeyView" ref="87905362"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<int key="IBUIContentMode">7</int>
@@ -580,6 +579,46 @@ AAgACAAIAAEAAQABAAE</bytes>
 					<int key="connectionID">63</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">logo</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="303053806"/>
+					</object>
+					<int key="connectionID">73</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">updatecheckbutton</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="183407477"/>
+					</object>
+					<int key="connectionID">74</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">datesLabel1</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="152796249"/>
+					</object>
+					<int key="connectionID">75</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">datesLabel2</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="791217358"/>
+					</object>
+					<int key="connectionID">76</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">datesLabel3</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="587509794"/>
+					</object>
+					<int key="connectionID">77</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">runUpdateCheck:</string>
 						<reference key="source" ref="183407477"/>
@@ -631,7 +670,6 @@ AAgACAAIAAEAAQABAAE</bytes>
 							<reference ref="126721949"/>
 							<reference ref="791217358"/>
 							<reference ref="587509794"/>
-							<reference ref="87905362"/>
 							<reference ref="183407477"/>
 							<reference ref="216700237"/>
 							<reference ref="152796249"/>
@@ -640,6 +678,7 @@ AAgACAAIAAEAAQABAAE</bytes>
 							<reference ref="630692100"/>
 							<reference ref="303053806"/>
 							<reference ref="469216897"/>
+							<reference ref="87905362"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -824,7 +863,7 @@ AAgACAAIAAEAAQABAAE</bytes>
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">71</int>
+			<int key="maxID">77</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -883,16 +922,23 @@ AAgACAAIAAEAAQABAAE</bytes>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>currentDatabaseCreatedLabel</string>
+							<string>datesLabel1</string>
+							<string>datesLabel2</string>
+							<string>datesLabel3</string>
 							<string>lastUpdateCheckLabel</string>
 							<string>lastUpdatePerformedLabel</string>
 							<string>logo</string>
 							<string>noUpdateLabel</string>
 							<string>progressBar</string>
 							<string>progressText</string>
+							<string>updatecheckbutton</string>
 							<string>updaterButton</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>UILabel</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
 							<string>UILabel</string>
 							<string>UILabel</string>
 							<string>UILabel</string>
@@ -901,6 +947,7 @@ AAgACAAIAAEAAQABAAE</bytes>
 							<string>UIProgressView</string>
 							<string>UILabel</string>
 							<string>UIButton</string>
+							<string>UIButton</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -908,18 +955,34 @@ AAgACAAIAAEAAQABAAE</bytes>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>currentDatabaseCreatedLabel</string>
+							<string>datesLabel1</string>
+							<string>datesLabel2</string>
+							<string>datesLabel3</string>
 							<string>lastUpdateCheckLabel</string>
 							<string>lastUpdatePerformedLabel</string>
 							<string>logo</string>
 							<string>noUpdateLabel</string>
 							<string>progressBar</string>
 							<string>progressText</string>
+							<string>updatecheckbutton</string>
 							<string>updaterButton</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBToOneOutletInfo">
 								<string key="name">currentDatabaseCreatedLabel</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">datesLabel1</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">datesLabel2</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">datesLabel3</string>
 								<string key="candidateClassName">UILabel</string>
 							</object>
 							<object class="IBToOneOutletInfo">
@@ -945,6 +1008,10 @@ AAgACAAIAAEAAQABAAE</bytes>
 							<object class="IBToOneOutletInfo">
 								<string key="name">progressText</string>
 								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">updatecheckbutton</string>
+								<string key="candidateClassName">UIButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">updaterButton</string>

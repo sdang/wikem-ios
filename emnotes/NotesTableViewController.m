@@ -150,7 +150,7 @@
 			 
 				}
         
-        request.fetchBatchSize = 300; //make large for all notes faster. rather than fetch 20 notes ata time. 
+        request.fetchBatchSize = 20; //make large for all notes faster. rather than fetch 20 notes ata time. 
         
         NSFetchedResultsController *frc = [[NSFetchedResultsController alloc]
                                            initWithFetchRequest:request
