@@ -352,11 +352,6 @@
 	
 }*/
 
-//Typically, you implement this method to perform the text-based search.
-- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
-{ //NSLog(@" asdlfkjasfdl;kjasfd l;kajsdf sbTextdidEND");
-  
-}
 
 
 

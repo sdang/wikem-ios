@@ -100,10 +100,12 @@
     //the overlay once start searching
     self.searchDisplayController.searchResultsTableView.backgroundColor = [UIColor darkGrayColor];
     self.searchDisplayController.searchResultsTableView.separatorColor = [UIColor blackColor];
-
+    self.searchDisplayController.searchResultsTableView.scrollEnabled = NO;
     //the default tableview just sitting there before the saesrch overlay
     self.tableView.separatorColor = [UIColor blackColor];
     self.tableView.backgroundColor = [UIColor blackColor];
+    self.tableView.scrollEnabled = NO;
+    
     //  self.searchDisplayController.searchResultsTableView.backgroundColor = [UIColor lightGrayColor];
     //self.imageView.image = [UIImage imageNamed:@"gradientBackground.png"];
 	
@@ -224,6 +226,21 @@
     
     
 }
+//Typically, you implement this method to perform the text-based search.
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{ //NSLog(@" asdlfkjasfdl;kjasfd l;kajsdf sbTextdidEND");
+             self.searchDisplayController.searchResultsTableView.backgroundColor = [UIColor blackColor];
+        self.searchDisplayController.searchResultsTableView.separatorColor = [UIColor blackColor];
+        
+        // self.tableView.scrollEnabled = NO;
+        self.searchDisplayController.searchResultsTableView.scrollEnabled = NO;
+        
+        self.isTyping = YES;
+    
+    
+
+}
+
 
 //want to return no and not auto refresh when search string changes
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString 
@@ -239,6 +256,9 @@
         self.searchDisplayController.searchResultsTableView.backgroundColor = [UIColor blackColor];
         self.searchDisplayController.searchResultsTableView.separatorColor = [UIColor blackColor];
         
+       // self.tableView.scrollEnabled = NO;
+        self.searchDisplayController.searchResultsTableView.scrollEnabled = NO;
+        
                 self.isTyping = YES;
     }
        
@@ -251,7 +271,7 @@
    
          //searchResultsTableView is basically an overlay on top of the original tableview
         self.searchDisplayController.searchResultsTableView.backgroundColor = [UIColor whiteColor];
-        
+     /*   
         //make table footer... doesnt apear after query..
         UIView *containerView =
         [[[UIView alloc]
@@ -265,13 +285,16 @@
         footerLabel.textColor = [UIColor whiteColor];
         footerLabel.shadowColor = [UIColor blackColor];
         footerLabel.shadowOffset = CGSizeMake(0, 1);
-        footerLabel.font = [UIFont boldSystemFontOfSize:22];
+        footerLabel.font = [UIFont systemFontOfSize:16];
         footerLabel.backgroundColor = [UIColor clearColor];
         [containerView addSubview:footerLabel];
         self.searchDisplayController.searchResultsTableView.tableFooterView = containerView;       
-        
+        */
         
         self.isTyping = NO;
+    self.searchDisplayController.searchResultsTableView.scrollEnabled = YES;
+    self.searchDisplayController.searchResultsTableView.separatorColor = [UIColor lightGrayColor];
+
     
 
         [self.searchDisplayController.searchResultsTableView reloadData];
@@ -301,4 +324,12 @@
 	
 	return cell;
 } 
+- (NSIndexPath *)tableView :(UITableView *)theTableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (isTyping){
+        return nil;
+    }else{
+        return indexPath;
+    }
+        
+}
 @end
