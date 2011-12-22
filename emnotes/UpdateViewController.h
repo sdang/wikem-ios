@@ -37,8 +37,17 @@
 @property (nonatomic, retain) IBOutlet UILabel *progressText;
 @property (nonatomic, retain) IBOutlet UIButton *updaterButton;
 
+@property (nonatomic, retain) IBOutlet UIImageView *logo;
+@property (nonatomic, retain) IBOutlet UIButton *updatecheckbutton;
+@property (nonatomic, retain) IBOutlet UILabel *datesLabel1;
+@property (nonatomic, retain) IBOutlet UILabel *datesLabel2;
+@property (nonatomic, retain) IBOutlet UILabel *datesLabel3;
+
+
 @property (assign) BOOL ranInitialSetup;
 @property (assign) BOOL displayingLicense;
+
+
 
 - (void)userDidAcceptLicense:(BOOL)status;
 - (IBAction)clearWikEMData;
