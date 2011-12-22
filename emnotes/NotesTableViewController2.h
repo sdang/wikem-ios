@@ -17,7 +17,7 @@
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 
 @property BOOL isTyping;
-
+ 
 - (id)initWithStyle:(UITableViewStyle)style inManagedContext:(NSManagedObjectContext *)context withCategory:(Category *)category;
 
 @end

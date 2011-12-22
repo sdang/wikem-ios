@@ -116,11 +116,9 @@
 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
 {
-	NSLog(@"didSelectViewController");
 
     // if we're a navigation controller, pop back to root
     if ([viewController isKindOfClass:[UINavigationController class]]) {
-		NSLog(@"should pop if navigation class");
 
         [(UINavigationController *)viewController popToRootViewControllerAnimated:NO];
     }

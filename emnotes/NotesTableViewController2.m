@@ -2,9 +2,11 @@
 //  NotesTableViewController2.m
 //  emnotes
 //
-//  Created by Busby on 12/10/11.
-//get rid of scrollview and make overlay
-//also when click on image link...open imagebrowser?
+//  Created by chris on 12/10/11.
+
+/* Search/Find viewcontroller
+  this class should load faster than the other notestablecontroller since it is not responsible to load the entire list. the fetch is limited to ~60 results. while typing the tableview is simply hidden  
+  */
 #import "NotesTableViewController2.h"
 #import "NoteViewController.h"
 #import "Note.h"
@@ -16,8 +18,7 @@
 @synthesize tabBarItem;
 @synthesize isTyping;
 @synthesize managedObjectContext;
-
-
+ 
 - (void)setupTabBarItem
 {
     UITabBarItem *item = [[UITabBarItem alloc]
@@ -43,7 +44,7 @@
             }
     return self;
 }
-//ck...place this in init with sytle?
+ 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -58,43 +59,32 @@
     return self;
 }
 - (void)gotoSearch
-{ 
- 	[self.mySearchBar becomeFirstResponder];
-    
-    
-}
+{  	[self.mySearchBar becomeFirstResponder];}
 
 - (void)dealloc
 {
     [tabBarItem release];
     [super dealloc];
 }
--(void)viewDidDisappear:(BOOL)animated{
-	//NSLog(@"viewdid disappear");
-    
-}
-- (void)viewDidAppear:(BOOL)animated {
-    
-   
-     //ck, will focus search bar if pressed search button in category tab.
-    [self.mySearchBar becomeFirstResponder];
-    self.mySearchBar.placeholder = @"Press 'Search' after search term";
-   // self.mySearchBar.barStyle = UIBarStyleBlack;
-    self.mySearchBar.translucent = YES;
-  //  self.mySearchBar.tintColor
 
+- (void)viewDidAppear:(BOOL)animated {
+    //ck, will focus search bar unless text already in searchbar 
+    if ([self.mySearchBar.text length] ==0)
+    {
+        [self.mySearchBar becomeFirstResponder];
+        self.mySearchBar.placeholder = @"Press 'Search' after search term";
+        self.mySearchBar.translucent = YES;
+     }
+         
 	 //check to see if updates made and cache needs to be deleted
 	if ([VariableStore sharedInstance].searchViewNeedsCacheReset==YES){
-		//delete cache 'nil' specifies deletes all cache files
 		[NSFetchedResultsController deleteCacheWithName:nil];  
-		
-		//reset the bool to NO
-		[VariableStore sharedInstance].searchViewNeedsCacheReset=NO;
+        [VariableStore sharedInstance].searchViewNeedsCacheReset=NO;
 		NSLog(@"cache deleted");
 	}
 	
-	
 }
+
 - (void)viewDidLoad 
 { 
     //the overlay once start searching
@@ -185,22 +175,17 @@
     // Release any cached data, images, etc that aren't in use.
     //delete cache 'nil' specifies deletes all cache files
     [NSFetchedResultsController deleteCacheWithName:nil];  
-    
-    NSLog(@"cache deleted");
-    
 }
 
 - (void)managedObjectSelected:(NSManagedObject *)managedObject
 { 
     //no selecting when typing in this view
     if(!isTyping){
-    NoteViewController *noteViewController = [[NoteViewController alloc] init];
-	noteViewController.managedObjectContext = self.managedObjectContext;
-    //i hope that passed the correct context along...
-	noteViewController.note = (Note *)managedObject;
-    // [self.navigationController pushViewController:noteViewController animated:YES];
-	[self.navigationController pushViewController:noteViewController animated:NO];
-    noteViewController = nil;
+        NoteViewController *noteViewController = [[NoteViewController alloc] init];
+        noteViewController.managedObjectContext = self.managedObjectContext;
+        noteViewController.note = (Note *)managedObject;
+        [self.navigationController pushViewController:noteViewController animated:NO];
+        noteViewController = nil;
         [noteViewController release];}
 }
 
@@ -213,19 +198,14 @@
 
 //these are UISearchBarDelegate
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
-	// Existing code
-	NSLog(@"cancel button clicked");
-	//[self.view removeFromSuperview]; 
-	
-    //	[self.navigationController dismissModalViewControllerAnimated:YES];
-	[self.searchDisplayController setActive:NO];
+	 
+ 	[self.searchDisplayController setActive:NO];
     //need this or crash
     
 	[self.navigationController dismissModalViewControllerAnimated:NO];
-	[self.navigationController popViewControllerAnimated:NO];    
-    
-    
+	[self.navigationController popViewControllerAnimated:NO];        
 }
+
 //Typically, you implement this method to perform the text-based search.
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 { //NSLog(@" asdlfkjasfdl;kjasfd l;kajsdf sbTextdidEND");
@@ -234,11 +214,8 @@
         
         // self.tableView.scrollEnabled = NO;
         self.searchDisplayController.searchResultsTableView.scrollEnabled = NO;
-        
         self.isTyping = YES;
     
-    
-
 }
 
 
@@ -248,10 +225,6 @@
 //while typing also need to keep color scheme here
     if(isTyping){
         //do nothing... will unlock screen once done searching
-        
-        //make the search screen exclusive
-     //   self.searchDisplayController.searchResultsTableView.exclusiveTouch = YES;
-
     }else{
         self.searchDisplayController.searchResultsTableView.backgroundColor = [UIColor blackColor];
         self.searchDisplayController.searchResultsTableView.separatorColor = [UIColor blackColor];
@@ -259,53 +232,29 @@
        // self.tableView.scrollEnabled = NO;
         self.searchDisplayController.searchResultsTableView.scrollEnabled = NO;
         
-                self.isTyping = YES;
+        self.isTyping = YES;
     }
        
    
     return NO;
 }
-//You should implement this method to begin the search. Use the text property of the search bar to get the text. You can also send becomeFirstResponder to the search bar to begin editing programmatically.
+//You should implement this method to begin the search. Use the text property of the search bar to get the text. 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
    
          //searchResultsTableView is basically an overlay on top of the original tableview
         self.searchDisplayController.searchResultsTableView.backgroundColor = [UIColor whiteColor];
-     /*   
-        //make table footer... doesnt apear after query..
-        UIView *containerView =
-        [[[UIView alloc]
-          initWithFrame:CGRectMake(0, 0, 300, 60)]
-         autorelease];
-        UILabel *footerLabel =
-        [[[UILabel alloc]
-          initWithFrame:CGRectMake(10, 20, 300, 40)]
-         autorelease];
-        footerLabel.text = NSLocalizedString(@"To find a search term within all WikEM articles, press RETURN/'Search' Key to query ", @"");
-        footerLabel.textColor = [UIColor whiteColor];
-        footerLabel.shadowColor = [UIColor blackColor];
-        footerLabel.shadowOffset = CGSizeMake(0, 1);
-        footerLabel.font = [UIFont systemFontOfSize:16];
-        footerLabel.backgroundColor = [UIColor clearColor];
-        [containerView addSubview:footerLabel];
-        self.searchDisplayController.searchResultsTableView.tableFooterView = containerView;       
-        */
-        
         self.isTyping = NO;
-    self.searchDisplayController.searchResultsTableView.scrollEnabled = YES;
-    self.searchDisplayController.searchResultsTableView.separatorColor = [UIColor lightGrayColor];
-
-    
-
+        self.searchDisplayController.searchResultsTableView.scrollEnabled = YES;
+        self.searchDisplayController.searchResultsTableView.separatorColor = [UIColor lightGrayColor];
         [self.searchDisplayController.searchResultsTableView reloadData];
-        
-        
+    
     
 }
 
-//override this method of superclass
+//override this method of superclass to get rid of highlighting cell
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForManagedObject:(NSManagedObject *)managedObject
-{  //NSLog(@"cellformanagedobj");
+{   
     static NSString *ReuseIdentifier = @"CoreDataTableViewCell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ReuseIdentifier];

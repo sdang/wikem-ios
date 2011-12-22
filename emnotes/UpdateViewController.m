@@ -674,6 +674,10 @@ inManagedObjectContext:managedObjectContext];
         if (status) {
             // show red dot to indicate update available
             [[[[[self tabBarController] tabBar] items] objectAtIndex:4] setBadgeValue:@""];
+     //in horizontal mode hide the dates now
+            [self hideDates];
+            
+            
             
             // show button to allow user to update if it isn't already shown
             [self animateInUpdaterButton];
@@ -749,8 +753,7 @@ inManagedObjectContext:managedObjectContext];
     // Release any cached data, images, etc that aren't in use.
 }
 
-- (void)viewDidLoad
-{
+-(void) viewDidLoad{
     [super viewDidLoad];
     self.progressBar.alpha = 0.0;
     self.updaterButton.alpha = 0.0;
@@ -768,24 +771,51 @@ inManagedObjectContext:managedObjectContext];
         [self animateInUpdaterButton];
     }
 }
-- (void)viewWillAppear:(BOOL)animated{
-
-/*	UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
-	
-	if (orientation == UIDeviceOrientationLandscapeLeft) {
-		[self.view setTransform:CGAffineTransformMakeRotation(M_PI/-2.0)];
-	} else if (orientation == UIDeviceOrientationLandscapeRight) {
-		[self.view setTransform:CGAffineTransformMakeRotation(M_PI/2.0)];
-	}
-	
-	else if (orientation == UIDeviceOrientationPortraitUpsideDown) {
-		[self.view setTransform:CGAffineTransformMakeRotation(M_PI)];
-	} else if (orientation == UIDeviceOrientationPortrait) {
-		[self.view setTransform:CGAffineTransformMakeRotation(0.0)];
-	}
-	
-*/
+-(void) hideDates{
+    if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
+    {
+    //get rid of dates for landscape
+    self.datesLabel1.alpha = 0;
+    self.datesLabel2.alpha = 0;
+    self.datesLabel3.alpha = 0;
+    self.currentDatabaseCreatedLabel.alpha = 0;
+    self.lastUpdateCheckLabel.alpha = 0;
+    self.lastUpdatePerformedLabel.alpha = 0;
+    }
 }
+-(void) changeViewsOnOrientation{
+    if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
+    { //takes x y width and height as args
+        // self.logo.frame = CGRectMake(56, 20, 326, 71);
+        self.logo.frame = CGRectMake(56, 20, 326, 71);
+        self.updatecheckbutton.frame = CGRectMake(310, 100, 151, 45);
+        self.updaterButton.frame = CGRectMake(20, 260, 280, 45);
+        self.progressBar.frame = CGRectMake(20, 250, 280, 9);        
+        self.progressText.frame = CGRectMake(20,254,280,26);   
+        self.noUpdateLabel.frame = CGRectMake(20, 220, 286, 21);
+        
+    }
+    else //portrait
+    {   self.logo.frame = CGRectMake(0, 20, 326, 71);
+        self.updatecheckbutton.frame = CGRectMake(164, 286, 151, 45);
+        self.updaterButton.frame = CGRectMake(20, 354, 280, 45);
+        self.progressBar.frame = CGRectMake(20, 348, 280, 9);
+        self.progressText.frame = CGRectMake(20,348,280,26);   
+        self.noUpdateLabel.frame = CGRectMake(20, 248, 286, 21);
+        //the dates
+        self.datesLabel1.alpha = 1;
+        self.datesLabel2.alpha = 1;
+        self.datesLabel3.alpha = 1;
+        self.currentDatabaseCreatedLabel.alpha = 1;
+        self.lastUpdateCheckLabel.alpha = 1;
+        self.lastUpdatePerformedLabel.alpha = 1;
+        
+    }
+
+}
+- (void)viewWillAppear:(BOOL)animated{
+    [self changeViewsOnOrientation];
+     }
 
 - (void)viewDidAppear:(BOOL)animated {
     NSLog(@"viewdidappear in upd");
@@ -845,60 +875,10 @@ inManagedObjectContext:managedObjectContext];
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration{
     /*
-     This method is called from within the animation block that is used to rotate the view. You can override this method and use it to configure additional animations that should occur during the view rotation. For example, you could use it to adjust the zoom level of your content, change the scroller position, or modify other animatable properties of your view.
+     This method is called from within the animation block that is used to rotate the view. You can override this method and use it to configure additional animations that should occur during the view rotation. For example, you could use it to adjust the zoom level of your content, change the scroller position, or modify other animatable properties of your view*/
+    [self changeViewsOnOrientation];
     
-     */ //landscape orientation
-    if (interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
-        interfaceOrientation == UIInterfaceOrientationLandscapeRight)
-    { //takes x y width and height as args
-       // self.logo.frame = CGRectMake(56, 20, 326, 71);
-        self.logo.frame = CGRectMake(56, 20, 326, 71);
-
-        self.updatecheckbutton.frame = CGRectMake(310, 200, 151, 45);
-        
-        self.updaterButton.frame = CGRectMake(20, 200, 280, 45);
-
-        
-        self.progressBar.frame = CGRectMake(20, 190, 280, 9);
-
-        
-        self.progressText.frame = CGRectMake(20,194,280,26);   
-        
-        self.noUpdateLabel.frame = CGRectMake(20, 220, 286, 21);
-        //get rid of dates for landscape
-        self.datesLabel1.alpha = 0;
-        self.datesLabel2.alpha = 0;
-        self.datesLabel3.alpha = 0;
-        self.currentDatabaseCreatedLabel.alpha = 0;
-        self.lastUpdateCheckLabel.alpha = 0;
-        self.lastUpdatePerformedLabel.alpha = 0;
-
-
-    }
-    else //portrait
-    {   self.logo.frame = CGRectMake(0, 20, 326, 71);
-        
-        self.updatecheckbutton.frame = CGRectMake(164, 286, 151, 45);
-
-        self.updaterButton.frame = CGRectMake(20, 354, 280, 45);
-        
-        self.progressBar.frame = CGRectMake(20, 348, 280, 9);
-        
-        
-        self.progressText.frame = CGRectMake(20,348,280,26);   
-        
-        self.noUpdateLabel.frame = CGRectMake(20, 248, 286, 21);
-//the dates
-        self.datesLabel1.alpha = 1;
-        self.datesLabel2.alpha = 1;
-        self.datesLabel3.alpha = 1;
-        self.currentDatabaseCreatedLabel.alpha = 1;
-        self.lastUpdateCheckLabel.alpha = 1;
-        self.lastUpdatePerformedLabel.alpha = 1;
-
-
-    }
-    
+      
 }
 
 
