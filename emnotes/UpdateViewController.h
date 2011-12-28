@@ -46,6 +46,7 @@
 
 @property (assign) BOOL ranInitialSetup;
 @property (assign) BOOL displayingLicense;
+@property (assign) BOOL isOffset;
 
 
 
@@ -65,5 +66,6 @@
 - (void)animateOutNoUpdateText;
 - (void)autoUpdateCheck;
 
+-(void)hideDates;
 
 @end

@@ -34,7 +34,7 @@
 @synthesize datesLabel2;
 @synthesize datesLabel3;
 
-
+@synthesize isOffset;
 
 #pragma mark - Progress Bar & Update Button Animation
 
@@ -66,12 +66,14 @@
 - (void)animateOutUpdaterButton
 {
     // alpha = 0 if it's already hidden
-    if (self.updaterButton.alpha != 0)
+    if (self.updaterButton.alpha != 0){
     [UIView transitionWithView:self.updaterButton
                       duration:0.5
                        options:UIViewAnimationCurveLinear
                     animations:^{ self.updaterButton.alpha = 0.0; self.updaterButton.frame = CGRectOffset(self.updaterButton.frame, 0, 100.0); }
                     completion:NULL];
+        self.isOffset = YES;
+    }
 }
 
 - (void)animateOutProgressPackage
@@ -81,6 +83,7 @@
         // we're going to move up the package by 60 pts
         CGRect finalRectBar = CGRectOffset(self.progressBar.frame, 0.0, 60.0);
         CGRect finalRectText = CGRectOffset(self.progressText.frame, 0.0, 60.0);
+        self.isOffset = YES;
         
         // actually do the animation
         [UIView transitionWithView:self.progressBar
@@ -108,12 +111,15 @@
         }
         
         // alpha = 1 if it's already shown
-        if (self.updaterButton.alpha != 1)
+        if (self.updaterButton.alpha != 1){
             [UIView transitionWithView:self.updaterButton
                               duration:0.5
                                options:UIViewAnimationCurveLinear
                             animations:^{ self.updaterButton.alpha = 1.0; self.updaterButton.frame = CGRectOffset(self.updaterButton.frame, 0, -100.0); }
                             completion:NULL];
+            self.isOffset = NO;
+         }
+        
     });
 }
 
@@ -129,6 +135,8 @@
     
     // if alpha == 1 that means we're already showing it
     if (self.progressBar.alpha != 1) {
+        
+        self.isOffset = NO;
         // we're going to move up the package by 60 pts
         CGRect finalRectBar = CGRectOffset(self.progressBar.frame, 0.0, -60.0);
         CGRect finalRectText = CGRectOffset(self.progressText.frame, 0.0, -60.0);
@@ -760,6 +768,7 @@ inManagedObjectContext:managedObjectContext];
     self.updaterButton.frame = CGRectOffset(self.updaterButton.frame, 0.0, 100.0);
     self.progressBar.frame = CGRectOffset(self.progressBar.frame, 0.0, 60.0);
     self.progressText.frame = CGRectOffset(self.progressText.frame, 0.0, 60.0);
+    self.isOffset = YES; 
     self.progressText.text = @"";
     self.noUpdateLabel.text = @"";
     self.noUpdateLabel.alpha = 0.0;
@@ -769,7 +778,14 @@ inManagedObjectContext:managedObjectContext];
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     if ([prefs boolForKey:@"updateAvailable"]) {
         [self animateInUpdaterButton];
+        [self hideDates];
     }
+    NSLog(@"view did load in UVC!?!!!");
+}
+-(void) offsetHiddenViews{
+    self.updaterButton.frame = CGRectOffset(self.updaterButton.frame, 0.0, 100.0);
+    self.progressBar.frame = CGRectOffset(self.progressBar.frame, 0.0, 60.0);
+    self.progressText.frame = CGRectOffset(self.progressText.frame, 0.0, 60.0);
 }
 -(void) hideDates{
     if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
@@ -789,18 +805,31 @@ inManagedObjectContext:managedObjectContext];
         // self.logo.frame = CGRectMake(56, 20, 326, 71);
         self.logo.frame = CGRectMake(56, 20, 326, 71);
         self.updatecheckbutton.frame = CGRectMake(310, 100, 151, 45);
-        self.updaterButton.frame = CGRectMake(20, 260, 280, 45);
-        self.progressBar.frame = CGRectMake(20, 250, 280, 9);        
-        self.progressText.frame = CGRectMake(20,254,280,26);   
+        
+        self.updaterButton.frame = CGRectMake(20, 180, 280, 45);
+        self.progressBar.frame = CGRectMake(20, 200, 280, 9);        
+        self.progressText.frame = CGRectMake(20,200,280,26);   
+        if(isOffset) //updating views off screen. so animate the view in
+        {
+            [self offsetHiddenViews];
+        }
+        else{ //otherwise always hide the dates in landscpae mode
+            [self hideDates];
+        }
         self.noUpdateLabel.frame = CGRectMake(20, 220, 286, 21);
         
     }
     else //portrait
     {   self.logo.frame = CGRectMake(0, 20, 326, 71);
         self.updatecheckbutton.frame = CGRectMake(164, 286, 151, 45);
+        
         self.updaterButton.frame = CGRectMake(20, 354, 280, 45);
         self.progressBar.frame = CGRectMake(20, 348, 280, 9);
-        self.progressText.frame = CGRectMake(20,348,280,26);   
+        self.progressText.frame = CGRectMake(20,348,280,26); 
+        if(isOffset){
+            [self offsetHiddenViews];
+        }
+        
         self.noUpdateLabel.frame = CGRectMake(20, 248, 286, 21);
         //the dates
         self.datesLabel1.alpha = 1;
@@ -818,8 +847,7 @@ inManagedObjectContext:managedObjectContext];
      }
 
 - (void)viewDidAppear:(BOOL)animated {
-    NSLog(@"viewdidappear in upd");
-    // TODO: make welcome screen explaining update stuff 
+     // TODO: make welcome screen explaining update stuff 
     if (!self.ranInitialSetup && !self.displayingLicense) {
         [self disableAllTabBarItems:YES];
         self.licenseViewController = [[AcceptLicense alloc] init];
