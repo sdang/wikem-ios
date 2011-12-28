@@ -55,7 +55,6 @@
 		94DA301613468FE900862F48 /* UpdateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94DA300E13468FE900862F48 /* UpdateViewController.m */; };
 		94DA301713468FE900862F48 /* UpdateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94DA300F13468FE900862F48 /* UpdateViewController.xib */; };
 		94DA3023134691DE00862F48 /* info.xml in Resources */ = {isa = PBXBuildFile; fileRef = 94DA3021134691DE00862F48 /* info.xml */; };
-		94DA3024134691DE00862F48 /* database.xml in Resources */ = {isa = PBXBuildFile; fileRef = 94DA3022134691DE00862F48 /* database.xml */; };
 		94E6959A1346BCE8008DF6ED /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E695991346BCE8008DF6ED /* Category.m */; };
 		94E6959D1346BD46008DF6ED /* CoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E6959B1346BD46008DF6ED /* CoreDataTableViewController.m */; };
 		94E695A01346CB35008DF6ED /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E6959F1346CB35008DF6ED /* Note.m */; };
@@ -73,7 +72,23 @@
 		94EFE5F8134DA10400B1CBDB /* Close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94EFE5F6134DA10400B1CBDB /* Close@2x.png */; };
 		94EFE5FB134DA10B00B1CBDB /* WikEM.org.png in Resources */ = {isa = PBXBuildFile; fileRef = 94EFE5F9134DA10B00B1CBDB /* WikEM.org.png */; };
 		94EFE5FC134DA10B00B1CBDB /* WikEM.org@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94EFE5FA134DA10B00B1CBDB /* WikEM.org@2x.png */; };
+		CA1E098414048C220096CBA5 /* VariableStore.m in Sources */ = {isa = PBXBuildFile; fileRef = CA1E098314048C220096CBA5 /* VariableStore.m */; };
+		CA2E2014143670EB00BFE933 /* database.xml in Resources */ = {isa = PBXBuildFile; fileRef = CA2E2013143670EB00BFE933 /* database.xml */; };
+		CAB8A6A0149481090086FA90 /* NotesTableViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = CAB8A69F149481090086FA90 /* NotesTableViewController2.m */; };
+		CAB8A6A2149485750086FA90 /* 06-magnify.png in Resources */ = {isa = PBXBuildFile; fileRef = CAB8A6A1149485750086FA90 /* 06-magnify.png */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CA1FAED3148FE5970043F399 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		940640DB134CFD81008E4461 /* AboutWikemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutWikemViewController.h; sourceTree = "<group>"; };
@@ -135,7 +150,6 @@
 		94DA300E13468FE900862F48 /* UpdateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateViewController.m; sourceTree = "<group>"; };
 		94DA300F13468FE900862F48 /* UpdateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UpdateViewController.xib; sourceTree = "<group>"; };
 		94DA3021134691DE00862F48 /* info.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = info.xml; sourceTree = "<group>"; };
-		94DA3022134691DE00862F48 /* database.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = database.xml; sourceTree = "<group>"; };
 		94E695981346BCE8008DF6ED /* Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Category.h; sourceTree = "<group>"; };
 		94E695991346BCE8008DF6ED /* Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Category.m; sourceTree = "<group>"; };
 		94E6959B1346BD46008DF6ED /* CoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataTableViewController.m; sourceTree = "<group>"; };
@@ -164,6 +178,13 @@
 		94EFE5F6134DA10400B1CBDB /* Close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Close@2x.png"; sourceTree = "<group>"; };
 		94EFE5F9134DA10B00B1CBDB /* WikEM.org.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WikEM.org.png; sourceTree = "<group>"; };
 		94EFE5FA134DA10B00B1CBDB /* WikEM.org@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WikEM.org@2x.png"; sourceTree = "<group>"; };
+		CA1E098214048C220096CBA5 /* VariableStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VariableStore.h; sourceTree = "<group>"; };
+		CA1E098314048C220096CBA5 /* VariableStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VariableStore.m; sourceTree = "<group>"; };
+		CA2E2013143670EB00BFE933 /* database.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = database.xml; sourceTree = "<group>"; };
+		CA792BA6140A96690038CE27 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
+		CAB8A69E149481090086FA90 /* NotesTableViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotesTableViewController2.h; sourceTree = "<group>"; };
+		CAB8A69F149481090086FA90 /* NotesTableViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotesTableViewController2.m; sourceTree = "<group>"; };
+		CAB8A6A1149485750086FA90 /* 06-magnify.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "06-magnify.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,12 +207,14 @@
 			isa = PBXGroup;
 			children = (
 				94DA300C13468FE900862F48 /* PersonalNotesTableViewController.xib */,
-				94E6959B1346BD46008DF6ED /* CoreDataTableViewController.m */,
 				94E6959C1346BD46008DF6ED /* CoreDataTableViewController.h */,
+				94E6959B1346BD46008DF6ED /* CoreDataTableViewController.m */,
 				94DA2FFF13468FCB00862F48 /* CategoryTableViewController.h */,
 				94DA300013468FCB00862F48 /* CategoryTableViewController.m */,
 				94DA300413468FE900862F48 /* NotesTableViewController.h */,
 				94DA300513468FE900862F48 /* NotesTableViewController.m */,
+				CAB8A69E149481090086FA90 /* NotesTableViewController2.h */,
+				CAB8A69F149481090086FA90 /* NotesTableViewController2.m */,
 			);
 			name = ListViews;
 			sourceTree = "<group>";
@@ -232,6 +255,8 @@
 				94DA2FE913468F8D00862F48 /* emnotesAppDelegate.h */,
 				94DA2FEA13468F8D00862F48 /* emnotesAppDelegate.m */,
 				94DA2FEC13468F8D00862F48 /* MainWindow.xib */,
+				CA1E098214048C220096CBA5 /* VariableStore.h */,
+				CA1E098314048C220096CBA5 /* VariableStore.m */,
 			);
 			name = WikEM;
 			sourceTree = "<group>";
@@ -247,6 +272,7 @@
 				9421A3E5134D47760031D4AB /* InfoBackground.png */,
 				9421A3E2134D46810031D4AB /* AcceptButton@2x.png */,
 				9421A3DD134D42C20031D4AB /* UpdateButton.png */,
+				CAB8A6A1149485750086FA90 /* 06-magnify.png */,
 				9421A3DE134D42C20031D4AB /* UpdateButton@2x.png */,
 				9421A3D9134D42330031D4AB /* AboutWikEMButton.png */,
 				9421A3DA134D42330031D4AB /* AboutWikEMButton@2x.png */,
@@ -274,9 +300,9 @@
 		940640BF134CE897008E4461 /* InitialData */ = {
 			isa = PBXGroup;
 			children = (
+				CA2E2013143670EB00BFE933 /* database.xml */,
 				94DA2FE313468F8D00862F48 /* InfoPlist.strings */,
 				94DA3021134691DE00862F48 /* info.xml */,
-				94DA3022134691DE00862F48 /* database.xml */,
 				94DA2FE213468F8D00862F48 /* emnotes-Info.plist */,
 			);
 			name = InitialData;
@@ -301,18 +327,21 @@
 		94DA2FC913468F8D00862F48 = {
 			isa = PBXGroup;
 			children = (
+				CA792BA6140A96690038CE27 /* Entitlements.plist */,
 				94DA2FE013468F8D00862F48 /* emnotes */,
 				94DA2FD713468F8D00862F48 /* Frameworks */,
-				94DA2FD513468F8D00862F48 /* Products */,
+				94DA2FD513468F8D00862F48 /* Busby */,
 			);
 			sourceTree = "<group>";
 		};
-		94DA2FD513468F8D00862F48 /* Products */ = {
+		94DA2FD513468F8D00862F48 /* Busby */ = {
 			isa = PBXGroup;
 			children = (
 				94DA2FD413468F8D00862F48 /* WikEM.app */,
 			);
-			name = Products;
+			includeInIndex = 1;
+			name = Busby;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		94DA2FD713468F8D00862F48 /* Frameworks */ = {
@@ -390,6 +419,7 @@
 				94DA2FD013468F8D00862F48 /* Sources */,
 				94DA2FD113468F8D00862F48 /* Frameworks */,
 				94DA2FD213468F8D00862F48 /* Resources */,
+				CA1FAED3148FE5970043F399 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -406,6 +436,7 @@
 		94DA2FCB13468F8D00862F48 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0420;
 				ORGANIZATIONNAME = sabindang.com;
 			};
 			buildConfigurationList = 94DA2FCE13468F8D00862F48 /* Build configuration list for PBXProject "emnotes" */;
@@ -416,7 +447,7 @@
 				en,
 			);
 			mainGroup = 94DA2FC913468F8D00862F48;
-			productRefGroup = 94DA2FD513468F8D00862F48 /* Products */;
+			productRefGroup = 94DA2FD513468F8D00862F48 /* Busby */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -440,7 +471,6 @@
 				94DA301513468FE900862F48 /* PersonalNotesTableViewController.xib in Resources */,
 				94DA301713468FE900862F48 /* UpdateViewController.xib in Resources */,
 				94DA3023134691DE00862F48 /* info.xml in Resources */,
-				94DA3024134691DE00862F48 /* database.xml in Resources */,
 				94234C8F134A640900D241B5 /* AcceptLicense.xib in Resources */,
 				94234C92134A6EA300D241B5 /* disclaimer.html in Resources */,
 				94234C9B134AA33D00D241B5 /* WikEM-Logo@2x.png in Resources */,
@@ -471,6 +501,8 @@
 				94EFE5F8134DA10400B1CBDB /* Close@2x.png in Resources */,
 				94EFE5FB134DA10B00B1CBDB /* WikEM.org.png in Resources */,
 				94EFE5FC134DA10B00B1CBDB /* WikEM.org@2x.png in Resources */,
+				CA2E2014143670EB00BFE933 /* database.xml in Resources */,
+				CAB8A6A2149485750086FA90 /* 06-magnify.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -501,6 +533,8 @@
 				94EFE5E8134D71D400B1CBDB /* PersonalNote.m in Sources */,
 				94EFE5ED134D790100B1CBDB /* EditNoteViewController.m in Sources */,
 				94EFE5F3134D8A9900B1CBDB /* PersonalNotesViewController.m in Sources */,
+				CA1E098414048C220096CBA5 /* VariableStore.m in Sources */,
+				CAB8A6A0149481090086FA90 /* NotesTableViewController2.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -530,7 +564,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: christopher kim (PZ9WXQ99N9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: christopher kim (PZ9WXQ99N9)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
@@ -538,7 +573,9 @@
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				PROVISIONING_PROFILE = "29925F97-BB08-4465-A3D7-52BEE4F2FC56";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "29925F97-BB08-4465-A3D7-52BEE4F2FC56";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -547,13 +584,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: christopher kim (PZ9WXQ99N9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: christopher kim (PZ9WXQ99N9)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "29925F97-BB08-4465-A3D7-52BEE4F2FC56";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "29925F97-BB08-4465-A3D7-52BEE4F2FC56";
 				SDKROOT = iphoneos;
 			};
 			name = Release;
@@ -562,13 +602,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_ENTITLEMENTS = "~/emnotes/Entitlements.plist";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "emnotes/emnotes-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "emnotes/emnotes-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = WikEM;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -577,16 +621,58 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_ENTITLEMENTS = "~/emnotes/Entitlements.plist";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "emnotes/emnotes-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "emnotes/emnotes-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = WikEM;
+				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
+		};
+		CA792BBD140A9A570038CE27 /* Ad Hoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: christopher kim (PZ9WXQ99N9)";
+				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer: christopher kim (PZ9WXQ99N9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: christopher kim (PZ9WXQ99N9)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "29925F97-BB08-4465-A3D7-52BEE4F2FC56";
+				"PROVISIONING_PROFILE[sdk=*]" = "29925F97-BB08-4465-A3D7-52BEE4F2FC56";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "29925F97-BB08-4465-A3D7-52BEE4F2FC56";
+				SDKROOT = iphoneos;
+			};
+			name = "Ad Hoc";
+		};
+		CA792BBE140A9A570038CE27 /* Ad Hoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_ENTITLEMENTS = "~/emnotes/Entitlements.plist";
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "emnotes/emnotes-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INFOPLIST_FILE = "emnotes/emnotes-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				PRODUCT_NAME = WikEM;
+				SKIP_INSTALL = NO;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = "Ad Hoc";
 		};
 /* End XCBuildConfiguration section */
 
@@ -596,6 +682,7 @@
 			buildConfigurations = (
 				94DA2FF213468F8D00862F48 /* Debug */,
 				94DA2FF313468F8D00862F48 /* Release */,
+				CA792BBD140A9A570038CE27 /* Ad Hoc */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -605,6 +692,7 @@
 			buildConfigurations = (
 				94DA2FF513468F8D00862F48 /* Debug */,
 				94DA2FF613468F8D00862F48 /* Release */,
+				CA792BBE140A9A570038CE27 /* Ad Hoc */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -10,33 +10,65 @@
 
 @synthesize fetchedResultsController;
 @synthesize titleKey, subtitleKey, searchKey;
+//
+@synthesize mySearchBar;
+@synthesize searchBarReturnKey;
 
+ 
 - (void)createSearchBar
 {
 	if (self.searchKey.length) {
 		if (self.tableView && !self.tableView.tableHeaderView) {
-			UISearchBar *searchBar = [[[UISearchBar alloc] init] autorelease];
-			[[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
+	//	if (self.tableView && self.tableView.tableHeaderView) {
+
+	//		UISearchBar *searchBar = [[[UISearchBar alloc] init] autorelease];
+			mySearchBar = [[[UISearchBar alloc] init] autorelease];
+			mySearchBar.delegate = self;
+
+			
+			
+			[[UISearchDisplayController alloc] initWithSearchBar:mySearchBar contentsController:self];
 			self.searchDisplayController.searchResultsDelegate = self;
 			self.searchDisplayController.searchResultsDataSource = self;
 			self.searchDisplayController.delegate = self;
-			searchBar.frame = CGRectMake(0, 0, 0, 38);
-			self.tableView.tableHeaderView = searchBar;
+			mySearchBar.frame = CGRectMake(0, 0, 0, 38);
+			self.tableView.tableHeaderView = mySearchBar;
+			
+			//try to change search button to say 'done'
+			for (UIView *searchBarSubview in [mySearchBar subviews]) {
+				if ([searchBarSubview conformsToProtocol:@protocol(UITextInputTraits)]) {
+					@try {
+                        if (searchBarReturnKey)
+                        {
+                             // default is 'search'
+                         }
+                        else{ //'done' instead of 'search'
+ 
+						[(UITextField *)searchBarSubview setReturnKeyType:UIReturnKeyDone];
+                        }
+					}
+					@catch (NSException * e) {
+						// ignore exception
+					}
+				}
+			  }
+			
 		}
-	} else {
+	} else { NSLog(@"er... no tableheader view");
 		self.tableView.tableHeaderView = nil;
 	}
 }
 
 - (void)setSearchKey:(NSString *)aKey
-{
+{ //NSLog(@"setserachkey being called");
+	
 	[searchKey release];
 	searchKey = [aKey copy];
 	[self createSearchBar];
 }
 
 - (NSString *)titleKey
-{
+{  
 	if (!titleKey) {
 		NSArray *sortDescriptors = [self.fetchedResultsController.fetchRequest sortDescriptors];
 		if (sortDescriptors.count) {
@@ -52,7 +84,17 @@
 - (void)performFetchForTableView:(UITableView *)tableView
 {
 	NSError *error = nil;
-	[self.fetchedResultsController performFetch:&error];
+	@try{
+		[self.fetchedResultsController performFetch:&error];
+	}@catch (NSException * e) {
+		if([[e name] isEqualToString:NSInternalInconsistencyException]){
+			[NSFetchedResultsController deleteCacheWithName:nil];  
+			
+			//[self.tableView reloadData];
+			NSLog(@"ck:exceptino thrown in coredatatableviewcontorller, reload data with cleaned cache");
+		}
+		else { @throw e;}
+	}
 	if (error) {
 		NSLog(@"[CoreDataTableViewController performFetchForTableView:] %@ (%@)", [error localizedDescription], [error localizedFailureReason]);
 	}
@@ -86,8 +128,11 @@
 - (void)searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller
 {
 	// reset the fetch controller for the main (non-searching) table view
+ 	NSLog(@"will end search");
 	[self fetchedResultsControllerForTableView:self.tableView];
 }
+ 
+ 
 
 - (void)setFetchedResultsController:(NSFetchedResultsController *)controller
 {
@@ -290,6 +335,25 @@
 {
     [self.tableView endUpdates];
 }
+#pragma mark SearchBarDelegate stuff
+/*
+//these are UISearchBarDelegate
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    // Existing code
+	NSLog(@"cancel button clicked");
+	searchBar.text = @"";
+	//[self searchBar:searchBar activate:NO];
+	[searchBar setHidden:YES];
+
+	
+	[searchBar setShowsCancelButton:NO animated:YES];
+    [searchBar resignFirstResponder];
+	
+	
+}*/
+
+
+
 
 #pragma mark dealloc
 
@@ -301,8 +365,11 @@
 	[titleKey release];
 	[currentSearchText release];
 	[normalPredicate release];
+	[mySearchBar release];
     [super dealloc];
 }
-
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+}
 @end
 

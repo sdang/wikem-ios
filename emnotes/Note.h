@@ -28,6 +28,8 @@
             categories:(NSSet *)categories
 inManagedObjectContext:(NSManagedObjectContext *)context;
 
+ 
+
 - (NSString *)formattedContent;
 - (NSString *)getFirstLetter;
 

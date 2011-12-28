@@ -1,4 +1,4 @@
-//
+//////
 //  emnotesAppDelegate.m
 //  emnotes
 //
@@ -9,11 +9,16 @@
 #import "emnotesAppDelegate.h"
 #import "CategoryTableViewController.h"
 #import "NotesTableViewController.h"
+#import "NotesTableViewController2.h"
+
 #import "PersonalNotesTableViewController.h"
 #import "UpdateViewController.h"
 #import "AcceptLicense.h"
 #import "Category.h"
 #import "Note.h"
+//add import now that we alloc a context
+#import "NoteViewController.h"
+//#import "MyTabBarController.h"
 
 @implementation emnotesAppDelegate
 
@@ -28,7 +33,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    
+ 
+	
     // is this the first time we've been run?
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     BOOL ranInitialSetup = [prefs boolForKey:@"ranInitialSetup"];
@@ -44,15 +50,32 @@
     categoryTableViewController.managedObjectContext = self.managedObjectContext;
     [categoriesNavCon pushViewController:categoryTableViewController animated:NO];
     [categoryTableViewController release];
-    
+		
     UINavigationController *allNotesNavCon = [[UINavigationController alloc] init];
     NotesTableViewController *notesTableViewController = [[NotesTableViewController alloc]
                                                           initWithStyle:UITableViewStylePlain
                                                           inManagedContext:self.managedObjectContext
                                                           withCategory:nil];
-    
+	//ck added this setter
+    notesTableViewController.managedObjectContext = self.managedObjectContext;
+	
     [allNotesNavCon pushViewController:notesTableViewController animated:NO];
     [notesTableViewController release];
+    
+    
+///////    //add a second tabbar for all notes
+    
+    UINavigationController *allNotesNavCon2 = [[UINavigationController alloc] init];
+    NotesTableViewController2 *notesTableViewController2 = [[NotesTableViewController2 alloc]
+                                                          initWithStyle:UITableViewStylePlain
+                                                          inManagedContext:self.managedObjectContext
+                                                          withCategory:nil];
+    notesTableViewController2.managedObjectContext = self.managedObjectContext;
+	
+    [allNotesNavCon2 pushViewController:notesTableViewController2 animated:NO];
+    [notesTableViewController2 release];
+    
+
     
     UINavigationController *personalNotesNavCon = [[UINavigationController alloc] init];
     PersonalNotesTableViewController *personalNotesTableViewController = [[PersonalNotesTableViewController alloc]
@@ -67,12 +90,13 @@
     self.uVC = updateViewController;
     
     self.tabBar = [[UITabBarController alloc] init];
+  	
     self.tabBar.delegate = self;
     
-    tabBar.viewControllers = [NSArray arrayWithObjects:categoriesNavCon, allNotesNavCon, personalNotesNavCon, updateViewController, nil];
-    
+    tabBar.viewControllers = [NSArray arrayWithObjects:categoriesNavCon, allNotesNavCon, allNotesNavCon2,personalNotesNavCon, updateViewController, nil];
+ 
     [categoriesNavCon release];
-    [allNotesNavCon release];
+    [allNotesNavCon release]; [allNotesNavCon2 release];
     [personalNotesNavCon release];
     [updateViewController release];
     
@@ -81,7 +105,7 @@
     
     if (!ranInitialSetup) {
         updateViewController.ranInitialSetup = FALSE;
-        [tabBar setSelectedIndex:3];    
+        [tabBar setSelectedIndex:4];    
     } else {
         updateViewController.ranInitialSetup = TRUE;
     }
@@ -92,10 +116,29 @@
 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
 {
+
     // if we're a navigation controller, pop back to root
     if ([viewController isKindOfClass:[UINavigationController class]]) {
+
         [(UINavigationController *)viewController popToRootViewControllerAnimated:NO];
     }
+	
+	
+	
+		//NSUInteger indexOfTab = [tabBarController.viewControllers indexOfObject:viewController];
+		//NSLog(@"Tab index = %u (%u)", indexOfTab);
+	/*if(indexOfTab ==3){ //ie we are in update view. try force portrait only
+		tabBar.dontrotate = TRUE;
+		
+	}else{
+		tabBar.dontrotate = FALSE;
+	}*/
+	
+	
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -117,7 +160,8 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     /*
-     Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+     Called as part of the transition from the background to the inactive state;
+	 here you can undo many of the changes made on entering the background.
      */
 }
 
@@ -148,7 +192,8 @@
 - (void)awakeFromNib
 {
     /*
-     Typically you should set up the Core Data stack here, usually by passing the managed object context to the first view controller.
+     Typically you should set up the Core Data stack here, 
+	 usually by passing the managed object context to the first view controller.
      self.<#View controller#>.managedObjectContext = self.managedObjectContext;
     */
 }
@@ -226,18 +271,7 @@
     __persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
     if (![__persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error])
     {
-        /*
-         Replace this implementation with code to handle the error appropriately.
-         
-         abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
-         
-         Typical reasons for an error here include:
-         * The persistent store is not accessible;
-         * The schema for the persistent store is incompatible with current managed object model.
-         Check the error message to determine what the actual problem was.
-         
-         
-         If the persistent store is not accessible, there is typically something wrong with the file path. Often, a file URL is pointing into the application's resources directory instead of a writeable directory.
+       /*
          
          If you encounter schema incompatibility errors during development, you can reduce their frequency by:
          * Simply deleting the existing store:
@@ -249,6 +283,22 @@
          Lightweight migration will only work for a limited set of schema changes; consult "Core Data Model Versioning and Data Migration Programming Guide" for details.
          
          */
+        
+        NSLog(@"Error opening the database. Deleting the file and trying again.");
+        
+        //if the app did not quit, show the alert to inform the users that the data have been deleted
+        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Error encountered while reading old database. Please allow all the data to download again. Personal Notes in old version will be deleted." message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] autorelease];
+        [alert show];
+        
+        //delete the sqlite file and try again
+        [[NSFileManager defaultManager] removeItemAtPath:storeURL.path error:nil];
+        if (![__persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }
+        
+        
+        
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }    

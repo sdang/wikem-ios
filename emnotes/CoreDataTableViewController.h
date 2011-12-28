@@ -7,7 +7,7 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 
-@interface CoreDataTableViewController : UITableViewController <NSFetchedResultsControllerDelegate, UISearchDisplayDelegate>
+@interface CoreDataTableViewController : UITableViewController <NSFetchedResultsControllerDelegate, UISearchDisplayDelegate, UISearchBarDelegate>
 {
 	NSPredicate *normalPredicate;
 	NSString *currentSearchText;
@@ -18,7 +18,7 @@
 }
 
 // the controller (this class does nothing if this is not set)
-@property (retain) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 
 // key to use when displaying items in the table; defaults to the first sortDescriptor's key
 @property (copy) NSString *titleKey;
@@ -26,6 +26,11 @@
 @property (copy) NSString *subtitleKey;
 // key to use when searching the table (should usually be the same as displayKey); if nil, no searching allowed
 @property (copy) NSString *searchKey;
+
+@property (copy) UISearchBar *mySearchBar;
+// allow search bar button to say 'search' or 'done'
+@property(nonatomic) BOOL searchBarReturnKey;
+
 
 // gets accessory type (e.g. disclosure indicator) for the given managedObject (default DisclosureIndicator)
 - (UITableViewCellAccessoryType)accessoryTypeForManagedObject:(NSManagedObject *)managedObject;

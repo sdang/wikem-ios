@@ -11,7 +11,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFile</key>
-	<string></string>
+	<string>WikEMIcon.png</string>
 	<key>CFBundleIconFiles</key>
 	<array>
 		<string>WikEMIcon.png</string>
@@ -26,19 +26,13 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.0</string>
+	<string>3.12</string>
 	<key>CFBundleSignature</key>
-	<string>????</string>
+	<string>wikem</string>
 	<key>CFBundleURLTypes</key>
 	<array/>
 	<key>CFBundleVersion</key>
-	<string>2.0</string>
-	<key>database_url</key>
-	<string>http://dl.wikem.org/database.xml</string>
-	<key>info_url</key>
-	<string>http://dl.wikem.org/info.xml</string>
-	<key>edit_note_url</key>
-	<string>http://www.wikem.org/w/index.php?title=%@&amp;action=edit</string>
+	<string>3.12</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.medical</string>
 	<key>LSRequiresIPhoneOS</key>
@@ -47,11 +41,56 @@
 	<string>MainWindow</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
-		<string>UIInterfaceOrientationPortrait</string>
+		<string></string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
 	<key>UTExportedTypeDeclarations</key>
 	<array/>
 	<key>UTImportedTypeDeclarations</key>
 	<array/>
+	<key>base_url</key>
+	<string>http://www.wikem.org</string>
+	<key>database_url</key>
+	<string>http://dl.wikem.org/files/db-update.xml</string>
+	<key>edit_note_url</key>
+	<string>http://www.wikem.org/w/index.php?title=%@&amp;action=edit</string>
+	<key>extras_url</key>
+	<string>http://dl.wikem.org/files/info-extras.xml</string>
+	<key>head_css_string</key>
+	<string>&lt;html&gt;&lt;head&gt;
+&lt;meta name='viewport' content='initial-scale=1.0, maximum-scale=10.0'/&gt;&lt;style type="text/css"&gt; body { font-family: arial }
+.editsection {display: none}
+p,ol,li,ul,a {font-size: 12pt }
+h2 { font-size: 14pt; border-top:1px solid #DBDEE2; padding-top: 10px; color: darkblue }
+h3 { font-size: 12pt; color: darkgray }
+#toc { width: 100% }
+li {   margin-left: .25em;
+    padding-left: .1em; }
+li li {  margin-left: .5em; }
+li li li { margin-left: .2em;}
+li li li li {martin-left:.2em;}
+ol {
+    list-style: decimal;
+    margin-left: .5em;
+    padding-left: 0.2em; }
+ol ol {
+    list-style: lower-alpha; 
+    margin-left: .5em;}
+ol ol ol {
+    list-style: lower-roman;
+    margin-left: .5em; }
+ol ol ol ol {
+    list-style: decimal; 
+    margin-left: .5em;}
+ol ol ol ol ol {
+    list-style: lower-alpha; 
+    margin-left: 0.2em;} 
+&lt;/style&gt; &lt;/head&gt;&lt;body&gt;</string>
+	<key>images_url</key>
+	<string>http://www.wikem.org/w/api.php?action=query&amp;prop=images&amp;list=allimages&amp;ailimit=500&amp;format=xml</string>
+	<key>info_url</key>
+	<string>http://dl.wikem.org/files/info.xml</string>
+	<key>link_base_url</key>
+	<string>/wiki/</string>
 </dict>
 </plist>
