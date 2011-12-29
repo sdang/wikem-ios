@@ -177,7 +177,11 @@
     //get the path of current users Documents folder for read/write
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory , NSUserDomainMask, YES);
 	NSString* imagePath = [paths objectAtIndex:0];
-	NSURL *testURL = [NSURL fileURLWithPath:imagePath];
+    NSString *dirName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"storage_directory_name"];
+    imagePath = [imagePath stringByAppendingPathComponent:dirName];
+
+    
+	NSURL *appDocsDir = [NSURL fileURLWithPath:imagePath];
  	webView.dataDetectorTypes = UIDataDetectorTypeLink;
 	
      
@@ -188,7 +192,7 @@
     else{
         
         //as baseURL changes, need to add css as a string...not as a 'link'
-        [webView loadHTMLString:[self.note formattedContent] baseURL:testURL];
+        [webView loadHTMLString:[self.note formattedContent] baseURL:appDocsDir];
         
         //this alone does not zoom appropriately. added meta 'viewport' tag for html5 in header to make work
         self.webView.scalesPageToFit = YES;

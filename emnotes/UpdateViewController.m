@@ -371,7 +371,22 @@
 	//get the path of current users documents folder for read/write
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory , NSUserDomainMask, YES);
 	NSString* documentsDir = [paths objectAtIndex:0];
-	
+    
+/* copy images and files into 'Documents/wikemdocs' for ex. 
+ rather than jsutthe Docs dir, which is shared btw apps
+ in future can gather all files in Dir and create list view for example
+ */
+	//documentsDir = [documentsDir stringByAppendingPathComponent:@"/wikemdocs/"];
+      NSString *dirName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"storage_directory_name"];
+    documentsDir = [documentsDir stringByAppendingPathComponent:dirName];
+
+    NSError* error = nil;
+    if (![[NSFileManager defaultManager] fileExistsAtPath:documentsDir]){
+        [[NSFileManager defaultManager] createDirectoryAtPath:documentsDir withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
+        NSLog(@"new folder created in Docs dir");
+    }
+       
+    //
 	if (![filemanager isReadableFileAtPath:documentsDir] || ![filemanager isWritableFileAtPath:documentsDir]) 
 	{NSLog(@"uh oh. documents path is either not readable and/or writeable");
 		return false;

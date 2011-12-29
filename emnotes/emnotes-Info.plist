@@ -58,7 +58,7 @@
 	<string>http://dl.wikem.org/files/info-extras.xml</string>
 	<key>head_css_string</key>
 	<string>&lt;html&gt;&lt;head&gt;
-&lt;meta name='viewport' content='initial-scale=1.0, maximum-scale=10.0'/&gt;&lt;style type="text/css"&gt; body { font-family: arial }
+&lt;meta name=&apos;viewport&apos; content=&apos;initial-scale=1.0, maximum-scale=10.0&apos;/&gt;&lt;style type=&quot;text/css&quot;&gt; body { font-family: arial }
 .editsection {display: none}
 p,ol,li,ul,a {font-size: 12pt }
 h2 { font-size: 14pt; border-top:1px solid #DBDEE2; padding-top: 10px; color: darkblue }
@@ -92,5 +92,7 @@ ol ol ol ol ol {
 	<string>http://dl.wikem.org/files/info.xml</string>
 	<key>link_base_url</key>
 	<string>/wiki/</string>
+	<key>storage_directory_name</key>
+	<string>wikem3docs</string>
 </dict>
 </plist>
