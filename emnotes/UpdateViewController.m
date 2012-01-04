@@ -383,8 +383,7 @@
     NSError* error = nil;
     if (![[NSFileManager defaultManager] fileExistsAtPath:documentsDir]){
         [[NSFileManager defaultManager] createDirectoryAtPath:documentsDir withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
-        NSLog(@"new folder created in Docs dir");
-    }
+     }
        
     //
 	if (![filemanager isReadableFileAtPath:documentsDir] || ![filemanager isWritableFileAtPath:documentsDir]) 

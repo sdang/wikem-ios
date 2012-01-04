@@ -73,7 +73,7 @@
 		94EFE5FB134DA10B00B1CBDB /* WikEM.org.png in Resources */ = {isa = PBXBuildFile; fileRef = 94EFE5F9134DA10B00B1CBDB /* WikEM.org.png */; };
 		94EFE5FC134DA10B00B1CBDB /* WikEM.org@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94EFE5FA134DA10B00B1CBDB /* WikEM.org@2x.png */; };
 		CA1E098414048C220096CBA5 /* VariableStore.m in Sources */ = {isa = PBXBuildFile; fileRef = CA1E098314048C220096CBA5 /* VariableStore.m */; };
-		CA2E2014143670EB00BFE933 /* database.xml in Resources */ = {isa = PBXBuildFile; fileRef = CA2E2013143670EB00BFE933 /* database.xml */; };
+		CA79249F14B4E7990046A78D /* database.xml in Resources */ = {isa = PBXBuildFile; fileRef = CA79249E14B4E7990046A78D /* database.xml */; };
 		CAB8A6A0149481090086FA90 /* NotesTableViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = CAB8A69F149481090086FA90 /* NotesTableViewController2.m */; };
 		CAB8A6A2149485750086FA90 /* 06-magnify.png in Resources */ = {isa = PBXBuildFile; fileRef = CAB8A6A1149485750086FA90 /* 06-magnify.png */; };
 /* End PBXBuildFile section */
@@ -180,7 +180,7 @@
 		94EFE5FA134DA10B00B1CBDB /* WikEM.org@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WikEM.org@2x.png"; sourceTree = "<group>"; };
 		CA1E098214048C220096CBA5 /* VariableStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VariableStore.h; sourceTree = "<group>"; };
 		CA1E098314048C220096CBA5 /* VariableStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VariableStore.m; sourceTree = "<group>"; };
-		CA2E2013143670EB00BFE933 /* database.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = database.xml; sourceTree = "<group>"; };
+		CA79249E14B4E7990046A78D /* database.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = database.xml; sourceTree = "<group>"; };
 		CA792BA6140A96690038CE27 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		CAB8A69E149481090086FA90 /* NotesTableViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotesTableViewController2.h; sourceTree = "<group>"; };
 		CAB8A69F149481090086FA90 /* NotesTableViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotesTableViewController2.m; sourceTree = "<group>"; };
@@ -300,7 +300,7 @@
 		940640BF134CE897008E4461 /* InitialData */ = {
 			isa = PBXGroup;
 			children = (
-				CA2E2013143670EB00BFE933 /* database.xml */,
+				CA79249E14B4E7990046A78D /* database.xml */,
 				94DA2FE313468F8D00862F48 /* InfoPlist.strings */,
 				94DA3021134691DE00862F48 /* info.xml */,
 				94DA2FE213468F8D00862F48 /* emnotes-Info.plist */,
@@ -501,8 +501,8 @@
 				94EFE5F8134DA10400B1CBDB /* Close@2x.png in Resources */,
 				94EFE5FB134DA10B00B1CBDB /* WikEM.org.png in Resources */,
 				94EFE5FC134DA10B00B1CBDB /* WikEM.org@2x.png in Resources */,
-				CA2E2014143670EB00BFE933 /* database.xml in Resources */,
 				CAB8A6A2149485750086FA90 /* 06-magnify.png in Resources */,
+				CA79249F14B4E7990046A78D /* database.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
