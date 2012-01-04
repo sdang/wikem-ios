@@ -50,6 +50,8 @@ inManagedObjectContext:(NSManagedObjectContext *)context
     return note;
 }
 
+ 
+
 - (NSString *) getFirstLetter {
     [self willAccessValueForKey:@"firstLetter"];
     NSString *firstLetter = [[self name] substringToIndex:1];
@@ -86,9 +88,17 @@ inManagedObjectContext:(NSManagedObjectContext *)context
 }
 
 - (NSString *)formattedContent {
-    NSString* cssTags = @"<html><head><link href=\"note-style.css\" rel=\"Stylesheet\" type=\"text/css\" /></head><body>";
+	//NSString *start = @"<html>";
+	NSString *cssTags = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"head_css_string"];
+  
+	//NSString* cssTags =[start stringByAppendingString:headTag]; 
+			//@"<html><head><link href=\"note-style.css\" rel=\"Stylesheet\" type=\"text/css\" /></head><body>";
 	NSString* htmlContent = [cssTags stringByAppendingString:self.content];
-	htmlContent = [htmlContent stringByAppendingString:@"</body></html>"];
+	//htmlContent = [htmlContent stringByAppendingString:@"</body></html>"];
+    
+    //add javascript
+    htmlContent = [htmlContent stringByAppendingString:@"</body></html>"];
+
     
     return htmlContent;
 }
