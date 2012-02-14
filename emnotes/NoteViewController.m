@@ -7,12 +7,26 @@
 //
 
 #import "NoteViewController.h"
-
+#import "emnotesAppDelegate.h"
 
 @implementation NoteViewController
 
 @synthesize webView, note;
+//ck add initializer for new context for this class
+@synthesize managedObjectContext;
+@synthesize scalesPageToFit;
 
+
+
+/*
+-(id)init{
+	if (self=[super init]){
+		
+		[webView setDelegate:self]
+		 }return self;
+}*/
+
+ 
 
 - (void)editNote
 {
@@ -55,41 +69,249 @@
 {
     [note release];
     [webView release];
+	//
+	[managedObjectContext release];
     [super dealloc];
 }
 
 - (void)didReceiveMemoryWarning
-{
+{	
+	NSLog(@"didreceivememory warning in noteview");
+	
+	
+	NSAutoreleasePool *pool;
+    pool = [[NSAutoreleasePool alloc] init];
+   
+    /* if anything is in the pool..drain it*/
+    [pool drain];
+	
     // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
     
     // Release any cached data, images, etc that aren't in use.
+	
 }
 
 #pragma mark - View lifecycle
 
-- (void)viewDidLoad
-{
-    NSURL *resourceBaseURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
-    [webView loadHTMLString:[self.note formattedContent] baseURL:resourceBaseURL];
-    self.title = self.note.name;
-    [super viewDidLoad];
+//ck : as this wv already a uiwebviewdelegate, can call this BEFORE any wv loads
+- (BOOL)webView:(UIWebView*)webView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType {
+	
+	if(navigationType == UIWebViewNavigationTypeLinkClicked) {
+		NSURL *url = request.URL;
+		NSString *urlString = url.absoluteString;
+        
+        
+         
+ 		NSString *imagefilestring = [urlString lastPathComponent];
+//first ... if last path component begins with #.. this is just an internal link to an anchor on page
+        if ([imagefilestring hasPrefix:@"#"])
+        {
+            return YES;
+        }
+  //now that not internal anchor, get rid of internal links that also have anchors
+         if ([imagefilestring rangeOfString:@"#"].length > 0)
+        {
+            int indexof = [imagefilestring rangeOfString:@"#"].location;
+         NSString *substring = [imagefilestring substringToIndex:indexof]; 
+        imagefilestring = substring;
+            NSLog(@"ck: had to chop off anchors on internal link");
+    //TODO can do something later with the part of string chopped off... like actually go to that anchor
+         }
+        
+		//convert encoded characters in the link
+		NSString *convertedString = [self convertURLString:imagefilestring];
+
+	 
+		
+		//get the note with the title of link... if it exists. 
+		Note* newNote = [self noteFromName:convertedString ]; 
+    
+		if (newNote !=nil){
+			NSLog(@"woohoo a match");
+
+			NoteViewController *noteViewController2 = [[NoteViewController alloc] init];
+			noteViewController2.note = newNote;
+            noteViewController2.managedObjectContext = self.managedObjectContext;
+		 //setter syntax
+ 
+			[self.navigationController pushViewController:noteViewController2 animated:NO];
+            
+            noteViewController2 = nil;
+			[noteViewController2 release];
+        //    NSLog(@"Retain Count :%i",[noteViewController2 retainCount]);
+
+		}else {
+			NSLog(@"no action for the link click");
+            
+            UIAlertView *someError = [[UIAlertView alloc] initWithTitle: @"Warning" message: @"sorry. the page which this link refers to may have been redirected." delegate:self cancelButtonTitle: @"Cancel" otherButtonTitles:nil, nil];
+            
+            [someError show];
+            [someError release];
+            
+            
+			return YES;
+		}
+      //  NSLog(@"Retain Count of newNote :%i",[newNote retainCount]);
+
+        newNote = nil; //not necessarily needed
+
+		return NO;
+	}
+	//ie, a link not clicked. do nothing special before webview loads
+	return YES;
+}
+
+
+
+//after a webivew loaded calls this- (void)viewDidLoad but don't useAlways try to write only UI initialisation code in viewDidLoad. If you write code to alloc/init a variable in your viewDidLoad, then when the method is invoked a second time the variable will be alloc/init'd again causing a memory leak. 
+//If you really do need to alloc/init your member variable in viewdidload , do it only if it is not already allocated.
+-(void)viewDidAppear:(BOOL)animated{
+//called everytime view reappears
+    //for first time context wont be loaded...so load it here:
+	if (managedObjectContext == nil) 
+	{  // NSLog(@"managedobjectcontext was nil so set in viewdidappear of NVC");
+        managedObjectContext = [(emnotesAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext]; 
+ 	}
+	     
+    //get the path of current users Documents folder for read/write
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory , NSUserDomainMask, YES);
+	NSString* imagePath = [paths objectAtIndex:0];
+    NSString *dirName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"storage_directory_name"];
+    imagePath = [imagePath stringByAppendingPathComponent:dirName];
+
+    
+	NSURL *appDocsDir = [NSURL fileURLWithPath:imagePath];
+ 	webView.dataDetectorTypes = UIDataDetectorTypeLink;
+	
+     
+	if (self.note == nil){
+        NSLog(@"ERROR !!!!! why is the note nil?!");
+        //don't proceed to load anything. it will crash
+    }
+    else{
+        
+        //as baseURL changes, need to add css as a string...not as a 'link'
+        [webView loadHTMLString:[self.note formattedContent] baseURL:appDocsDir];
+        
+        //this alone does not zoom appropriately. added meta 'viewport' tag for html5 in header to make work
+        self.webView.scalesPageToFit = YES;
+        
+        self.title = self.note.name;
+    }
+
+    
+    
+}
+-(void)viewDidLoad:(BOOL)animated{
+	NSLog(@"noteviewcontroller viewDidLOAD");
+
+	    [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 }
 
 - (void)viewDidUnload
 {
+    
+    //ck : make these nil. just incase. pointers that are nil can respond with nil, safely, without blowing up. released objects on the other hand will give the crazy errors that i am getting  
+    
+    NSLog(@"viewDidUnload");
+    self.webView = nil;
+    self.note = nil;
+    self.managedObjectContext = nil;
+    
 
     [super viewDidUnload];
     // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-    self.webView = nil;
+    //eg. self.myOutlet = nil;
+    
+ 
+ } 
+
+
+//unescape these url encoded characters
+- (NSString*) convertURLString: (NSString *) myString {
+    NSMutableString * temp = [myString mutableCopy];
+	//change underscores back to space...for whatever reason the renderer doesnt use %20 for space but _
+    [temp replaceOccurrencesOfString:@"_"
+                          withString:@" "
+                             options:0
+                               range:NSMakeRange(0, [temp length])];
+	//change parentheses back... there seem to be some inconsistencies almost all unescaped
+	//just incase
+    [temp replaceOccurrencesOfString:@"%28"
+                          withString:@"("
+                             options:0
+                               range:NSMakeRange(0, [temp length])];
+    [temp replaceOccurrencesOfString:@"%29"
+                          withString:@")"
+                             options:0
+                               range:NSMakeRange(0, [temp length])];
+	//change quotes... (don't think used.. but just incase) "&quot;"
+    [temp replaceOccurrencesOfString:@"%22"
+                          withString:@"\""
+                             options:0
+                               range:NSMakeRange(0, [temp length])];
+	//change apostrophes... @"&apos;"
+    [temp replaceOccurrencesOfString:@"%27"
+                          withString:@"'"
+                             options:0
+                               range:NSMakeRange(0, [temp length])];
+	
+    return [temp autorelease];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+- (Note *)noteFromName:(NSString *)name
+//inManagedObjectContext:(NSManagedObjectContext *)context
 {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    Note *note2 = nil;
+    
+    // request category of title
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    request.entity = [NSEntityDescription entityForName:@"Note" inManagedObjectContext:managedObjectContext];
+    request.predicate = [NSPredicate predicateWithFormat:@"name = %@", name];
+    request.fetchBatchSize = 1;
+    
+    NSError *error = nil;
+    note2 = [[managedObjectContext executeFetchRequest:request error:&error] lastObject];
+    
+    if (!error && !note2) {
+        // no note..
+        //TODO throw a toast or something?
+        
+		//  note = [NSEntityDescription insertNewObjectForEntityForName:@"Note" inManagedObjectContext:context];
+		[request release];
+
+        return nil;
+    }
+    else if (error)
+    { //TODO what to do here?
+     //why would it ever throw an error here
+        NSLog(@"there is an error trying to find a note by title?!");
+        //throw an alert?
+        [request release];
+        return nil;
+    }
+    else{ //default... there is a note
+       // NSLog(@"Retain Count of note2 :%i",[note2 retainCount]);
+
+        [request release];
+        return note2;
+    }
 }
 
+/*the key property which leads to this leak is the WebKitCacheModelPreferenceKey application setting.
+ And when you open a link in a UIWebView, this property is automatically set to the value "1". 
+ So, the solution is to set it back to 0 everytime you open a link. 
+ You may easily do this by adding a UIWebViewDelegate to your UIWebView :
+*/ 
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+	[[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"WebKitCacheModelPreferenceKey"];
+}
+
+
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+}
 @end

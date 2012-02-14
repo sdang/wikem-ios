@@ -14,6 +14,10 @@
 #import "AcceptLicense.h"
 #import "AboutWikemViewController.h"
 
+//ck
+#import "NoteViewController.h"
+#import "VariableStore.h"
+
 @implementation UpdateViewController
 @synthesize currentDatabaseCreatedLabel;
 @synthesize lastUpdateCheckLabel;
@@ -23,6 +27,14 @@
 @synthesize noUpdateLabel;
 @synthesize persistentStoreCoordinator;
 @synthesize updaterButton;
+
+@synthesize logo;
+@synthesize updatecheckbutton;
+@synthesize datesLabel1;
+@synthesize datesLabel2;
+@synthesize datesLabel3;
+
+@synthesize isOffset;
 
 #pragma mark - Progress Bar & Update Button Animation
 
@@ -54,12 +66,14 @@
 - (void)animateOutUpdaterButton
 {
     // alpha = 0 if it's already hidden
-    if (self.updaterButton.alpha != 0)
+    if (self.updaterButton.alpha != 0){
     [UIView transitionWithView:self.updaterButton
                       duration:0.5
                        options:UIViewAnimationCurveLinear
                     animations:^{ self.updaterButton.alpha = 0.0; self.updaterButton.frame = CGRectOffset(self.updaterButton.frame, 0, 100.0); }
                     completion:NULL];
+        self.isOffset = YES;
+    }
 }
 
 - (void)animateOutProgressPackage
@@ -69,6 +83,7 @@
         // we're going to move up the package by 60 pts
         CGRect finalRectBar = CGRectOffset(self.progressBar.frame, 0.0, 60.0);
         CGRect finalRectText = CGRectOffset(self.progressText.frame, 0.0, 60.0);
+        self.isOffset = YES;
         
         // actually do the animation
         [UIView transitionWithView:self.progressBar
@@ -96,12 +111,15 @@
         }
         
         // alpha = 1 if it's already shown
-        if (self.updaterButton.alpha != 1)
+        if (self.updaterButton.alpha != 1){
             [UIView transitionWithView:self.updaterButton
                               duration:0.5
                                options:UIViewAnimationCurveLinear
                             animations:^{ self.updaterButton.alpha = 1.0; self.updaterButton.frame = CGRectOffset(self.updaterButton.frame, 0, -100.0); }
                             completion:NULL];
+            self.isOffset = NO;
+         }
+        
     });
 }
 
@@ -117,6 +135,8 @@
     
     // if alpha == 1 that means we're already showing it
     if (self.progressBar.alpha != 1) {
+        
+        self.isOffset = NO;
         // we're going to move up the package by 60 pts
         CGRect finalRectBar = CGRectOffset(self.progressBar.frame, 0.0, -60.0);
         CGRect finalRectText = CGRectOffset(self.progressText.frame, 0.0, -60.0);
@@ -222,12 +242,14 @@
 
 - (IBAction)runUpdateCheck:(id)sender
 {
+	//ck: this is the method called by pressing the update button (not updatedownloadbutton)
+	
     NSDictionary *infoFileContents = [self checkUpdateAvailable];
     if ([infoFileContents count] == 2) {
         [self animateInNoUpdateText:@"Update Available"];
         [self updateAvailable:YES];
     } else if ([infoFileContents count] == 1) {
-        [self animateInNoUpdateText:@"Database is Up to Date"];
+        [self animateInNoUpdateText:@"Database is up to date"];
     } else {
         [self animateInNoUpdateText:@"Error Checking for Update"];
     }
@@ -260,18 +282,21 @@
 }
 
 - (NSDictionary *)checkUpdateAvailable
-{
+{//check update available uses last update time compared with the epoch on the info.xml file
+	//do not use lastDatabaseGeneratedTime, as we no longer regenerate the XML unless needed in future
+	
     NSDictionary *infoFileContents = [self parseXMLInfoFile];
+	//bool *imagesAvailable = [self parseXMLImagesFile];
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     
     
-    NSNumber *totalNumberOfNotes = nil;
+  //  NSNumber *totalNumberOfNotes = nil;
     NSNumber *infoGenerationTime = nil;
     
     if (infoFileContents) {
         // update last update check time, only update last check if we have data
         [prefs setInteger:[[NSDate date] timeIntervalSince1970] forKey:@"lastDatabaseCheck"];
-        totalNumberOfNotes = [infoFileContents objectForKey:@"size"];
+  //      totalNumberOfNotes = [infoFileContents objectForKey:@"size"];
         infoGenerationTime = [infoFileContents objectForKey:@"lastUpdate"];
     } else {
         NSLog(@"Error parsing info file");
@@ -281,13 +306,126 @@
     [prefs synchronize];
     [self updateUpdateTimes];
     
-    if (NSOrderedDescending == [infoGenerationTime compare:[NSNumber numberWithInt:[prefs integerForKey:@"lastDatabaseGenerationTime"]]]) {
+	if (NSOrderedDescending == [infoGenerationTime compare:[NSNumber numberWithInt:[prefs integerForKey:@"lastDatabaseUpdate"]]]) {
+
+    //if (NSOrderedDescending == [infoGenerationTime compare:[NSNumber numberWithInt:[prefs integerForKey:@"lastDatabaseGenerationTime"]]]) {
         [self updateAvailable:YES];
         return infoFileContents;
     } else {
         [self updateAvailable:NO];
         return [NSDictionary dictionaryWithObject:@"" forKey:@"size"];
     }
+}
+/* will implement in future
+//set up a xml to contain files to download for javascript or header files
+- (BOOL )parseXMLExtrasFile {
+    NSFileManager* filemanager = [NSFileManager defaultManager];
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory , NSUserDomainMask, YES);
+	NSString* documentsDir = [paths objectAtIndex:0];
+	
+	if (![filemanager isReadableFileAtPath:documentsDir] || ![filemanager isWritableFileAtPath:documentsDir]) 
+	{NSLog(@"uh oh. documents path is either not readable and/or writeable");
+		return false;
+	}
+	[filemanager changeCurrentDirectoryPath: documentsDir];
+    
+    NSString *extrasFile = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"extras_url"];
+	NSURL *theURL = [NSURL URLWithString:extrasFile];
+    NSString *content = [NSString stringWithContentsOfURL:theURL encoding:NSUTF8StringEncoding error:NULL];
+	
+    TBXML *tbxml = [TBXML tbxmlWithXMLString:content]; 
+    
+    TBXMLElement *download = [TBXML childElementNamed:@"download" parentElement:tbxml.rootXMLElement];
+	TBXMLElement *file = download->firstChild;
+    NSString *name;
+	NSString *url;
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    int lastUpdate = 0;
+    BOOL updateprefs;
+	do { 
+ 		name = [TBXML valueOfAttributeNamed:@"name" forElement:file];  	
+		url =  [TBXML valueOfAttributeNamed:@"url" forElement:file]; 
+        lastUpdate = [[TBXML valueOfAttributeNamed:@"epoch" forElement:file] intValue];
+
+        if (lastUpdate > ([prefs integerForKey:@"lastExtraUpdate"])){ 
+		//if ([filemanager fileExistsAtPath:name] == NO){
+            updateprefs = YES;
+			NSData *fileData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+ 			[filemanager createFileAtPath:name contents:fileData attributes:nil];
+ 			NSLog(@"created an extra file!!");
+  		}
+		else{ NSLog(@"no extra downloaded.... up to date");
+		}
+	} while ((file = file->nextSibling));
+	
+    if (updateprefs){ //new update time is now.
+        [prefs setInteger:[[NSDate date] timeIntervalSince1970] forKey:@"lastExtraUpdate"];
+        [prefs synchronize];
+        return YES;
+ }
+    return NO;
+}*/
+
+- (bool *)parseXMLImagesFile {
+	NSFileManager* filemanager = [NSFileManager defaultManager];
+	//get the path of current users documents folder for read/write
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory , NSUserDomainMask, YES);
+	NSString* documentsDir = [paths objectAtIndex:0];
+    
+/* copy images and files into 'Documents/wikemdocs' for ex. 
+ rather than jsutthe Docs dir, which is shared btw apps
+ in future can gather all files in Dir and create list view for example
+ */
+	//documentsDir = [documentsDir stringByAppendingPathComponent:@"/wikemdocs/"];
+      NSString *dirName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"storage_directory_name"];
+    documentsDir = [documentsDir stringByAppendingPathComponent:dirName];
+
+    NSError* error = nil;
+    if (![[NSFileManager defaultManager] fileExistsAtPath:documentsDir]){
+        [[NSFileManager defaultManager] createDirectoryAtPath:documentsDir withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
+     }
+       
+    //
+	if (![filemanager isReadableFileAtPath:documentsDir] || ![filemanager isWritableFileAtPath:documentsDir]) 
+	{NSLog(@"uh oh. documents path is either not readable and/or writeable");
+		return false;
+	}
+	//changing documents allows us to just use the filename and not worry about appending paths
+	[filemanager changeCurrentDirectoryPath: documentsDir];
+
+    NSString *imagesFile = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"images_url"];
+	NSURL *theURL = [NSURL URLWithString:imagesFile];
+    NSString *content = [NSString stringWithContentsOfURL:theURL encoding:NSUTF8StringEncoding error:NULL];
+	
+    
+    TBXML *tbxml = [TBXML tbxmlWithXMLString:content]; 
+   TBXMLElement *query = [TBXML childElementNamed:@"query" parentElement:tbxml.rootXMLElement];
+	TBXMLElement *allimages = query->firstChild;
+	TBXMLElement *subElement = allimages->firstChild;
+	if (subElement ==nil){NSLog(@"subelement is nil!!!");}
+//for some sort of progressbar for images	
+	float i = 0.0;
+	NSString *name;
+	NSString *url;
+		
+  
+	do { 
+ 		name = [TBXML valueOfAttributeNamed:@"name" forElement:subElement];  	
+		url =  [TBXML valueOfAttributeNamed:@"url" forElement:subElement]; 
+		
+		//save the image if it already doesn't exist, but first check the path
+  
+		if ([filemanager fileExistsAtPath:name] == NO){
+			NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+ 			[filemanager createFileAtPath:name contents:imageData attributes:nil];
+			i++;//some sort of progress bar later?
+			NSLog(@"created image file");
+  		}
+		else{ //NSLog(@"no image downlaoded file already exists");
+		}
+	} while ((subElement = subElement->nextSibling));
+	
+	return false;	 
 }
 
 - (NSDictionary *)parseXMLInfoFile {
@@ -310,24 +448,61 @@
     }
 
     NSDictionary *infoFileContents = nil;
-    if (size && lastUpdate) {
-        infoFileContents = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:size], @"size", [NSNumber numberWithInt:lastUpdate], @"lastUpdate", nil];
+ //   if (size && lastUpdate) {
+//ck:new xml 'num' attribute is now useless and can be zero. no longer keeps track of +- wikem pages bc Sabin's code counts xml page-nodes
+
+	if(lastUpdate){
+        infoFileContents = 
+		[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:size], @"size", [NSNumber numberWithInt:lastUpdate], @"lastUpdate", nil];
     } 
+	else{
+		NSLog(@"info xml issues!");
+	}
     
     return infoFileContents;
 }
 
 
 - (void)addNoteFromXMLElement:(TBXMLElement *)subElement context:(NSManagedObjectContext *)managedObjectContext
-{
-    NSString *content = [NSString stringWithString:[TBXML textForElement:[TBXML childElementNamed:@"content" parentElement:subElement]]];
-    NSSet *categories = [NSSet setWithObject:[Category categoryWithTitle:[TBXML textForElement:[TBXML childElementNamed:@"folder" parentElement:subElement]] inManagedObjectContext:managedObjectContext]];
-    if (![[categories anyObject] isKindOfClass:[Category class]]) {
-        NSLog(@"Found a note without a category");
-        categories = [NSSet setWithObject:[Category categoryWithTitle:@"Uncategorized" inManagedObjectContext:managedObjectContext]];
-    }
+
+{	NSString *thename = [NSString stringWithString: [TBXML textForElement:[TBXML childElementNamed:@"name" parentElement:subElement]]];
     
-    [Note noteWithName:[TBXML textForElement:[TBXML childElementNamed:@"name" parentElement:subElement]]
+
+
+	NSString *content = [NSString stringWithString:[TBXML textForElement:[TBXML childElementNamed:@"content" parentElement:subElement]]];
+	NSSet *categories = [NSSet setWithObject:[Category categoryWithTitle:@"Uncategorized" inManagedObjectContext:managedObjectContext]];
+
+	@try
+    {	TBXMLElement *folder = [TBXML childElementNamed:@"folder" parentElement:subElement];
+		if (folder != nil){
+			NSString *folderText = [TBXML textForElement:folder];
+			NSArray *chunks = [folderText componentsSeparatedByString: @"|"];
+			
+			NSMutableArray *array = [[NSMutableArray alloc] init ];
+		//	Category *categoryObjects[[chunks count]];
+		//	int i =0;
+			for (id object in chunks) {
+		//		NSLog(object);
+				[array addObject:  [Category categoryWithTitle:object inManagedObjectContext:managedObjectContext]];
+
+			}
+ 			
+			categories = [NSSet setWithArray:array];
+			[array release]; //crash?
+			
+			//categories = [NSSet setWithObject:[Category categoryWithTitle:[TBXML textForElement:[TBXML childElementNamed:@"folder" parentElement:subElement]] inManagedObjectContext:managedObjectContext]];
+			if (![[categories anyObject] isKindOfClass:[Category class]]) {
+			NSLog(@"Found a note with a foldertag and empty..no  category");
+			categories = [NSSet setWithObject:[Category categoryWithTitle:@"Uncategorized" inManagedObjectContext:managedObjectContext]];
+			}
+		}
+    }
+    @catch(NSException* ex)
+    {
+        NSLog(@"caught exception at addnotefrom xmlelement");
+    }
+
+    [Note noteWithName:thename
                 author:[TBXML textForElement:[TBXML childElementNamed:@"author" parentElement:subElement]]
                content:[content stringByDecodingHTMLEntities]
             lastUpdate:[NSDate date]
@@ -351,6 +526,9 @@ inManagedObjectContext:managedObjectContext];
     return content;
 }
 
+
+/* called by touch of button 'download update'... see the xib file (interface builder), file owner connections
+ */
 - (void)parseXMLDatabaseFile {
     
     dispatch_queue_t parseQueue = dispatch_queue_create("Parse XML Queue", NULL);
@@ -359,6 +537,7 @@ inManagedObjectContext:managedObjectContext];
         
         [self updateProgressBar:0.0 message:@"Downloading WikEM Database"];
         
+
         NSManagedObjectContext *managedObjectContext = [[[NSManagedObjectContext alloc] init] autorelease];
         [managedObjectContext setPersistentStoreCoordinator:self.persistentStoreCoordinator];
         NSLog(@"Running parse xml");
@@ -373,6 +552,7 @@ inManagedObjectContext:managedObjectContext];
         if (tbxml.rootXMLElement) {
             
             // extract : <root created="1301616061">
+			//no longer rebuild the database, so will keep the last date of the old script...
             int databaseGenerationTime = [[TBXML valueOfAttributeNamed:@"created" forElement:tbxml.rootXMLElement] intValue];
             
             if (! databaseGenerationTime) {
@@ -385,38 +565,83 @@ inManagedObjectContext:managedObjectContext];
                 [self updateProgressBar:0.1 message:@"Updating Categories"];
                 TBXMLElement *categories = [TBXML childElementNamed:@"categories" parentElement:tbxml.rootXMLElement];
                 TBXMLElement *subElement = categories->firstChild;
+				NSLog(@"ok now updating categories");
+
                 do {
                     NSString *title = [NSString stringWithString:[TBXML valueOfAttributeNamed:@"title" forElement:subElement]];
+				//	NSLog(title);
                     [Category categoryWithTitle:title inManagedObjectContext:managedObjectContext];
                 } while ((subElement = subElement->nextSibling));
-                
+				NSLog(@"ok now updating notes");
+
                 // Parse Notes
                [self updateProgressBar:0.2 message:@"Updating WikEM Notes"];
                 TBXMLElement *notes = [TBXML childElementNamed:@"pages" parentElement:tbxml.rootXMLElement];
                 subElement = notes->firstChild;
-                float i = 0.0;
-                do {
+                if (subElement ==nil){NSLog(@"subelement is nil!!!");}
+				
+				float i = 0.0;
+                do { 
+
                     [self addNoteFromXMLElement:subElement context:managedObjectContext];
                     i++;
+
                     [self updateProgressBar:(0.8*(i/totalNotes))+0.2 message:@"Updating WikEM Notes"];
                     
                 } while ((subElement = subElement->nextSibling));
+				NSLog(@"ok done w notes");
+
+//ck: after finish parsing xml.  set my singleton boolean so can communicate need for cache cleanup
+				[VariableStore sharedInstance].notesViewNeedsCacheReset=YES;
+				[VariableStore sharedInstance].categoryViewNeedsCacheReset=YES;
+
                 [self updateProgressBar:1 message:@"Done"];
                 [managedObjectContext save:nil];
                 [self disableAllTabBarItems:NO];
+				
+				
+				
+				NSUserDefaults *prefsThread = [NSUserDefaults standardUserDefaults];
+
+				//on first run set the update time to an old time...otw won't update online immediately 
+				if(self.ranInitialSetup == NO)
+				{
+					//NSLog(@"asldkfjlsadkjf");
+					[prefsThread setInteger:databaseGenerationTime forKey:@"lastDatabaseUpdate"];
+				}
+				else{
+					[prefsThread setInteger:[[NSDate date] timeIntervalSince1970] forKey:@"lastDatabaseUpdate"];
+
+				}
                 self.ranInitialSetup = YES;
                 
-                NSUserDefaults *prefsThread = [NSUserDefaults standardUserDefaults];
-                [prefsThread setInteger:[[NSDate date] timeIntervalSince1970] forKey:@"lastDatabaseUpdate"];
+				
+      //          NSUserDefaults *prefsThread = [NSUserDefaults standardUserDefaults];
+                //[prefsThread setInteger:[[NSDate date] timeIntervalSince1970] forKey:@"lastDatabaseUpdate"];
                 [prefsThread setInteger:databaseGenerationTime forKey:@"lastDatabaseGenerationTime"];
                 [prefsThread setBool:self.ranInitialSetup forKey:@"ranInitialSetup"];
                 [prefsThread synchronize];
                 [self updateUpdateTimes];
                 [self updateAvailable:NO];
+				
+				//user is now released from this updaterview but images will still dl behind scenes
+				//the NSData downloader is asyncrhonus already on another thread. nice.
+				//now after resease the other tab bar items and updated text, 
+				//dl images in background
+				 
+ 				//[self parseXMLExtrasFile ];	
+                /*
+                future implementation to use the extras to get new css and javascript functionality. for now, unnecessary unless rendering is tweaked to support this 
+                 */
+                
+                [self parseXMLImagesFile];
+                    
+				//ok now done.
             }
         }
     });
     dispatch_release(parseQueue);
+
 }
 
 - (IBAction)clearWikEMData
@@ -451,6 +676,8 @@ inManagedObjectContext:managedObjectContext];
         NSLog(@"Deleted All Notes");
     // });
     // dispatch_release(deleteQueue);
+	
+
 }
 
 #pragma mark - Tab Bar Controls
@@ -468,14 +695,18 @@ inManagedObjectContext:managedObjectContext];
         NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
         if (status) {
             // show red dot to indicate update available
-            [[[[[self tabBarController] tabBar] items] objectAtIndex:3] setBadgeValue:@""];
+            [[[[[self tabBarController] tabBar] items] objectAtIndex:4] setBadgeValue:@""];
+     //in horizontal mode hide the dates now
+            [self hideDates];
+            
+            
             
             // show button to allow user to update if it isn't already shown
             [self animateInUpdaterButton];
             [prefs setBool:YES forKey:@"updateAvailable"];
             
         } else {
-            [[[[[self tabBarController] tabBar] items] objectAtIndex:3] setBadgeValue:nil];
+            [[[[[self tabBarController] tabBar] items] objectAtIndex:4] setBadgeValue:nil];
             [prefs setBool:NO forKey:@"updateAvailable"];
         }
         [prefs synchronize];
@@ -494,6 +725,8 @@ inManagedObjectContext:managedObjectContext];
         [[[[[self tabBarController] tabBar] items] objectAtIndex:0] setEnabled:x];
         [[[[[self tabBarController] tabBar] items] objectAtIndex:1] setEnabled:x];
         [[[[[self tabBarController] tabBar] items] objectAtIndex:2] setEnabled:x];
+        [[[[[self tabBarController] tabBar] items] objectAtIndex:3] setEnabled:x];
+
     });
     
 }
@@ -524,6 +757,13 @@ inManagedObjectContext:managedObjectContext];
     [lastUpdateCheckLabel release];
     [lastUpdatePerformedLabel release];
     [noUpdateLabel release];
+    [logo release];
+    [updatecheckbutton release];
+    [datesLabel1 release];
+    [datesLabel2 release];
+    [datesLabel3 release];
+
+
     [super dealloc];
 }
 
@@ -535,14 +775,14 @@ inManagedObjectContext:managedObjectContext];
     // Release any cached data, images, etc that aren't in use.
 }
 
-- (void)viewDidLoad
-{
+-(void) viewDidLoad{
     [super viewDidLoad];
     self.progressBar.alpha = 0.0;
     self.updaterButton.alpha = 0.0;
     self.updaterButton.frame = CGRectOffset(self.updaterButton.frame, 0.0, 100.0);
     self.progressBar.frame = CGRectOffset(self.progressBar.frame, 0.0, 60.0);
     self.progressText.frame = CGRectOffset(self.progressText.frame, 0.0, 60.0);
+    self.isOffset = YES; 
     self.progressText.text = @"";
     self.noUpdateLabel.text = @"";
     self.noUpdateLabel.alpha = 0.0;
@@ -552,11 +792,76 @@ inManagedObjectContext:managedObjectContext];
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     if ([prefs boolForKey:@"updateAvailable"]) {
         [self animateInUpdaterButton];
+        [self hideDates];
+    }
+    NSLog(@"view did load in UVC!?!!!");
+}
+-(void) offsetHiddenViews{
+    self.updaterButton.frame = CGRectOffset(self.updaterButton.frame, 0.0, 100.0);
+    self.progressBar.frame = CGRectOffset(self.progressBar.frame, 0.0, 60.0);
+    self.progressText.frame = CGRectOffset(self.progressText.frame, 0.0, 60.0);
+}
+-(void) hideDates{
+    if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
+    {
+    //get rid of dates for landscape
+    self.datesLabel1.alpha = 0;
+    self.datesLabel2.alpha = 0;
+    self.datesLabel3.alpha = 0;
+    self.currentDatabaseCreatedLabel.alpha = 0;
+    self.lastUpdateCheckLabel.alpha = 0;
+    self.lastUpdatePerformedLabel.alpha = 0;
     }
 }
+-(void) changeViewsOnOrientation{
+    if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
+    { //takes x y width and height as args
+        // self.logo.frame = CGRectMake(56, 20, 326, 71);
+        self.logo.frame = CGRectMake(56, 20, 326, 71);
+        self.updatecheckbutton.frame = CGRectMake(310, 100, 151, 45);
+        
+        self.updaterButton.frame = CGRectMake(20, 180, 280, 45);
+        self.progressBar.frame = CGRectMake(20, 200, 280, 9);        
+        self.progressText.frame = CGRectMake(20,200,280,26);   
+        if(isOffset) //updating views off screen. so animate the view in
+        {
+            [self offsetHiddenViews];
+        }
+        else{ //otherwise always hide the dates in landscpae mode
+            [self hideDates];
+        }
+        self.noUpdateLabel.frame = CGRectMake(20, 220, 286, 21);
+        
+    }
+    else //portrait
+    {   self.logo.frame = CGRectMake(0, 20, 326, 71);
+        self.updatecheckbutton.frame = CGRectMake(164, 286, 151, 45);
+        
+        self.updaterButton.frame = CGRectMake(20, 354, 280, 45);
+        self.progressBar.frame = CGRectMake(20, 348, 280, 9);
+        self.progressText.frame = CGRectMake(20,348,280,26); 
+        if(isOffset){
+            [self offsetHiddenViews];
+        }
+        
+        self.noUpdateLabel.frame = CGRectMake(20, 248, 286, 21);
+        //the dates
+        self.datesLabel1.alpha = 1;
+        self.datesLabel2.alpha = 1;
+        self.datesLabel3.alpha = 1;
+        self.currentDatabaseCreatedLabel.alpha = 1;
+        self.lastUpdateCheckLabel.alpha = 1;
+        self.lastUpdatePerformedLabel.alpha = 1;
+        
+    }
+
+}
+- (void)viewWillAppear:(BOOL)animated{
+    [self changeViewsOnOrientation];
+     }
 
 - (void)viewDidAppear:(BOOL)animated {
-    
+     // TODO: make welcome screen explaining update stuff 
     if (!self.ranInitialSetup && !self.displayingLicense) {
         [self disableAllTabBarItems:YES];
         self.licenseViewController = [[AcceptLicense alloc] init];
@@ -596,12 +901,27 @@ inManagedObjectContext:managedObjectContext];
     self.updaterButton = nil;
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+    self.logo = nil;
+    self.updatecheckbutton = nil;
+    self.datesLabel1 = nil;
+    self.datesLabel2 = nil;
+    self.datesLabel3 = nil;
+
+
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+  //  return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+    return YES;
 }
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration{
+    /*
+     This method is called from within the animation block that is used to rotate the view. You can override this method and use it to configure additional animations that should occur during the view rotation. For example, you could use it to adjust the zoom level of your content, change the scroller position, or modify other animatable properties of your view*/
+    [self changeViewsOnOrientation];
+    
+      
+}
+
 
 @end
