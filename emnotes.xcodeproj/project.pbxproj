@@ -76,6 +76,19 @@
 		CA2E2014143670EB00BFE933 /* database.xml in Resources */ = {isa = PBXBuildFile; fileRef = CA2E2013143670EB00BFE933 /* database.xml */; };
 		CAB8A6A0149481090086FA90 /* NotesTableViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = CAB8A69F149481090086FA90 /* NotesTableViewController2.m */; };
 		CAB8A6A2149485750086FA90 /* 06-magnify.png in Resources */ = {isa = PBXBuildFile; fileRef = CAB8A6A1149485750086FA90 /* 06-magnify.png */; };
+		CADAD1971502EE5A005BBA64 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = CADAD1951502EE5A005BBA64 /* Reachability.m */; };
+		CADAD1AC1502EE78005BBA64 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = CADAD1991502EE78005BBA64 /* ASIAuthenticationDialog.m */; };
+		CADAD1AD1502EE78005BBA64 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = CADAD19C1502EE78005BBA64 /* ASIDataCompressor.m */; };
+		CADAD1AE1502EE78005BBA64 /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = CADAD19E1502EE78005BBA64 /* ASIDataDecompressor.m */; };
+		CADAD1AF1502EE78005BBA64 /* ASIDownloadCache.m in Sources */ = {isa = PBXBuildFile; fileRef = CADAD1A01502EE78005BBA64 /* ASIDownloadCache.m */; };
+		CADAD1B01502EE78005BBA64 /* ASIFormDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CADAD1A21502EE78005BBA64 /* ASIFormDataRequest.m */; };
+		CADAD1B11502EE78005BBA64 /* ASIHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CADAD1A41502EE78005BBA64 /* ASIHTTPRequest.m */; };
+		CADAD1B21502EE78005BBA64 /* ASIInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = CADAD1A81502EE78005BBA64 /* ASIInputStream.m */; };
+		CADAD1B31502EE78005BBA64 /* ASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = CADAD1AA1502EE78005BBA64 /* ASINetworkQueue.m */; };
+		CADAD1B51502EF11005BBA64 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CADAD1B41502EF11005BBA64 /* CFNetwork.framework */; };
+		CADAD1B71502EF2D005BBA64 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CADAD1B61502EF2D005BBA64 /* SystemConfiguration.framework */; };
+		CADAD1B91502EF37005BBA64 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CADAD1B81502EF37005BBA64 /* MobileCoreServices.framework */; };
+		CADAD1BB1502F01D005BBA64 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CADAD1BA1502F01D005BBA64 /* libxml2.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -185,6 +198,32 @@
 		CAB8A69E149481090086FA90 /* NotesTableViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotesTableViewController2.h; sourceTree = "<group>"; };
 		CAB8A69F149481090086FA90 /* NotesTableViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotesTableViewController2.m; sourceTree = "<group>"; };
 		CAB8A6A1149485750086FA90 /* 06-magnify.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "06-magnify.png"; sourceTree = "<group>"; };
+		CADAD1951502EE5A005BBA64 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = emnotes/Reachability.m; sourceTree = "<group>"; };
+		CADAD1961502EE5A005BBA64 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = emnotes/Reachability.h; sourceTree = "<group>"; };
+		CADAD1981502EE78005BBA64 /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ASIAuthenticationDialog.h; path = emnotes/ASIAuthenticationDialog.h; sourceTree = "<group>"; };
+		CADAD1991502EE78005BBA64 /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ASIAuthenticationDialog.m; path = emnotes/ASIAuthenticationDialog.m; sourceTree = "<group>"; };
+		CADAD19A1502EE78005BBA64 /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ASICacheDelegate.h; path = emnotes/ASICacheDelegate.h; sourceTree = "<group>"; };
+		CADAD19B1502EE78005BBA64 /* ASIDataCompressor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ASIDataCompressor.h; path = emnotes/ASIDataCompressor.h; sourceTree = "<group>"; };
+		CADAD19C1502EE78005BBA64 /* ASIDataCompressor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ASIDataCompressor.m; path = emnotes/ASIDataCompressor.m; sourceTree = "<group>"; };
+		CADAD19D1502EE78005BBA64 /* ASIDataDecompressor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ASIDataDecompressor.h; path = emnotes/ASIDataDecompressor.h; sourceTree = "<group>"; };
+		CADAD19E1502EE78005BBA64 /* ASIDataDecompressor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ASIDataDecompressor.m; path = emnotes/ASIDataDecompressor.m; sourceTree = "<group>"; };
+		CADAD19F1502EE78005BBA64 /* ASIDownloadCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ASIDownloadCache.h; path = emnotes/ASIDownloadCache.h; sourceTree = "<group>"; };
+		CADAD1A01502EE78005BBA64 /* ASIDownloadCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ASIDownloadCache.m; path = emnotes/ASIDownloadCache.m; sourceTree = "<group>"; };
+		CADAD1A11502EE78005BBA64 /* ASIFormDataRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ASIFormDataRequest.h; path = emnotes/ASIFormDataRequest.h; sourceTree = "<group>"; };
+		CADAD1A21502EE78005BBA64 /* ASIFormDataRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ASIFormDataRequest.m; path = emnotes/ASIFormDataRequest.m; sourceTree = "<group>"; };
+		CADAD1A31502EE78005BBA64 /* ASIHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ASIHTTPRequest.h; path = emnotes/ASIHTTPRequest.h; sourceTree = "<group>"; };
+		CADAD1A41502EE78005BBA64 /* ASIHTTPRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ASIHTTPRequest.m; path = emnotes/ASIHTTPRequest.m; sourceTree = "<group>"; };
+		CADAD1A51502EE78005BBA64 /* ASIHTTPRequestConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ASIHTTPRequestConfig.h; path = emnotes/ASIHTTPRequestConfig.h; sourceTree = "<group>"; };
+		CADAD1A61502EE78005BBA64 /* ASIHTTPRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ASIHTTPRequestDelegate.h; path = emnotes/ASIHTTPRequestDelegate.h; sourceTree = "<group>"; };
+		CADAD1A71502EE78005BBA64 /* ASIInputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ASIInputStream.h; path = emnotes/ASIInputStream.h; sourceTree = "<group>"; };
+		CADAD1A81502EE78005BBA64 /* ASIInputStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ASIInputStream.m; path = emnotes/ASIInputStream.m; sourceTree = "<group>"; };
+		CADAD1A91502EE78005BBA64 /* ASINetworkQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ASINetworkQueue.h; path = emnotes/ASINetworkQueue.h; sourceTree = "<group>"; };
+		CADAD1AA1502EE78005BBA64 /* ASINetworkQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ASINetworkQueue.m; path = emnotes/ASINetworkQueue.m; sourceTree = "<group>"; };
+		CADAD1AB1502EE78005BBA64 /* ASIProgressDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ASIProgressDelegate.h; path = emnotes/ASIProgressDelegate.h; sourceTree = "<group>"; };
+		CADAD1B41502EF11005BBA64 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		CADAD1B61502EF2D005BBA64 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		CADAD1B81502EF37005BBA64 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		CADAD1BA1502F01D005BBA64 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +231,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CADAD1BB1502F01D005BBA64 /* libxml2.dylib in Frameworks */,
+				CADAD1B91502EF37005BBA64 /* MobileCoreServices.framework in Frameworks */,
+				CADAD1B71502EF2D005BBA64 /* SystemConfiguration.framework in Frameworks */,
+				CADAD1B51502EF11005BBA64 /* CFNetwork.framework in Frameworks */,
 				94E695B91346ED44008DF6ED /* libz.dylib in Frameworks */,
 				94DA2FD913468F8D00862F48 /* UIKit.framework in Frameworks */,
 				94DA2FDB13468F8D00862F48 /* Foundation.framework in Frameworks */,
@@ -327,6 +370,11 @@
 		94DA2FC913468F8D00862F48 = {
 			isa = PBXGroup;
 			children = (
+				CADAD1BA1502F01D005BBA64 /* libxml2.dylib */,
+				CADAD1B81502EF37005BBA64 /* MobileCoreServices.framework */,
+				CADAD1B61502EF2D005BBA64 /* SystemConfiguration.framework */,
+				CADAD1B41502EF11005BBA64 /* CFNetwork.framework */,
+				CADAD1931502EE3C005BBA64 /* ASIHttp */,
 				CA792BA6140A96690038CE27 /* Entitlements.plist */,
 				94DA2FE013468F8D00862F48 /* emnotes */,
 				94DA2FD713468F8D00862F48 /* Frameworks */,
@@ -407,6 +455,35 @@
 				94EFE5F2134D8A9900B1CBDB /* PersonalNotesViewController.xib */,
 			);
 			name = PersonalNotesView;
+			sourceTree = "<group>";
+		};
+		CADAD1931502EE3C005BBA64 /* ASIHttp */ = {
+			isa = PBXGroup;
+			children = (
+				CADAD1981502EE78005BBA64 /* ASIAuthenticationDialog.h */,
+				CADAD1991502EE78005BBA64 /* ASIAuthenticationDialog.m */,
+				CADAD19A1502EE78005BBA64 /* ASICacheDelegate.h */,
+				CADAD19B1502EE78005BBA64 /* ASIDataCompressor.h */,
+				CADAD19C1502EE78005BBA64 /* ASIDataCompressor.m */,
+				CADAD19D1502EE78005BBA64 /* ASIDataDecompressor.h */,
+				CADAD19E1502EE78005BBA64 /* ASIDataDecompressor.m */,
+				CADAD19F1502EE78005BBA64 /* ASIDownloadCache.h */,
+				CADAD1A01502EE78005BBA64 /* ASIDownloadCache.m */,
+				CADAD1A11502EE78005BBA64 /* ASIFormDataRequest.h */,
+				CADAD1A21502EE78005BBA64 /* ASIFormDataRequest.m */,
+				CADAD1A31502EE78005BBA64 /* ASIHTTPRequest.h */,
+				CADAD1A41502EE78005BBA64 /* ASIHTTPRequest.m */,
+				CADAD1A51502EE78005BBA64 /* ASIHTTPRequestConfig.h */,
+				CADAD1A61502EE78005BBA64 /* ASIHTTPRequestDelegate.h */,
+				CADAD1A71502EE78005BBA64 /* ASIInputStream.h */,
+				CADAD1A81502EE78005BBA64 /* ASIInputStream.m */,
+				CADAD1A91502EE78005BBA64 /* ASINetworkQueue.h */,
+				CADAD1AA1502EE78005BBA64 /* ASINetworkQueue.m */,
+				CADAD1AB1502EE78005BBA64 /* ASIProgressDelegate.h */,
+				CADAD1951502EE5A005BBA64 /* Reachability.m */,
+				CADAD1961502EE5A005BBA64 /* Reachability.h */,
+			);
+			name = ASIHttp;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -535,6 +612,15 @@
 				94EFE5F3134D8A9900B1CBDB /* PersonalNotesViewController.m in Sources */,
 				CA1E098414048C220096CBA5 /* VariableStore.m in Sources */,
 				CAB8A6A0149481090086FA90 /* NotesTableViewController2.m in Sources */,
+				CADAD1971502EE5A005BBA64 /* Reachability.m in Sources */,
+				CADAD1AC1502EE78005BBA64 /* ASIAuthenticationDialog.m in Sources */,
+				CADAD1AD1502EE78005BBA64 /* ASIDataCompressor.m in Sources */,
+				CADAD1AE1502EE78005BBA64 /* ASIDataDecompressor.m in Sources */,
+				CADAD1AF1502EE78005BBA64 /* ASIDownloadCache.m in Sources */,
+				CADAD1B01502EE78005BBA64 /* ASIFormDataRequest.m in Sources */,
+				CADAD1B11502EE78005BBA64 /* ASIHTTPRequest.m in Sources */,
+				CADAD1B21502EE78005BBA64 /* ASIInputStream.m in Sources */,
+				CADAD1B31502EE78005BBA64 /* ASINetworkQueue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -603,6 +689,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = "~/emnotes/Entitlements.plist";
+				CODE_SIGN_IDENTITY = "iPhone Developer: christopher kim (PZ9WXQ99N9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: christopher kim (PZ9WXQ99N9)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -611,6 +699,8 @@
 				INFOPLIST_FILE = "emnotes/emnotes-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = WikEM;
+				PROVISIONING_PROFILE = "E96D86D5-DBF1-4E15-860D-B58934A75570";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E96D86D5-DBF1-4E15-860D-B58934A75570";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
@@ -622,6 +712,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = "~/emnotes/Entitlements.plist";
+				CODE_SIGN_IDENTITY = "iPhone Developer: christopher kim (PZ9WXQ99N9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: christopher kim (PZ9WXQ99N9)";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "emnotes/emnotes-Prefix.pch";
@@ -629,6 +721,8 @@
 				INFOPLIST_FILE = "emnotes/emnotes-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = WikEM;
+				PROVISIONING_PROFILE = "E96D86D5-DBF1-4E15-860D-B58934A75570";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E96D86D5-DBF1-4E15-860D-B58934A75570";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
@@ -660,6 +754,9 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = "~/emnotes/Entitlements.plist";
+				CODE_SIGN_IDENTITY = "iPhone Developer: christopher kim (PZ9WXQ99N9)";
+				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer: christopher kim (PZ9WXQ99N9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: christopher kim (PZ9WXQ99N9)";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "emnotes/emnotes-Prefix.pch";
@@ -667,6 +764,9 @@
 				INFOPLIST_FILE = "emnotes/emnotes-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = WikEM;
+				PROVISIONING_PROFILE = "E96D86D5-DBF1-4E15-860D-B58934A75570";
+				"PROVISIONING_PROFILE[sdk=*]" = "E96D86D5-DBF1-4E15-860D-B58934A75570";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E96D86D5-DBF1-4E15-860D-B58934A75570";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;

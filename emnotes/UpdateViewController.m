@@ -243,16 +243,21 @@
 - (IBAction)runUpdateCheck:(id)sender
 {
 	//ck: this is the method called by pressing the update button (not updatedownloadbutton)
-	
-    NSDictionary *infoFileContents = [self checkUpdateAvailable];
-    if ([infoFileContents count] == 2) {
-        [self animateInNoUpdateText:@"Update Available"];
-        [self updateAvailable:YES];
-    } else if ([infoFileContents count] == 1) {
-        [self animateInNoUpdateText:@"Database is up to date"];
-    } else {
-        [self animateInNoUpdateText:@"Error Checking for Update"];
-    }
+	dispatch_queue_t updateQueue = dispatch_queue_create("Run Update Check", NULL);
+    dispatch_async(updateQueue, ^{
+  //the checkupdateavailable will need to be in a separate thread like this so as not to hang on the users main ui thread... was getting getb8adf00d when it was hanging on update check
+        
+        NSDictionary *infoFileContents = [self checkUpdateAvailable];
+        if ([infoFileContents count] == 2) {
+            [self animateInNoUpdateText:@"Update Available"];
+            [self updateAvailable:YES];
+        } else if ([infoFileContents count] == 1) {
+            [self animateInNoUpdateText:@"Database is up to date"];
+        } else {
+            [self animateInNoUpdateText:@"Error Checking for Update"];
+        }
+    });
+    dispatch_release(updateQueue);
 }
 
 
@@ -260,7 +265,7 @@
 - (void)autoUpdateCheck
 {
     if (self.ranInitialSetup) {
-        dispatch_queue_t updateQueue = dispatch_queue_create("Run Auto Update Check", NULL);
+        dispatch_queue_t updateQueue = dispatch_queue_create("Run AUTO Update Check", NULL);
         dispatch_async(updateQueue, ^{
         NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
         
@@ -381,8 +386,17 @@
 
     NSString *imagesFile = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"images_url"];
 	NSURL *theURL = [NSURL URLWithString:imagesFile];
-    NSString *content = [NSString stringWithContentsOfURL:theURL encoding:NSUTF8StringEncoding error:NULL];
-	
+    NSError *theError = nil;
+    // was getting error thrown here by tbxml...possibly when the network connnection didnt even work and there was nothign to parse
+    
+
+    NSString *content = [NSString stringWithContentsOfURL:theURL encoding:NSUTF8StringEncoding error:&theError]; /*ck:    & means "take the address of". it's how you make a pointer to something. the * means to dereference the pointer, if it's in code. if it's part of a declaration, it's simply indicating the variable is a pointer.*/
+    if( theError != nil )
+    {
+        //oops something went wrong, handle the error
+        NSLog(@"Error: %@", theError);
+    }
+  else{
     
     TBXML *tbxml = [TBXML tbxmlWithXMLString:content]; 
    TBXMLElement *query = [TBXML childElementNamed:@"query" parentElement:tbxml.rootXMLElement];
@@ -410,7 +424,7 @@
 		else{ //NSLog(@"no image downlaoded file already exists");
 		}
 	} while ((subElement = subElement->nextSibling));
-	
+  }
 	return false;	 
 }
 
