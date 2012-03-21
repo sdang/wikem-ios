@@ -17,6 +17,7 @@
 //ck
 #import "NoteViewController.h"
 #import "VariableStore.h"
+#import "ASIHTTPRequest.h"
 
 @implementation UpdateViewController
 @synthesize currentDatabaseCreatedLabel;
@@ -44,11 +45,14 @@
     [UIView setAnimationDuration:0.5];
     [UIView setAnimationCurve:UIViewAnimationOptionCurveEaseIn];
     [self.noUpdateLabel setAlpha:0.0];
+    NSLog(@"asdf");
     [UIView commitAnimations];
 }
 
 - (void)animateInNoUpdateText:(NSString *)updateMessage
 {
+    NSLog(@"asasdfasfddf");
+
     self.noUpdateLabel.text = updateMessage;
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationDuration:0.5];
@@ -241,14 +245,32 @@
 
 
 - (IBAction)runUpdateCheck:(id)sender
-{
+{          //add activity indicator here
+    CGRect                  b = self.view.bounds;
+    indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: 
+                 UIActivityIndicatorViewStyleWhiteLarge];
+    
+    
+    //center the indicator in the view
+    indicator.frame = CGRectMake((b.size.width - 20) / 2, (b.size.height - 20) / 2, 20, 20); 
+    [self.view addSubview: indicator];
+    [indicator release];
+    [indicator startAnimating]; 
+    
+    
+
 	//ck: this is the method called by pressing the update button (not updatedownloadbutton)
 	dispatch_queue_t updateQueue = dispatch_queue_create("Run Update Check", NULL);
     dispatch_async(updateQueue, ^{
   //the checkupdateavailable will need to be in a separate thread like this so as not to hang on the users main ui thread... was getting getb8adf00d when it was hanging on update check
         
         NSDictionary *infoFileContents = [self checkUpdateAvailable];
+        
+        [indicator removeFromSuperview];
+        indicator = nil;
+
         if ([infoFileContents count] == 2) {
+            
             [self animateInNoUpdateText:@"Update Available"];
             [self updateAvailable:YES];
         } else if ([infoFileContents count] == 1) {
@@ -510,6 +532,74 @@
 inManagedObjectContext:managedObjectContext];
 }
 
+//for now no use for sender...
+- (IBAction)grabURLInBackground:(id)sender
+{
+    //add activity indicator here
+    CGRect                  b = self.view.bounds;
+    indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: 
+                 UIActivityIndicatorViewStyleWhiteLarge];
+    
+    
+    //center the indicator in the view
+    indicator.frame = CGRectMake((b.size.width - 20) / 2, (b.size.height - 20) / 2, 20, 20); 
+    [self.view addSubview: indicator];
+    [indicator release];
+    [indicator startAnimating]; 
+
+    
+    NSString *path;
+    NSString *content = nil;
+    if (!self.ranInitialSetup) {
+        path = [[NSBundle mainBundle] pathForResource:@"database" ofType:@"xml"];
+        content = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+    } else {
+        NSString *databaseFile = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"database_url"];
+        NSURL *theURL = [NSURL URLWithString:databaseFile];
+        //content = [NSString stringWithContentsOfURL:theURL encoding:NSUTF8StringEncoding error:NULL
+       
+        
+        //third party asynch downloader, like nsurl, but better features
+        ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:theURL];
+        request.tag = 1;
+        //important, make sure we are the delegate to recieve the messages
+        [request setDelegate:self];
+        [request startAsynchronous];
+    }
+
+    
+    
+    
+ //   NSURL *url = [NSURL URLWithString:@"http://allseeing-i.com"];
+    
+}
+
+- (void)requestFinished:(ASIHTTPRequest *)request
+{
+    // Use when fetching text data
+    NSString *responseString = [request responseString];
+    
+    [indicator removeFromSuperview];
+    indicator = nil;
+    
+    
+    if (request.tag == 1)
+    {
+        NSLog(@"hey the NSTAg is 1");
+    }
+
+    [self parseXMLAfterDownloaded:responseString];
+    
+    // Use when fetching binary data
+   // NSData *responseData = [request responseData];
+}
+
+- (void)requestFailed:(ASIHTTPRequest *)request
+{
+    NSError *error = [request error];
+}
+
+
 - (NSString *)getXMLDatabaseContents
 {
     NSString *path;
@@ -530,7 +620,19 @@ inManagedObjectContext:managedObjectContext];
 /* called by touch of button 'download update'... see the xib file (interface builder), file owner connections
  */
 - (void)parseXMLDatabaseFile {
+    //Actually, this method just initiates the download. Misnomer, but too lazy to change name
+    //want UI changes, which wernt working off main thread
     
+    [self grabURLInBackground:nil];
+    //now uses nice 3rd party asynchronous implementation
+    //
+    // 'graburlinbackround'
+    //request finished AND request failed... in both stop indicator
+    //request finished, call this method...ie PARSE the XML..
+}
+
+//called after successful download
+- (void)parseXMLAfterDownloaded: (NSString *)content {    
     dispatch_queue_t parseQueue = dispatch_queue_create("Parse XML Queue", NULL);
     dispatch_async(parseQueue, ^{
         [self disableAllTabBarItems:YES];
@@ -541,9 +643,10 @@ inManagedObjectContext:managedObjectContext];
         NSManagedObjectContext *managedObjectContext = [[[NSManagedObjectContext alloc] init] autorelease];
         [managedObjectContext setPersistentStoreCoordinator:self.persistentStoreCoordinator];
         NSLog(@"Running parse xml");
-        
-        NSString *content = [self getXMLDatabaseContents];
-        
+             
+       // NSString *content = [self getXMLDatabaseContents];
+
+                
         // not ideal!! But we need a way to count number notes for updating progress bar
         int totalNotes = [[content componentsSeparatedByString:@"<content>"] count]-1;
         

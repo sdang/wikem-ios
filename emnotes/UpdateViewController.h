@@ -23,6 +23,8 @@
     UILabel *lastUpdateCheckLabel;
     UILabel *lastUpdatePerformedLabel;
     UILabel *noUpdateLabel;
+    UIActivityIndicatorView   *indicator;
+
 }
 
 
@@ -65,6 +67,11 @@
 - (void)animateInNoUpdateText:(NSString *)updateMessage;
 - (void)animateOutNoUpdateText;
 - (void)autoUpdateCheck;
+- (void)parseXMLAfterDownloaded: (NSString *)content;
+- (IBAction)grabURLInBackground:(id)sender;
+
+
+
 
 -(void)hideDates;
 
