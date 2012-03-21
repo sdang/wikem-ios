@@ -63,12 +63,13 @@
 - (NSDictionary *)checkUpdateAvailable;
 - (void)disableAllTabBarItems:(BOOL)status;
 - (void)updateProgressBar:(float)currentProgress message:(NSString *)messageString;
-- (NSDictionary *)parseXMLInfoFile;
+- (NSDictionary *)parseXMLInfoFileAfterDownload: (NSString*)content;
 - (void)animateInNoUpdateText:(NSString *)updateMessage;
 - (void)animateOutNoUpdateText;
 - (void)autoUpdateCheck;
 - (void)parseXMLAfterDownloaded: (NSString *)content;
 - (IBAction)grabURLInBackground:(id)sender;
+- (IBAction)grabInfoURLInBackground:(id)sender;
 
 
 

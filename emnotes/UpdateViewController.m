@@ -245,29 +245,16 @@
 
 
 - (IBAction)runUpdateCheck:(id)sender
-{          //add activity indicator here
-    CGRect                  b = self.view.bounds;
-    indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: 
-                 UIActivityIndicatorViewStyleWhiteLarge];
-    
-    
-    //center the indicator in the view
-    indicator.frame = CGRectMake((b.size.width - 20) / 2, (b.size.height - 20) / 2, 20, 20); 
-    [self.view addSubview: indicator];
-    [indicator release];
-    [indicator startAnimating]; 
-    
-    
-
+{          
 	//ck: this is the method called by pressing the update button (not updatedownloadbutton)
-	dispatch_queue_t updateQueue = dispatch_queue_create("Run Update Check", NULL);
-    dispatch_async(updateQueue, ^{
+	//dispatch_queue_t updateQueue = dispatch_queue_create("Run Update Check", NULL);
+    //dispatch_async(updateQueue, ^{
   //the checkupdateavailable will need to be in a separate thread like this so as not to hang on the users main ui thread... was getting getb8adf00d when it was hanging on update check
         
-        NSDictionary *infoFileContents = [self checkUpdateAvailable];
+       
+    //NSDictionary *infoFileContents = [self checkUpdateAvailable];
+    NSDictionary *infoFileContents = [self grabInfoURLInBackground];  
         
-        [indicator removeFromSuperview];
-        indicator = nil;
 
         if ([infoFileContents count] == 2) {
             
@@ -278,8 +265,8 @@
         } else {
             [self animateInNoUpdateText:@"Error Checking for Update"];
         }
-    });
-    dispatch_release(updateQueue);
+    //});
+    //dispatch_release(updateQueue);
 }
 
 
@@ -450,11 +437,11 @@
 	return false;	 
 }
 
-- (NSDictionary *)parseXMLInfoFile {
-    NSString *infoFile = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"info_url"];
+- (NSDictionary *)parseXMLInfoFileAfterDownload:(NSString *)content {
+   // NSString *infoFile = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"info_url"];
 
-    NSURL *theURL = [NSURL URLWithString:infoFile];
-    NSString *content = [NSString stringWithContentsOfURL:theURL encoding:NSUTF8StringEncoding error:NULL];
+   // NSURL *theURL = [NSURL URLWithString:infoFile];
+  //  NSString *content = [NSString stringWithContentsOfURL:theURL encoding:NSUTF8StringEncoding error:NULL];
 
     
     TBXML *tbxml = [TBXML tbxmlWithXMLString:content]; 
@@ -532,7 +519,33 @@
 inManagedObjectContext:managedObjectContext];
 }
 
-//for now no use for sender...
+- (IBAction)grabInfoURLInBackground:(id)sender
+{
+    //add activity indicator here
+    CGRect                  b = self.view.bounds;
+    indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: 
+                 UIActivityIndicatorViewStyleWhiteLarge];
+    
+    //center the indicator in the view
+    indicator.frame = CGRectMake((b.size.width - 20) / 2, (b.size.height - 20) / 2, 20, 20); 
+    [self.view addSubview: indicator];
+    [indicator release];
+    [indicator startAnimating]; 
+    
+    
+    //get path for info dl for asynch downlaod request
+    NSString *infoFile = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"info_url"];
+    
+    NSURL *theURL = [NSURL URLWithString:infoFile];
+    //NSString *content = [NSString stringWithContentsOfURL:theURL encoding:NSUTF8StringEncoding error:NULL];
+    //third party asynch downloader, like nsurl, but better features
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:theURL];
+    request.tag = 2; //tag2 will be the infofile
+    [request setDelegate:self]; //same as grabURLInBackbround.
+    [request startAsynchronous]; //fire off request
+    
+
+}
 - (IBAction)grabURLInBackground:(id)sender
 {
     //add activity indicator here
@@ -547,13 +560,16 @@ inManagedObjectContext:managedObjectContext];
     [indicator release];
     [indicator startAnimating]; 
 
-    
+  //get path for download  
     NSString *path;
     NSString *content = nil;
     if (!self.ranInitialSetup) {
         path = [[NSBundle mainBundle] pathForResource:@"database" ofType:@"xml"];
         content = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+        //ie the prebundled XML, so actually not downloading anything on first run
+        
     } else {
+        //all other instances other than first run download updates
         NSString *databaseFile = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"database_url"];
         NSURL *theURL = [NSURL URLWithString:databaseFile];
         //content = [NSString stringWithContentsOfURL:theURL encoding:NSUTF8StringEncoding error:NULL
@@ -561,17 +577,11 @@ inManagedObjectContext:managedObjectContext];
         
         //third party asynch downloader, like nsurl, but better features
         ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:theURL];
-        request.tag = 1;
+        request.tag = 1; //tag1 will be for db
         //important, make sure we are the delegate to recieve the messages
         [request setDelegate:self];
         [request startAsynchronous];
     }
-
-    
-    
-    
- //   NSURL *url = [NSURL URLWithString:@"http://allseeing-i.com"];
-    
 }
 
 - (void)requestFinished:(ASIHTTPRequest *)request
@@ -579,24 +589,43 @@ inManagedObjectContext:managedObjectContext];
     // Use when fetching text data
     NSString *responseString = [request responseString];
     
-    [indicator removeFromSuperview];
-    indicator = nil;
-    
-    
-    if (request.tag == 1)
-    {
-        NSLog(@"hey the NSTAg is 1");
+        
+    if (request.tag == 1) //DB downloaded
+    { //get rid of indicator
+        [indicator removeFromSuperview];
+        indicator = nil;
+        
+
+        NSLog(@"downloadRequest finished for DB");
+        [self parseXMLAfterDownloaded:responseString];
+
+    }
+    else if (request.tag == 2)//INFO file downloaded
+    { //get rid of indicator
+        [indicator removeFromSuperview];
+        indicator = nil;
+        
+
+        NSLog(@"downloadRequest finished for INFO file");
+        [self parseXMLInfoFileAfterDownload:responseString];
+        
     }
 
-    [self parseXMLAfterDownloaded:responseString];
-    
+     
     // Use when fetching binary data
    // NSData *responseData = [request responseData];
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request
 {
+    [indicator removeFromSuperview];
+    indicator = nil;
+    
+
     NSError *error = [request error];
+    //display alert... dl failed? TODO
+    //TODO
+    
 }
 
 
