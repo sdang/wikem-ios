@@ -720,6 +720,7 @@ inManagedObjectContext:managedObjectContext];
 
 
 #pragma mark - DownloadDelegate
+//FIXME: bug when click update many times... indicator stays!
 - (IBAction)grabInfoURLInBackground:(id)sender
 {
     //add activity indicator here
@@ -745,7 +746,8 @@ inManagedObjectContext:managedObjectContext];
     [request setDelegate:self]; //same as grabURLInBackbround.
     [request startAsynchronous]; //fire off request
     
-
+    
+    
 }
 
  
@@ -779,15 +781,49 @@ inManagedObjectContext:managedObjectContext];
        
         
         //third party asynch downloader, like nsurl, but better features
-        ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:theURL];
-        request.tag = 1; //tag1 will be for db
+       
+        //ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:theURL];
+        dbDLRequest = [[ASIHTTPRequest requestWithURL:theURL]retain];
+        
+        
+        dbDLRequest.tag = 1; //tag1 will be for db
         //important, make sure we are the delegate to recieve the messages
-        [request setDelegate:self];
-        [request startAsynchronous];
+        [dbDLRequest setDelegate:self];
+        [dbDLRequest startAsynchronous];
+        
+        
+    //creates the cancel button on each download. removed from superview when done or cancelled
+         cancelDLButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [cancelDLButton addTarget:self //send the request to be cancelled
+                           action:@selector(cancelDownload)
+                 forControlEvents:UIControlEventTouchDown];
+        [cancelDLButton setTitle:@"Cancel Download" forState:UIControlStateNormal];
+        cancelDLButton.frame = CGRectMake(((b.size.width - 20) / 2)-50, ((b.size.height - 20) / 2)-50, 100, 30); 
+        
+        [self.view addSubview:cancelDLButton];
+
     }
 }
 
+-(void)cancelDownload{
+    // Cancels an asynchronous request, clearing all delegates first
+    //ie. won't trigger the requestFailed unlike [request cancel];
+    NSLog(@"request cancelling");
+    if(dbDLRequest){
+        [dbDLRequest cancel];
+        [dbDLRequest release];
+        dbDLRequest=nil;
+    }
+    [dbDLRequest clearDelegatesAndCancel];
+    
+    
+    
+    //remove the button after
+    [cancelDLButton removeFromSuperview];
+    cancelDLButton = nil;
+}
 
+//TODO: error checking
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
     // Use when fetching text data
@@ -798,9 +834,14 @@ inManagedObjectContext:managedObjectContext];
     { //get rid of indicator
         [indicator removeFromSuperview];
         indicator = nil;
+       //get rid of cancel button
+        [cancelDLButton removeFromSuperview];
+        cancelDLButton = nil;
+        NSLog(@"requestFinished, releasing request now");
+        [dbDLRequest release];
+        dbDLRequest=nil;
         
-
-        NSLog(@"downloadRequest finished for DB");
+        NSLog(@"downloadRequest finished for DB, will parse XML Now");
         [self parseXMLAfterDownloaded:responseString];
 
     }
@@ -823,16 +864,24 @@ inManagedObjectContext:managedObjectContext];
    // NSData *responseData = [request responseData];
 }
 
-- (void)requestFailed:(ASIHTTPRequest *)request
+//TODO: displ	ay alert... dl failed? TODO
+//TODO: in case of error when parse db... now where to release?
+ - (void)requestFailed:(ASIHTTPRequest *)request
 {
     [indicator removeFromSuperview];
     indicator = nil;
     
 
+    if(request.tag == 1){
+        //ie. the download failed, throw an alert
+        
+    //also get rid of the cancel button (won't be removed twice if cancelled since delegate cleared)
+        [cancelDLButton removeFromSuperview];
+        cancelDLButton = nil;
+    }
+
     NSError *error = [request error];
-    //displ	ay alert... dl failed? TODO
- //FIXME:
-	
+ 	
     
 }
 
@@ -1044,6 +1093,10 @@ inManagedObjectContext:managedObjectContext];
     self.datesLabel1 = nil;
     self.datesLabel2 = nil;
     self.datesLabel3 = nil;
+    
+    self->cancelDLButton = nil;
+    //do i even need this
+    self->indicator = nil;
 }
 - (void)dealloc
 {

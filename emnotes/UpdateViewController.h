@@ -10,6 +10,7 @@
 #import "TBXML.h"
 #import "AcceptLicense.h"
 #import "AboutWikemViewController.h"
+#import "ASIHTTPRequest.h"
 
 @interface UpdateViewController : UIViewController <AcceptLicenseDelegate> {
     AcceptLicense *licenseViewController;
@@ -24,7 +25,10 @@
     UILabel *lastUpdatePerformedLabel;
     UILabel *noUpdateLabel;
     UIActivityIndicatorView   *indicator;
+    UIButton *cancelDLButton ;
 
+    //for downloadCancelButton, can't pass object (request) so need to retain it
+    ASIHTTPRequest *dbDLRequest;
 }
 
 
@@ -72,5 +76,6 @@
 - (IBAction)grabInfoURLInBackground:(id)sender;
 - (void)finishUpdateCheck:(NSDictionary*)infoFileContents;
  -(void)hideDates;
+-(void)cancelDownload;
 
 @end
