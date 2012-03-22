@@ -70,10 +70,7 @@
 - (void)parseXMLAfterDownloaded: (NSString *)content;
 - (IBAction)grabURLInBackground:(id)sender;
 - (IBAction)grabInfoURLInBackground:(id)sender;
-
-
-
-
--(void)hideDates;
+- (void)finishUpdateCheck:(NSDictionary*)infoFileContents;
+ -(void)hideDates;
 
 @end

@@ -45,13 +45,11 @@
     [UIView setAnimationDuration:0.5];
     [UIView setAnimationCurve:UIViewAnimationOptionCurveEaseIn];
     [self.noUpdateLabel setAlpha:0.0];
-    NSLog(@"asdf");
     [UIView commitAnimations];
 }
 
 - (void)animateInNoUpdateText:(NSString *)updateMessage
 {
-    NSLog(@"asasdfasfddf");
 
     self.noUpdateLabel.text = updateMessage;
     [UIView beginAnimations:nil context:NULL];
@@ -242,22 +240,22 @@
         }
     });
 }
-
-
 - (IBAction)runUpdateCheck:(id)sender
 {          
 	//ck: this is the method called by pressing the update button (not updatedownloadbutton)
-	//dispatch_queue_t updateQueue = dispatch_queue_create("Run Update Check", NULL);
-    //dispatch_async(updateQueue, ^{
-  //the checkupdateavailable will need to be in a separate thread like this so as not to hang on the users main ui thread... was getting getb8adf00d when it was hanging on update check
-        
+	   //the actual download will need to be in a separate thread like this so as not to hang on the users main ui thread... was getting getb8adf00d when it was hanging on update check
+        //tried run in block, but some GUI inconsistencies on animate out 'no update' etc..
        
-    //NSDictionary *infoFileContents = [self checkUpdateAvailable];
-    NSDictionary *infoFileContents = [self grabInfoURLInBackground];  
+     [self grabInfoURLInBackground:nil];  
+    
+    //goes to finishUpdateCheck after delegate for downloader all done
+    
+ /* delte block TODO
+  dispatch_async(updateQueue, ^{
+      
         
-
+        NSDictionary *infoFileContents = [self checkUpdateAvailable];
         if ([infoFileContents count] == 2) {
-            
             [self animateInNoUpdateText:@"Update Available"];
             [self updateAvailable:YES];
         } else if ([infoFileContents count] == 1) {
@@ -265,8 +263,23 @@
         } else {
             [self animateInNoUpdateText:@"Error Checking for Update"];
         }
-    //});
-    //dispatch_release(updateQueue);
+    });
+    dispatch_release(updateQueue);
+*/
+    }
+
+-(void)finishUpdateCheck:(NSDictionary*)infoFileContents{
+    //only if successfully reached server and dl info.xml
+    if ([infoFileContents count] == 2) {
+        
+        [self animateInNoUpdateText:@"Update Available"];
+        [self updateAvailable:YES];
+    } else if ([infoFileContents count] == 1) {
+        [self animateInNoUpdateText:@"Database is up to date"];
+    } else {
+        [self animateInNoUpdateText:@"Error Checking for Update"];
+    }
+    
 }
 
 
@@ -286,7 +299,9 @@
         NSTimeInterval nowInEpoch = [[NSDate date] timeIntervalSince1970];
         if (nowInEpoch > ([prefs integerForKey:@"lastDatabaseCheck"] + 7 * 24 * 3600) && ranInitialSetup) {
             NSLog(@"Will perform auto check (last check: %@)", [NSDate dateWithTimeIntervalSince1970:[prefs integerForKey:@"lastDatabaseCheck"]]);
-            [self checkUpdateAvailable];
+           // [self checkUpdateAvailable];
+            [self grabInfoURLInBackground:nil];  
+            //TODO is this right?
         } else {
             NSLog(@"Will NOT perform auto check (last check: %@)", [NSDate dateWithTimeIntervalSince1970:[prefs integerForKey:@"lastDatabaseCheck"]]);
         }
@@ -295,12 +310,14 @@
     }
 }
 
-- (NSDictionary *)checkUpdateAvailable
+- (NSDictionary *)checkUpdateAvailable:(NSDictionary*)infoFileContents
 {//check update available uses last update time compared with the epoch on the info.xml file
 	//do not use lastDatabaseGeneratedTime, as we no longer regenerate the XML unless needed in future
 	
-    NSDictionary *infoFileContents = [self parseXMLInfoFile];
-	//bool *imagesAvailable = [self parseXMLImagesFile];
+ //   NSDictionary *infoFileContents = [self parseXMLInfoFile];
+    
+    
+    
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     
     
@@ -518,117 +535,6 @@
             categories:categories
 inManagedObjectContext:managedObjectContext];
 }
-
-- (IBAction)grabInfoURLInBackground:(id)sender
-{
-    //add activity indicator here
-    CGRect                  b = self.view.bounds;
-    indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: 
-                 UIActivityIndicatorViewStyleWhiteLarge];
-    
-    //center the indicator in the view
-    indicator.frame = CGRectMake((b.size.width - 20) / 2, (b.size.height - 20) / 2, 20, 20); 
-    [self.view addSubview: indicator];
-    [indicator release];
-    [indicator startAnimating]; 
-    
-    
-    //get path for info dl for asynch downlaod request
-    NSString *infoFile = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"info_url"];
-    
-    NSURL *theURL = [NSURL URLWithString:infoFile];
-    //NSString *content = [NSString stringWithContentsOfURL:theURL encoding:NSUTF8StringEncoding error:NULL];
-    //third party asynch downloader, like nsurl, but better features
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:theURL];
-    request.tag = 2; //tag2 will be the infofile
-    [request setDelegate:self]; //same as grabURLInBackbround.
-    [request startAsynchronous]; //fire off request
-    
-
-}
-- (IBAction)grabURLInBackground:(id)sender
-{
-    //add activity indicator here
-    CGRect                  b = self.view.bounds;
-    indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: 
-                 UIActivityIndicatorViewStyleWhiteLarge];
-    
-    
-    //center the indicator in the view
-    indicator.frame = CGRectMake((b.size.width - 20) / 2, (b.size.height - 20) / 2, 20, 20); 
-    [self.view addSubview: indicator];
-    [indicator release];
-    [indicator startAnimating]; 
-
-  //get path for download  
-    NSString *path;
-    NSString *content = nil;
-    if (!self.ranInitialSetup) {
-        path = [[NSBundle mainBundle] pathForResource:@"database" ofType:@"xml"];
-        content = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
-        //ie the prebundled XML, so actually not downloading anything on first run
-        
-    } else {
-        //all other instances other than first run download updates
-        NSString *databaseFile = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"database_url"];
-        NSURL *theURL = [NSURL URLWithString:databaseFile];
-        //content = [NSString stringWithContentsOfURL:theURL encoding:NSUTF8StringEncoding error:NULL
-       
-        
-        //third party asynch downloader, like nsurl, but better features
-        ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:theURL];
-        request.tag = 1; //tag1 will be for db
-        //important, make sure we are the delegate to recieve the messages
-        [request setDelegate:self];
-        [request startAsynchronous];
-    }
-}
-
-- (void)requestFinished:(ASIHTTPRequest *)request
-{
-    // Use when fetching text data
-    NSString *responseString = [request responseString];
-    
-        
-    if (request.tag == 1) //DB downloaded
-    { //get rid of indicator
-        [indicator removeFromSuperview];
-        indicator = nil;
-        
-
-        NSLog(@"downloadRequest finished for DB");
-        [self parseXMLAfterDownloaded:responseString];
-
-    }
-    else if (request.tag == 2)//INFO file downloaded
-    { //get rid of indicator
-        [indicator removeFromSuperview];
-        indicator = nil;
-        
-
-        NSLog(@"downloadRequest finished for INFO file");
-        [self parseXMLInfoFileAfterDownload:responseString];
-        
-    }
-
-     
-    // Use when fetching binary data
-   // NSData *responseData = [request responseData];
-}
-
-- (void)requestFailed:(ASIHTTPRequest *)request
-{
-    [indicator removeFromSuperview];
-    indicator = nil;
-    
-
-    NSError *error = [request error];
-    //display alert... dl failed? TODO
-    //TODO
-    
-}
-
-
 - (NSString *)getXMLDatabaseContents
 {
     NSString *path;
@@ -668,14 +574,14 @@ inManagedObjectContext:managedObjectContext];
         
         [self updateProgressBar:0.0 message:@"Downloading WikEM Database"];
         
-
+        
         NSManagedObjectContext *managedObjectContext = [[[NSManagedObjectContext alloc] init] autorelease];
         [managedObjectContext setPersistentStoreCoordinator:self.persistentStoreCoordinator];
         NSLog(@"Running parse xml");
-             
-       // NSString *content = [self getXMLDatabaseContents];
-
-                
+        
+        // NSString *content = [self getXMLDatabaseContents];
+        
+        
         // not ideal!! But we need a way to count number notes for updating progress bar
         int totalNotes = [[content componentsSeparatedByString:@"<content>"] count]-1;
         
@@ -692,41 +598,41 @@ inManagedObjectContext:managedObjectContext];
             } else {
                 // clear the database
                 [self clearWikEMData];
-               
+                
                 // Parse Categories
                 [self updateProgressBar:0.1 message:@"Updating Categories"];
                 TBXMLElement *categories = [TBXML childElementNamed:@"categories" parentElement:tbxml.rootXMLElement];
                 TBXMLElement *subElement = categories->firstChild;
 				NSLog(@"ok now updating categories");
-
+                
                 do {
                     NSString *title = [NSString stringWithString:[TBXML valueOfAttributeNamed:@"title" forElement:subElement]];
-				//	NSLog(title);
+                    //	NSLog(title);
                     [Category categoryWithTitle:title inManagedObjectContext:managedObjectContext];
                 } while ((subElement = subElement->nextSibling));
 				NSLog(@"ok now updating notes");
-
+                
                 // Parse Notes
-               [self updateProgressBar:0.2 message:@"Updating WikEM Notes"];
+                [self updateProgressBar:0.2 message:@"Updating WikEM Notes"];
                 TBXMLElement *notes = [TBXML childElementNamed:@"pages" parentElement:tbxml.rootXMLElement];
                 subElement = notes->firstChild;
                 if (subElement ==nil){NSLog(@"subelement is nil!!!");}
 				
 				float i = 0.0;
                 do { 
-
+                    
                     [self addNoteFromXMLElement:subElement context:managedObjectContext];
                     i++;
-
+                    
                     [self updateProgressBar:(0.8*(i/totalNotes))+0.2 message:@"Updating WikEM Notes"];
                     
                 } while ((subElement = subElement->nextSibling));
 				NSLog(@"ok done w notes");
-
-//ck: after finish parsing xml.  set my singleton boolean so can communicate need for cache cleanup
+                
+                //ck: after finish parsing xml.  set my singleton boolean so can communicate need for cache cleanup
 				[VariableStore sharedInstance].notesViewNeedsCacheReset=YES;
 				[VariableStore sharedInstance].categoryViewNeedsCacheReset=YES;
-
+                
                 [self updateProgressBar:1 message:@"Done"];
                 [managedObjectContext save:nil];
                 [self disableAllTabBarItems:NO];
@@ -734,7 +640,7 @@ inManagedObjectContext:managedObjectContext];
 				
 				
 				NSUserDefaults *prefsThread = [NSUserDefaults standardUserDefaults];
-
+                
 				//on first run set the update time to an old time...otw won't update online immediately 
 				if(self.ranInitialSetup == NO)
 				{
@@ -743,12 +649,12 @@ inManagedObjectContext:managedObjectContext];
 				}
 				else{
 					[prefsThread setInteger:[[NSDate date] timeIntervalSince1970] forKey:@"lastDatabaseUpdate"];
-
+                    
 				}
                 self.ranInitialSetup = YES;
                 
 				
-      //          NSUserDefaults *prefsThread = [NSUserDefaults standardUserDefaults];
+                //          NSUserDefaults *prefsThread = [NSUserDefaults standardUserDefaults];
                 //[prefsThread setInteger:[[NSDate date] timeIntervalSince1970] forKey:@"lastDatabaseUpdate"];
                 [prefsThread setInteger:databaseGenerationTime forKey:@"lastDatabaseGenerationTime"];
                 [prefsThread setBool:self.ranInitialSetup forKey:@"ranInitialSetup"];
@@ -760,20 +666,20 @@ inManagedObjectContext:managedObjectContext];
 				//the NSData downloader is asyncrhonus already on another thread. nice.
 				//now after resease the other tab bar items and updated text, 
 				//dl images in background
-				 
+                
  				//[self parseXMLExtrasFile ];	
                 /*
-                future implementation to use the extras to get new css and javascript functionality. for now, unnecessary unless rendering is tweaked to support this 
+                 future implementation to use the extras to get new css and javascript functionality. for now, unnecessary unless rendering is tweaked to support this 
                  */
                 
                 [self parseXMLImagesFile];
-                    
+                
 				//ok now done.
             }
         }
     });
     dispatch_release(parseQueue);
-
+    
 }
 
 - (IBAction)clearWikEMData
@@ -781,36 +687,156 @@ inManagedObjectContext:managedObjectContext];
     // commented out multithreading deleting b/c it crashes parseXMLDatabase
     // dispatch_queue_t deleteQueue = dispatch_queue_create("Delete Queue", NULL);
     // dispatch_async(deleteQueue, ^{
-        NSLog(@"Deleting All Notes");
-        NSManagedObjectContext *managedObjectContextClear = [[NSManagedObjectContext alloc] init];
-        [managedObjectContextClear setPersistentStoreCoordinator:self.persistentStoreCoordinator];
-        
-        NSFetchRequest *request = [[NSFetchRequest alloc] init];
-        request.entity = [NSEntityDescription entityForName:@"Note" inManagedObjectContext:managedObjectContextClear];
-        [request setIncludesPropertyValues:NO];
-        NSArray *notes = [managedObjectContextClear executeFetchRequest:request error:nil];
-        for (Note *note in notes) {
-            [managedObjectContextClear deleteObject:note];
-        }
-        [request release];
-        
-        NSFetchRequest *requestC = [[NSFetchRequest alloc] init];
-        requestC.entity = [NSEntityDescription entityForName:@"Category" inManagedObjectContext:managedObjectContextClear];
-        [requestC setIncludesPropertyValues:NO];
-        NSArray *categories = [managedObjectContextClear executeFetchRequest:requestC error:nil];
-        for (Category *category in categories) {
-            [managedObjectContextClear deleteObject:category];
-        }
-        
-        [requestC release];
-        [managedObjectContextClear save:nil];
-        [managedObjectContextClear release];
-        NSLog(@"Deleted All Notes");
+    NSLog(@"Deleting All Notes");
+    NSManagedObjectContext *managedObjectContextClear = [[NSManagedObjectContext alloc] init];
+    [managedObjectContextClear setPersistentStoreCoordinator:self.persistentStoreCoordinator];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    request.entity = [NSEntityDescription entityForName:@"Note" inManagedObjectContext:managedObjectContextClear];
+    [request setIncludesPropertyValues:NO];
+    NSArray *notes = [managedObjectContextClear executeFetchRequest:request error:nil];
+    for (Note *note in notes) {
+        [managedObjectContextClear deleteObject:note];
+    }
+    [request release];
+    
+    NSFetchRequest *requestC = [[NSFetchRequest alloc] init];
+    requestC.entity = [NSEntityDescription entityForName:@"Category" inManagedObjectContext:managedObjectContextClear];
+    [requestC setIncludesPropertyValues:NO];
+    NSArray *categories = [managedObjectContextClear executeFetchRequest:requestC error:nil];
+    for (Category *category in categories) {
+        [managedObjectContextClear deleteObject:category];
+    }
+    
+    [requestC release];
+    [managedObjectContextClear save:nil];
+    [managedObjectContextClear release];
+    NSLog(@"Deleted All Notes");
     // });
     // dispatch_release(deleteQueue);
 	
+    
+}
+
+
+#pragma mark - DownloadDelegate
+- (IBAction)grabInfoURLInBackground:(id)sender
+{
+    //add activity indicator here
+    CGRect                  b = self.view.bounds;
+    indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: 
+                 UIActivityIndicatorViewStyleWhiteLarge];
+    
+    //center the indicator in the view
+    indicator.frame = CGRectMake((b.size.width - 20) / 2, (b.size.height - 20) / 2, 20, 20); 
+    [self.view addSubview: indicator];
+    [indicator release];
+    [indicator startAnimating]; 
+    
+    
+    //get path for info dl for asynch downlaod request
+    NSString *infoFile = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"info_url"];
+    
+    NSURL *theURL = [NSURL URLWithString:infoFile];
+    //NSString *content = [NSString stringWithContentsOfURL:theURL encoding:NSUTF8StringEncoding error:NULL];
+    //third party asynch downloader, like nsurl, but better features
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:theURL];
+    request.tag = 2; //tag2 will be the infofile
+    [request setDelegate:self]; //same as grabURLInBackbround.
+    [request startAsynchronous]; //fire off request
+    
 
 }
+
+ 
+- (IBAction)grabURLInBackground:(id)sender
+{
+    //add activity indicator here
+    CGRect                  b = self.view.bounds;
+    indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: 
+                 UIActivityIndicatorViewStyleWhiteLarge];
+    
+    
+    //center the indicator in the view
+    indicator.frame = CGRectMake((b.size.width - 20) / 2, (b.size.height - 20) / 2, 20, 20); 
+    [self.view addSubview: indicator];
+    [indicator release];
+    [indicator startAnimating]; 
+
+  //get path for download  
+    NSString *path;
+    NSString *content = nil;
+    if (!self.ranInitialSetup) {
+        path = [[NSBundle mainBundle] pathForResource:@"database" ofType:@"xml"];
+        content = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+        //ie the prebundled XML, so actually not downloading anything on first run
+        
+    } else {
+        //all other instances other than first run download updates
+        NSString *databaseFile = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"database_url"];
+        NSURL *theURL = [NSURL URLWithString:databaseFile];
+        //content = [NSString stringWithContentsOfURL:theURL encoding:NSUTF8StringEncoding error:NULL
+       
+        
+        //third party asynch downloader, like nsurl, but better features
+        ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:theURL];
+        request.tag = 1; //tag1 will be for db
+        //important, make sure we are the delegate to recieve the messages
+        [request setDelegate:self];
+        [request startAsynchronous];
+    }
+}
+
+
+- (void)requestFinished:(ASIHTTPRequest *)request
+{
+    // Use when fetching text data
+    NSString *responseString = [request responseString];
+    
+        
+    if (request.tag == 1) //DB downloaded
+    { //get rid of indicator
+        [indicator removeFromSuperview];
+        indicator = nil;
+        
+
+        NSLog(@"downloadRequest finished for DB");
+        [self parseXMLAfterDownloaded:responseString];
+
+    }
+    else if (request.tag == 2)//INFO file downloaded
+    { //get rid of indicator
+        [indicator removeFromSuperview];
+        indicator = nil;
+        
+
+        NSLog(@"downloadRequest finished for INFO file");
+        NSDictionary *infoFileContents = 
+         [self parseXMLInfoFileAfterDownload:responseString];
+        //error check TODO?
+        infoFileContents = [self checkUpdateAvailable:infoFileContents];
+        [self finishUpdateCheck:infoFileContents];
+    }
+
+     
+    // Use when fetching binary data
+   // NSData *responseData = [request responseData];
+}
+
+- (void)requestFailed:(ASIHTTPRequest *)request
+{
+    [indicator removeFromSuperview];
+    indicator = nil;
+    
+
+    NSError *error = [request error];
+    //displ	ay alert... dl failed? TODO
+ //FIXME:
+	
+    
+}
+
+#pragma mark -
 
 #pragma mark - Tab Bar Controls
 
@@ -877,27 +903,7 @@ inManagedObjectContext:managedObjectContext];
     return self;
 }
 
-- (void)dealloc
-{
-    [progressBar release];
-    [persistentStoreCoordinator release];
-    [licenseViewController release];
-    [tabBarItem release];
-    [progressText release];
-    [updaterButton release];
-    [currentDatabaseCreatedLabel release];
-    [lastUpdateCheckLabel release];
-    [lastUpdatePerformedLabel release];
-    [noUpdateLabel release];
-    [logo release];
-    [updatecheckbutton release];
-    [datesLabel1 release];
-    [datesLabel2 release];
-    [datesLabel3 release];
 
-
-    [super dealloc];
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -1038,8 +1044,28 @@ inManagedObjectContext:managedObjectContext];
     self.datesLabel1 = nil;
     self.datesLabel2 = nil;
     self.datesLabel3 = nil;
-
-
+}
+- (void)dealloc
+{
+    [progressBar release];
+    [persistentStoreCoordinator release];
+    [licenseViewController release];
+    [tabBarItem release];
+    [progressText release];
+    [updaterButton release];
+    [currentDatabaseCreatedLabel release];
+    [lastUpdateCheckLabel release];
+    [lastUpdatePerformedLabel release];
+    [noUpdateLabel release];
+    [logo release];
+    [updatecheckbutton release];
+    [datesLabel1 release];
+    [datesLabel2 release];
+    [datesLabel3 release];
+    
+    
+    
+    [super dealloc];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
