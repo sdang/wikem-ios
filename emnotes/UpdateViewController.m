@@ -242,31 +242,40 @@
 }
 - (IBAction)runUpdateCheck:(id)sender
 {          
-	//ck: this is the method called by pressing the update button (not updatedownloadbutton)
+/*	//ck: this is the method called by pressing the update button (not updatedownloadbutton)
 	   //the actual download will need to be in a separate thread like this so as not to hang on the users main ui thread... was getting getb8adf00d when it was hanging on update check
         //tried run in block, but some GUI inconsistencies on animate out 'no update' etc..
-       
-     [self grabInfoURLInBackground:nil];  
+*/  
     
-    //goes to finishUpdateCheck after delegate for downloader all done
+    //first check if misclick, and already download button shown or already updating
+    // if alpha == 0 that means it's already hidden
+  if (self.progressBar.alpha != 0 || self.updaterButton.alpha !=0) {    
+        NSLog(@"probably misclick");
+    } 
+  else{
     
- /* delte block TODO
-  dispatch_async(updateQueue, ^{
-      
+     if (indicator != nil){ //the little spinning indicator
+        NSLog(@"presed update twice?");
         
-        NSDictionary *infoFileContents = [self checkUpdateAvailable];
-        if ([infoFileContents count] == 2) {
-            [self animateInNoUpdateText:@"Update Available"];
-            [self updateAvailable:YES];
-        } else if ([infoFileContents count] == 1) {
-            [self animateInNoUpdateText:@"Database is up to date"];
-        } else {
-            [self animateInNoUpdateText:@"Error Checking for Update"];
         }
-    });
-    dispatch_release(updateQueue);
-*/
+    else{ 
+        //this is the expected situation. check for update. dl the xml
+            CGRect   b = self.view.bounds;
+        indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: 
+                    UIActivityIndicatorViewStyleWhiteLarge];
+    
+        //center the indicator in the view
+        indicator.frame = CGRectMake((b.size.width - 20) / 2, (b.size.height - 20) / 2, 20, 20); 
+        [self.view addSubview: indicator];
+        [indicator release];
+        [indicator startAnimating]; 
+        [self grabInfoURLInBackground:nil];  
+
+        }
+    
+        //goes to finishUpdateCheck after delegate for downloader all done
     }
+}
 
 -(void)finishUpdateCheck:(NSDictionary*)infoFileContents{
     //only if successfully reached server and dl info.xml
@@ -720,20 +729,9 @@ inManagedObjectContext:managedObjectContext];
 
 
 #pragma mark - DownloadDelegate
-//FIXME: bug when click update many times... indicator stays!
 - (IBAction)grabInfoURLInBackground:(id)sender
 {
-    //add activity indicator here
-    CGRect                  b = self.view.bounds;
-    indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: 
-                 UIActivityIndicatorViewStyleWhiteLarge];
-    
-    //center the indicator in the view
-    indicator.frame = CGRectMake((b.size.width - 20) / 2, (b.size.height - 20) / 2, 20, 20); 
-    [self.view addSubview: indicator];
-    [indicator release];
-    [indicator startAnimating]; 
-    
+        
     
     //get path for info dl for asynch downlaod request
     NSString *infoFile = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"info_url"];
@@ -777,15 +775,7 @@ inManagedObjectContext:managedObjectContext];
         //all other instances other than first run download updates
         NSString *databaseFile = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"database_url"];
         NSURL *theURL = [NSURL URLWithString:databaseFile];
-        //content = [NSString stringWithContentsOfURL:theURL encoding:NSUTF8StringEncoding error:NULL
-       
-        
-        //third party asynch downloader, like nsurl, but better features
-       
-        //ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:theURL];
         dbDLRequest = [[ASIHTTPRequest requestWithURL:theURL]retain];
-        
-        
         dbDLRequest.tag = 1; //tag1 will be for db
         //important, make sure we are the delegate to recieve the messages
         [dbDLRequest setDelegate:self];
@@ -797,10 +787,11 @@ inManagedObjectContext:managedObjectContext];
         [cancelDLButton addTarget:self //send the request to be cancelled
                            action:@selector(cancelDownload)
                  forControlEvents:UIControlEventTouchDown];
-        [cancelDLButton setTitle:@"Cancel Download" forState:UIControlStateNormal];
-        cancelDLButton.frame = CGRectMake(((b.size.width - 20) / 2)-50, ((b.size.height - 20) / 2)-50, 100, 30); 
-        
-        [self.view addSubview:cancelDLButton];
+        [cancelDLButton setTitle:@"Press to Cancel Download" forState:UIControlStateNormal];
+        //cancelDLButton.frame = CGRectMake(((b.size.width - 20) / 2)-50, ((b.size.height - 20) / 2)-50, 100, 100); 
+        cancelDLButton.frame = CGRectMake(0,0, b.size.width , 30);
+        cancelDLButton.alpha = 0.75;
+         [self.view addSubview:cancelDLButton];
 
     }
 }
@@ -819,8 +810,8 @@ inManagedObjectContext:managedObjectContext];
     
     
     //remove the button after
-    [cancelDLButton removeFromSuperview];
-    cancelDLButton = nil;
+   // [cancelDLButton removeFromSuperview];
+    //cancelDLButton = nil;
 }
 
 //TODO: error checking
@@ -838,9 +829,12 @@ inManagedObjectContext:managedObjectContext];
         [cancelDLButton removeFromSuperview];
         cancelDLButton = nil;
         NSLog(@"requestFinished, releasing request now");
+
+        
+        //unlike for the info file (which was autoreleased via convenience method) this one retained
         [dbDLRequest release];
         dbDLRequest=nil;
-        
+
         NSLog(@"downloadRequest finished for DB, will parse XML Now");
         [self parseXMLAfterDownloaded:responseString];
 
@@ -860,17 +854,28 @@ inManagedObjectContext:managedObjectContext];
     }
 
      
-    // Use when fetching binary data
-   // NSData *responseData = [request responseData];
-}
+ }
 
-//TODO: displ	ay alert... dl failed? TODO
-//TODO: in case of error when parse db... now where to release?
+ //TODO: in case of error when parse db... now where to release?
  - (void)requestFailed:(ASIHTTPRequest *)request
 {
     [indicator removeFromSuperview];
     indicator = nil;
     
+    NSError *error = [request error];
+   // [[NSAlert alertWithError:error] runModal];
+    NSString *messageString = [error localizedDescription];
+    NSString *moreString = [error localizedFailureReason] ? //stupid ternary operator
+    [error localizedFailureReason] :    NSLocalizedString(@"Please try again. Wifi is recommended.", nil);
+    messageString = [NSString stringWithFormat:@"%@. %@", messageString, moreString];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Unable To Connect to WikEM" 
+                                                    message:messageString
+                                                   delegate:nil 
+                                          cancelButtonTitle:@"OK" 
+                                          otherButtonTitles:nil];
+    
+    [alert show];
+    [alert release];
 
     if(request.tag == 1){
         //ie. the download failed, throw an alert
@@ -878,9 +883,21 @@ inManagedObjectContext:managedObjectContext];
     //also get rid of the cancel button (won't be removed twice if cancelled since delegate cleared)
         [cancelDLButton removeFromSuperview];
         cancelDLButton = nil;
+        
+/*    //who would this give an error in other people' code?
+        NSLog(@"reference count is %i",[dbDLRequest retainCount]);
+
+         [dbDLRequest release];
+        dbDLRequest=nil;
+        NSLog(@"reference count is %i",[dbDLRequest retainCount]);
+*/
+    }
+    else if (request.tag ==2){
+    //do nothing for error during info.xml dl, other than previous alert
+    //autoreleased, so no need to release
+        
     }
 
-    NSError *error = [request error];
  	
     
 }
