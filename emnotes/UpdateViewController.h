@@ -58,13 +58,13 @@
 
 - (void)userDidAcceptLicense:(BOOL)status;
 - (IBAction)clearWikEMData;
-- (IBAction)parseXMLDatabaseFile;
+- (IBAction)dlThenParseXMLDatabaseFile;
 - (IBAction)runUpdateCheck:(id)sender;
 - (IBAction)displayAboutWikEMView:(id)sender;
 
 - (void)addNoteFromXMLElement:(TBXMLElement *)subElement context:(NSManagedObjectContext *)managedContextIndex;
 - (void)updateAvailable:(BOOL)status;
-- (NSDictionary *)checkUpdateAvailable;
+//- (NSDictionary *)checkUpdateAvailable;
 - (void)disableAllTabBarItems:(BOOL)status;
 - (void)updateProgressBar:(float)currentProgress message:(NSString *)messageString;
 - (NSDictionary *)parseXMLInfoFileAfterDownload: (NSString*)content;

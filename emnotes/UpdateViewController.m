@@ -80,6 +80,7 @@
 
 - (void)animateOutProgressPackage
 {
+    NSLog(@"animating out progpack");
     // if alpha == 0 that means it's already hidden
     if (self.progressBar.alpha != 0) {
         // we're going to move up the package by 60 pts
@@ -97,7 +98,7 @@
                           duration:0.5
                            options:UIViewAnimationCurveLinear
                         animations:^{ self.progressText.frame = finalRectText; }
-                        completion:NULL];
+                        completion:NULL]; //TODO make alpha0 no?
         
     }
 }
@@ -168,7 +169,7 @@
 - (void)userDidAcceptLicense:(BOOL)status {
     if (status) {
         self.displayingLicense = NO;
-        [self parseXMLDatabaseFile];
+        [self dlThenParseXMLDatabaseFile];
         [self updateAvailable:NO];
     }
 }
@@ -542,28 +543,13 @@
             categories:categories
 inManagedObjectContext:managedObjectContext];
 }
-- (NSString *)getXMLDatabaseContents
-{
-    NSString *path;
-    NSString *content = nil;
-    if (!self.ranInitialSetup) {
-        path = [[NSBundle mainBundle] pathForResource:@"database" ofType:@"xml"];
-        content = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
-    } else {
-        NSString *databaseFile = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"database_url"];
-        NSURL *theURL = [NSURL URLWithString:databaseFile];
-        content = [NSString stringWithContentsOfURL:theURL encoding:NSUTF8StringEncoding error:NULL];
-    }
-    
-    return content;
-}
-
+ 
 
 /* called by touch of button 'download update'... see the xib file (interface builder), file owner connections
  */
-- (void)parseXMLDatabaseFile {
-    //Actually, this method just initiates the download. Misnomer, but too lazy to change name
-    //want UI changes, which wernt working off main thread
+- (void)dlThenParseXMLDatabaseFile {
+    
+    
     [self disableAllTabBarItems:YES];
     
      [self updateProgressBar:0.0 message:@"Downloading WikEM Database"];
@@ -580,8 +566,7 @@ inManagedObjectContext:managedObjectContext];
         [managedObjectContext setPersistentStoreCoordinator:self.persistentStoreCoordinator];
         NSLog(@"Running parse xml");
         
-        // NSString *content = [self getXMLDatabaseContents];
-        
+         
         
         // not ideal!! But we need a way to count number notes for updating progress bar
         int totalNotes = [[content componentsSeparatedByString:@"<content>"] count]-1;
@@ -633,7 +618,7 @@ inManagedObjectContext:managedObjectContext];
                 //ck: after finish parsing xml.  set my singleton boolean so can communicate need for cache cleanup
 				[VariableStore sharedInstance].notesViewNeedsCacheReset=YES;
 				[VariableStore sharedInstance].categoryViewNeedsCacheReset=YES;
-                
+ 
                 [self updateProgressBar:1 message:@"Done"];
                 [managedObjectContext save:nil];
                 [self disableAllTabBarItems:NO];
@@ -733,7 +718,7 @@ inManagedObjectContext:managedObjectContext];
     //third party asynch downloader, like nsurl, but better features
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:theURL];
     request.tag = 2; //tag2 will be the infofile
-    [request setDelegate:self]; //same as grabURLInBackbround.
+    [request setDelegate:self];  
     [request startAsynchronous]; //fire off request
     
     
@@ -743,28 +728,30 @@ inManagedObjectContext:managedObjectContext];
  
 - (IBAction)grabURLInBackground:(id)sender
 {
-    //add activity indicator here
-    CGRect                  b = self.view.bounds;
-    indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: 
-                 UIActivityIndicatorViewStyleWhiteLarge];
     
-    
-    //center the indicator in the view
-    indicator.frame = CGRectMake((b.size.width - 20) / 2, (b.size.height - 20) / 2, 20, 20); 
-    [self.view addSubview: indicator];
-    [indicator release];
-    [indicator startAnimating]; 
-
   //get path for download  
     NSString *path;
     NSString *content = nil;
-    if (!self.ranInitialSetup) {
+    if (!self.ranInitialSetup) {       
+        //ie the prebundled XML, so actually not downloading anything on first run
         path = [[NSBundle mainBundle] pathForResource:@"database" ofType:@"xml"];
         content = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
-        //ie the prebundled XML, so actually not downloading anything on first run
-        
+        [self parseXMLAfterDownloaded:content];
     } else {
         //all other instances other than first run download updates
+        //add activity indicator here
+        CGRect                  b = self.view.bounds;
+        indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: 
+                     UIActivityIndicatorViewStyleWhiteLarge];
+        
+        
+        //center the indicator in the view
+        indicator.frame = CGRectMake((b.size.width - 20) / 2, (b.size.height - 20) / 2, 20, 20); 
+        [self.view addSubview: indicator];
+        [indicator release];
+        [indicator startAnimating]; 
+
+        
         NSString *databaseFile = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"database_url"];
         NSURL *theURL = [NSURL URLWithString:databaseFile];
        
@@ -801,7 +788,9 @@ inManagedObjectContext:managedObjectContext];
     }
     [dbDLRequest clearDelegatesAndCancel];
     
+    [self disableAllTabBarItems:NO];
     
+    [self updateProgressBar:1 message:@"Done"];
     
     //remove the button after
    // [cancelDLButton removeFromSuperview];
