@@ -307,11 +307,9 @@
             
         NSTimeInterval nowInEpoch = [[NSDate date] timeIntervalSince1970];
         if (nowInEpoch > ([prefs integerForKey:@"lastDatabaseCheck"] + 7 * 24 * 3600) && ranInitialSetup) {
-            NSLog(@"Will perform auto check (last check: %@)", [NSDate dateWithTimeIntervalSince1970:[prefs integerForKey:@"lastDatabaseCheck"]]);
-           // [self checkUpdateAvailable];
-            [self grabInfoURLInBackground:nil];  
-            //TODO is this right?
-        } else {
+             NSLog(@"Will perform auto check (last check: %@)", [NSDate dateWithTimeIntervalSince1970:[prefs integerForKey:@"lastDatabaseCheck"]]);
+             [self grabInfoURLInBackground:nil];  
+         } else {
             NSLog(@"Will NOT perform auto check (last check: %@)", [NSDate dateWithTimeIntervalSince1970:[prefs integerForKey:@"lastDatabaseCheck"]]);
         }
         });
@@ -566,24 +564,18 @@ inManagedObjectContext:managedObjectContext];
 - (void)parseXMLDatabaseFile {
     //Actually, this method just initiates the download. Misnomer, but too lazy to change name
     //want UI changes, which wernt working off main thread
+    [self disableAllTabBarItems:YES];
+    
+     [self updateProgressBar:0.0 message:@"Downloading WikEM Database"];
     
     [self grabURLInBackground:nil];
-    //now uses nice 3rd party asynchronous implementation
-    //
-    // 'graburlinbackround'
-    //request finished AND request failed... in both stop indicator
-    //request finished, call this method...ie PARSE the XML..
 }
 
 //called after successful download
 - (void)parseXMLAfterDownloaded: (NSString *)content {    
     dispatch_queue_t parseQueue = dispatch_queue_create("Parse XML Queue", NULL);
     dispatch_async(parseQueue, ^{
-        [self disableAllTabBarItems:YES];
-        
-        [self updateProgressBar:0.0 message:@"Downloading WikEM Database"];
-        
-        
+                 
         NSManagedObjectContext *managedObjectContext = [[[NSManagedObjectContext alloc] init] autorelease];
         [managedObjectContext setPersistentStoreCoordinator:self.persistentStoreCoordinator];
         NSLog(@"Running parse xml");
@@ -775,7 +767,9 @@ inManagedObjectContext:managedObjectContext];
         //all other instances other than first run download updates
         NSString *databaseFile = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"database_url"];
         NSURL *theURL = [NSURL URLWithString:databaseFile];
+       
         dbDLRequest = [[ASIHTTPRequest requestWithURL:theURL]retain];
+         
         dbDLRequest.tag = 1; //tag1 will be for db
         //important, make sure we are the delegate to recieve the messages
         [dbDLRequest setDelegate:self];
@@ -814,7 +808,6 @@ inManagedObjectContext:managedObjectContext];
     //cancelDLButton = nil;
 }
 
-//TODO: error checking
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
     // Use when fetching text data
@@ -829,8 +822,7 @@ inManagedObjectContext:managedObjectContext];
         [cancelDLButton removeFromSuperview];
         cancelDLButton = nil;
         NSLog(@"requestFinished, releasing request now");
-
-        
+ 
         //unlike for the info file (which was autoreleased via convenience method) this one retained
         [dbDLRequest release];
         dbDLRequest=nil;
@@ -856,8 +848,7 @@ inManagedObjectContext:managedObjectContext];
      
  }
 
- //TODO: in case of error when parse db... now where to release?
- - (void)requestFailed:(ASIHTTPRequest *)request
+- (void)requestFailed:(ASIHTTPRequest *)request
 {
     [indicator removeFromSuperview];
     indicator = nil;
@@ -884,8 +875,8 @@ inManagedObjectContext:managedObjectContext];
         [cancelDLButton removeFromSuperview];
         cancelDLButton = nil;
         
-/*    //who would this give an error in other people' code?
-        NSLog(@"reference count is %i",[dbDLRequest retainCount]);
+/*    //why would this give an error in other people' code? i think asihttp old bug fixed
+        NSLog(@"reference count is %i",[dbDLRequest retainCount]); -> 0 already
 
          [dbDLRequest release];
         dbDLRequest=nil;
