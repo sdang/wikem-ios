@@ -90,15 +90,16 @@
         
         // actually do the animation
         [UIView transitionWithView:self.progressBar
-                          duration:0.5
+                          duration:0.9
                            options:UIViewAnimationCurveLinear
                         animations:^{ self.progressBar.frame = finalRectBar; self.progressBar.alpha = 0.0;}
                         completion:NULL];
         [UIView transitionWithView:self.progressText   
-                          duration:0.5
+                          duration:0.9
                            options:UIViewAnimationCurveLinear
-                        animations:^{ self.progressText.frame = finalRectText; }
-                        completion:NULL]; //TODO make alpha0 no?
+                        animations:^{ //self.progressText.alpha = 0; 
+                            self.progressText.frame = finalRectText; }
+                        completion:NULL];  
         
     }
 }
