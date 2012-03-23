@@ -10,6 +10,7 @@
 #import "TBXML.h"
 #import "AcceptLicense.h"
 #import "AboutWikemViewController.h"
+#import "ASIHTTPRequest.h"
 
 @interface UpdateViewController : UIViewController <AcceptLicenseDelegate> {
     AcceptLicense *licenseViewController;
@@ -23,6 +24,11 @@
     UILabel *lastUpdateCheckLabel;
     UILabel *lastUpdatePerformedLabel;
     UILabel *noUpdateLabel;
+    UIActivityIndicatorView   *indicator;
+    UIButton *cancelDLButton ;
+
+    //for downloadCancelButton, can't pass object (request) so need to retain it
+    ASIHTTPRequest *dbDLRequest;
 }
 
 
@@ -52,20 +58,24 @@
 
 - (void)userDidAcceptLicense:(BOOL)status;
 - (IBAction)clearWikEMData;
-- (IBAction)parseXMLDatabaseFile;
+- (IBAction)dlThenParseXMLDatabaseFile;
 - (IBAction)runUpdateCheck:(id)sender;
 - (IBAction)displayAboutWikEMView:(id)sender;
 
 - (void)addNoteFromXMLElement:(TBXMLElement *)subElement context:(NSManagedObjectContext *)managedContextIndex;
 - (void)updateAvailable:(BOOL)status;
-- (NSDictionary *)checkUpdateAvailable;
+//- (NSDictionary *)checkUpdateAvailable;
 - (void)disableAllTabBarItems:(BOOL)status;
 - (void)updateProgressBar:(float)currentProgress message:(NSString *)messageString;
-- (NSDictionary *)parseXMLInfoFile;
+- (NSDictionary *)parseXMLInfoFileAfterDownload: (NSString*)content;
 - (void)animateInNoUpdateText:(NSString *)updateMessage;
 - (void)animateOutNoUpdateText;
 - (void)autoUpdateCheck;
-
--(void)hideDates;
+- (void)parseXMLAfterDownloaded: (NSString *)content;
+- (IBAction)grabURLInBackground:(id)sender;
+- (IBAction)grabInfoURLInBackground:(id)sender;
+- (void)finishUpdateCheck:(NSDictionary*)infoFileContents;
+ -(void)hideDates;
+-(void)cancelDownload;
 
 @end
