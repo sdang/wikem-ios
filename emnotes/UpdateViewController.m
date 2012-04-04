@@ -798,6 +798,7 @@ inManagedObjectContext:managedObjectContext];
     //cancelDLButton = nil;
 }
 
+//TODO XML error checking in future
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
     // Use when fetching text data
