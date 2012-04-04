@@ -91,8 +91,21 @@
 	//check to see if updates made and cache needs to be deleted
 	if ([VariableStore sharedInstance].notesViewNeedsCacheReset==YES){
 		//delete cache 'nil' specifies deletes all cache files
+        
+        
+        
+        dispatch_queue_t fetchQueue = dispatch_queue_create("backgroundfetching", NULL);
+        
+        dispatch_async(fetchQueue,^{
 		[NSFetchedResultsController deleteCacheWithName:nil];  
-		
+		});
+        
+        dispatch_release(fetchQueue);
+        
+        
+        
+        
+        
 		//reset the bool to NO
 		[VariableStore sharedInstance].notesViewNeedsCacheReset=NO;
 		NSLog(@"cache deleted");
