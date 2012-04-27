@@ -370,6 +370,7 @@
 		94DA2FC913468F8D00862F48 = {
 			isa = PBXGroup;
 			children = (
+				CA4C350F152FB6230058EFF8 /* New Group */,
 				CADAD1BA1502F01D005BBA64 /* libxml2.dylib */,
 				CADAD1B81502EF37005BBA64 /* MobileCoreServices.framework */,
 				CADAD1B61502EF2D005BBA64 /* SystemConfiguration.framework */,
@@ -455,6 +456,13 @@
 				94EFE5F2134D8A9900B1CBDB /* PersonalNotesViewController.xib */,
 			);
 			name = PersonalNotesView;
+			sourceTree = "<group>";
+		};
+		CA4C350F152FB6230058EFF8 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "New Group";
 			sourceTree = "<group>";
 		};
 		CADAD1931502EE3C005BBA64 /* ASIHttp */ = {

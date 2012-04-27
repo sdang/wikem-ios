@@ -13,11 +13,13 @@
 #import "NSString+HTML.h"
 #import "AcceptLicense.h"
 #import "AboutWikemViewController.h"
-
-//ck
 #import "NoteViewController.h"
 #import "VariableStore.h"
 #import "ASIHTTPRequest.h"
+
+//for 5.1 and on ... apple's 'do not backup' attribute:
+//  http://developer.apple.com/library/ios/#qa/qa1719/_index.html
+#include <sys/xattr.h>
 
 @implementation UpdateViewController
 @synthesize currentDatabaseCreatedLabel;
@@ -412,6 +414,15 @@
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory , NSUserDomainMask, YES);
 	NSString* documentsDir = [paths objectAtIndex:0];
 	
+    NSString *dirName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"storage_directory_name"];
+    documentsDir = [documentsDir stringByAppendingPathComponent:dirName];
+    
+    NSError* error = nil;
+    if (![[NSFileManager defaultManager] fileExistsAtPath:documentsDir]){
+        [[NSFileManager defaultManager] createDirectoryAtPath:documentsDir withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
+        NSLog(@"made new directory");
+    }
+
 	if (![filemanager isReadableFileAtPath:documentsDir] || ![filemanager isWritableFileAtPath:documentsDir]) 
 	{NSLog(@"uh oh. documents path is either not readable and/or writeable");
 		return false;
@@ -453,6 +464,17 @@
 		if ([filemanager fileExistsAtPath:name] == NO){
 			NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
  			[filemanager createFileAtPath:name contents:imageData attributes:nil];
+            
+            /*
+             
+             TODO whater these attributes?
+             how dod i call 
+             - (BOOL)addSkipBackupAttributeToItemAtURL:(NSURL *)URL
+
+             
+             
+             
+             */
 			i++;//some sort of progress bar later?
 			NSLog(@"created image file");
   		}
@@ -705,7 +727,17 @@ inManagedObjectContext:managedObjectContext];
     
 }
 
-
+#pragma mark - Download attribute apple stuff
+- (BOOL)addSkipBackupAttributeToItemAtURL:(NSURL *)URL
+{
+    const char* filePath = [[URL path] fileSystemRepresentation];
+    
+    const char* attrName = "com.apple.MobileBackup";
+    u_int8_t attrValue = 1;
+    
+    int result = setxattr(filePath, attrName, &attrValue, sizeof(attrValue), 0, 0);
+    return result == 0;
+}
 #pragma mark - DownloadDelegate
 - (IBAction)grabInfoURLInBackground:(id)sender
 {
