@@ -12,6 +12,21 @@
 #import "AboutWikemViewController.h"
 #import "ASIHTTPRequest.h"
 
+
+// obj c preprocessor can include 'macro' such as this... can use ~like static var or code snippet
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+
+/*
+ *  System Versioning Preprocessor Macros
+ *
+
+#define SYSTEM_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
+#define SYSTEM_VERSION_GREATER_THAN(v)              ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedDescending)
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+#define SYSTEM_VERSION_LESS_THAN(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
+#define SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v)     ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedDescending)
+*/
+
 @interface UpdateViewController : UIViewController <AcceptLicenseDelegate> {
     AcceptLicense *licenseViewController;
     NSPersistentStoreCoordinator *persistentStoreCoordinator;
@@ -20,6 +35,7 @@
     UILabel *progressText;
     BOOL ranInitialSetup;
     BOOL displayingLicense;
+    BOOL iOS5;
     UILabel *currentDatabaseCreatedLabel;
     UILabel *lastUpdateCheckLabel;
     UILabel *lastUpdatePerformedLabel;
@@ -77,5 +93,6 @@
 - (void)finishUpdateCheck:(NSDictionary*)infoFileContents;
  -(void)hideDates;
 -(void)cancelDownload;
+ 
 
 @end

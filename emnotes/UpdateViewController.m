@@ -19,7 +19,10 @@
 
 //for 5.1 and on ... apple's 'do not backup' attribute:
 //  http://developer.apple.com/library/ios/#qa/qa1719/_index.html
+//import is the fancier obj c version of include which gaurds against redundancy
 #include <sys/xattr.h>
+
+
 
 @implementation UpdateViewController
 @synthesize currentDatabaseCreatedLabel;
@@ -408,83 +411,6 @@
     return NO;
 }*/
 
-- (bool *)parseXMLImagesFile {
-	NSFileManager* filemanager = [NSFileManager defaultManager];
-	//get the path of current users documents folder for read/write
-	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory , NSUserDomainMask, YES);
-	NSString* documentsDir = [paths objectAtIndex:0];
-	
-    NSString *dirName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"storage_directory_name"];
-    documentsDir = [documentsDir stringByAppendingPathComponent:dirName];
-    
-    NSError* error = nil;
-    if (![[NSFileManager defaultManager] fileExistsAtPath:documentsDir]){
-        [[NSFileManager defaultManager] createDirectoryAtPath:documentsDir withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
-        NSLog(@"made new directory");
-    }
-
-	if (![filemanager isReadableFileAtPath:documentsDir] || ![filemanager isWritableFileAtPath:documentsDir]) 
-	{NSLog(@"uh oh. documents path is either not readable and/or writeable");
-		return false;
-	}
-	//changing documents allows us to just use the filename and not worry about appending paths
-	[filemanager changeCurrentDirectoryPath: documentsDir];
-
-    NSString *imagesFile = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"images_url"];
-	NSURL *theURL = [NSURL URLWithString:imagesFile];
-    NSError *theError = nil;
-    // was getting error thrown here by tbxml...possibly when the network connnection didnt even work and there was nothign to parse
-    
-
-    NSString *content = [NSString stringWithContentsOfURL:theURL encoding:NSUTF8StringEncoding error:&theError]; /*ck:    & means "take the address of". it's how you make a pointer to something. the * means to dereference the pointer, if it's in code. if it's part of a declaration, it's simply indicating the variable is a pointer.*/
-    if( theError != nil )
-    {
-        //oops something went wrong, handle the error
-        NSLog(@"Error: %@", theError);
-    }
-  else{
-    
-    TBXML *tbxml = [TBXML tbxmlWithXMLString:content]; 
-   TBXMLElement *query = [TBXML childElementNamed:@"query" parentElement:tbxml.rootXMLElement];
-	TBXMLElement *allimages = query->firstChild;
-	TBXMLElement *subElement = allimages->firstChild;
-	if (subElement ==nil){NSLog(@"subelement is nil!!!");}
-//for some sort of progressbar for images	
-	float i = 0.0;
-	NSString *name;
-	NSString *url;
-		
-  
-	do { 
- 		name = [TBXML valueOfAttributeNamed:@"name" forElement:subElement];  	
-		url =  [TBXML valueOfAttributeNamed:@"url" forElement:subElement]; 
-		
-		//save the image if it already doesn't exist, but first check the path
-  
-		if ([filemanager fileExistsAtPath:name] == NO){
-			NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
- 			[filemanager createFileAtPath:name contents:imageData attributes:nil];
-            
-            /*
-             
-             TODO whater these attributes?
-             how dod i call 
-             - (BOOL)addSkipBackupAttributeToItemAtURL:(NSURL *)URL
-
-             
-             
-             
-             */
-			i++;//some sort of progress bar later?
-			NSLog(@"created image file");
-  		}
-		else{ //NSLog(@"no image downlaoded file already exists");
-		}
-	} while ((subElement = subElement->nextSibling));
-  }
-	return false;	 
-}
-
 - (NSDictionary *)parseXMLInfoFileAfterDownload:(NSString *)content {
    // NSString *infoFile = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"info_url"];
 
@@ -727,7 +653,101 @@ inManagedObjectContext:managedObjectContext];
     
 }
 
+
+- (bool *)parseXMLImagesFile {
+	NSFileManager* filemanager = [NSFileManager defaultManager];
+	//get the path of current users documents folder for read/write
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory , NSUserDomainMask, YES);
+	NSString* documentsDir = [paths objectAtIndex:0];
+	
+    NSString *dirName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"storage_directory_name"];
+    documentsDir = [documentsDir stringByAppendingPathComponent:dirName];
+    
+    NSError* error = nil;
+    if (![[NSFileManager defaultManager] fileExistsAtPath:documentsDir]){
+        [[NSFileManager defaultManager] createDirectoryAtPath:documentsDir withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
+        NSLog(@"made new directory");
+    }
+    // Set do not backup attribute to whole folder
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"5.0.1")){ 
+        NSURL* pathUrl = [NSURL fileURLWithPath:documentsDir];
+
+        BOOL success = [self addSkipBackupAttributeToItemAtURL:pathUrl];
+        if (success) 
+            NSLog(@"successfully Marked %@", documentsDir);
+        else
+            NSLog(@"Can't marked %@", documentsDir);
+    }
+    
+	if (![filemanager isReadableFileAtPath:documentsDir] || ![filemanager isWritableFileAtPath:documentsDir]) 
+	{NSLog(@"uh oh. documents path is either not readable and/or writeable");
+		return false;
+	}
+	//changing documents allows us to just use the filename and not worry about appending paths
+	[filemanager changeCurrentDirectoryPath: documentsDir];
+    
+    NSString *imagesFile = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"images_url"];
+	NSURL *theURL = [NSURL URLWithString:imagesFile];
+    NSError *theError = nil;
+    // was getting error thrown here by tbxml...possibly when the network connnection didnt even work and there was nothign to parse
+    
+    
+    NSString *content = [NSString stringWithContentsOfURL:theURL encoding:NSUTF8StringEncoding error:&theError]; /*ck:    & means "take the address of". it's how you make a pointer to something. the * means to dereference the pointer, if it's in code. if it's part of a declaration, it's simply indicating the variable is a pointer.*/
+    if( theError != nil )
+    {
+        //oops something went wrong, handle the error
+        NSLog(@"Error: %@", theError);
+    }
+    else{
+        
+        TBXML *tbxml = [TBXML tbxmlWithXMLString:content]; 
+        TBXMLElement *query = [TBXML childElementNamed:@"query" parentElement:tbxml.rootXMLElement];
+        TBXMLElement *allimages = query->firstChild;
+        TBXMLElement *subElement = allimages->firstChild;
+        if (subElement ==nil){NSLog(@"subelement is nil!!!");}
+        //for some sort of progressbar for images	
+        float i = 0.0;
+        NSString *name;
+        NSString *url;
+		
+        
+        do { 
+            name = [TBXML valueOfAttributeNamed:@"name" forElement:subElement];  	
+            url =  [TBXML valueOfAttributeNamed:@"url" forElement:subElement]; 
+            
+            //save the image if it already doesn't exist, but first check the path
+            
+            if ([filemanager fileExistsAtPath:name] == NO){
+                NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+                [filemanager createFileAtPath:name contents:imageData attributes:nil];
+                
+    //set attributes if ios501 or greater
+                if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"5.0.1")){ 
+                    NSURL* imagePath = [NSURL fileURLWithPath:name];
+                    
+                    
+                    BOOL success = [self addSkipBackupAttributeToItemAtURL:imagePath];
+                    if (success) 
+                        NSLog(@"Marked %@", name);
+                    else
+                        NSLog(@"Can't marked %@", name);
+                }
+
+                
+                
+                i++;//some sort of progress bar later?
+                NSLog(@"created image file");
+            }
+            else{ //NSLog(@"no image downlaoded file already exists");
+            }
+        } while ((subElement = subElement->nextSibling));
+    }
+	return false;	 
+}
+
 #pragma mark - Download attribute apple stuff
+ 
+ 
 - (BOOL)addSkipBackupAttributeToItemAtURL:(NSURL *)URL
 {
     const char* filePath = [[URL path] fileSystemRepresentation];
@@ -738,6 +758,8 @@ inManagedObjectContext:managedObjectContext];
     int result = setxattr(filePath, attrName, &attrValue, sizeof(attrValue), 0, 0);
     return result == 0;
 }
+
+
 #pragma mark - DownloadDelegate
 - (IBAction)grabInfoURLInBackground:(id)sender
 {
