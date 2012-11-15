@@ -132,7 +132,7 @@
 		94742938134B8F4B00AE579D /* WikEMIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "WikEMIcon@2x.png"; path = "../WikEMIcon@2x.png"; sourceTree = "<group>"; };
 		9474293A134BA6E600AE579D /* wikemUpdaterBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wikemUpdaterBackground.png; sourceTree = "<group>"; };
 		9474293B134BA6E600AE579D /* wikemUpdaterBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wikemUpdaterBackground@2x.png"; sourceTree = "<group>"; };
-		94DA2FD413468F8D00862F48 /* WikEM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WikEM.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		94DA2FD413468F8D00862F48 /* WikEMv3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WikEMv3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		94DA2FD813468F8D00862F48 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		94DA2FDA13468F8D00862F48 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		94DA2FDC13468F8D00862F48 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -386,7 +386,7 @@
 		94DA2FD513468F8D00862F48 /* Busby */ = {
 			isa = PBXGroup;
 			children = (
-				94DA2FD413468F8D00862F48 /* WikEM.app */,
+				94DA2FD413468F8D00862F48 /* WikEMv3.app */,
 			);
 			includeInIndex = 1;
 			name = Busby;
@@ -512,7 +512,7 @@
 			);
 			name = emnotes;
 			productName = emnotes;
-			productReference = 94DA2FD413468F8D00862F48 /* WikEM.app */;
+			productReference = 94DA2FD413468F8D00862F48 /* WikEMv3.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -706,9 +706,9 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "emnotes/emnotes-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				PRODUCT_NAME = WikEM;
-				PROVISIONING_PROFILE = "E96D86D5-DBF1-4E15-860D-B58934A75570";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E96D86D5-DBF1-4E15-860D-B58934A75570";
+				PRODUCT_NAME = WikEMv3;
+				PROVISIONING_PROFILE = "36AA4061-0440-4EA6-AA7A-E665A7662162";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "36AA4061-0440-4EA6-AA7A-E665A7662162";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
@@ -719,6 +719,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					armv6,
+					armv7,
+				);
 				CODE_SIGN_ENTITLEMENTS = "~/emnotes/Entitlements.plist";
 				CODE_SIGN_IDENTITY = "iPhone Developer: christopher kim (PZ9WXQ99N9)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: christopher kim (PZ9WXQ99N9)";
@@ -728,9 +732,9 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "emnotes/emnotes-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				PRODUCT_NAME = WikEM;
-				PROVISIONING_PROFILE = "E96D86D5-DBF1-4E15-860D-B58934A75570";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E96D86D5-DBF1-4E15-860D-B58934A75570";
+				PRODUCT_NAME = WikEMv3;
+				PROVISIONING_PROFILE = "36AA4061-0440-4EA6-AA7A-E665A7662162";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "36AA4061-0440-4EA6-AA7A-E665A7662162";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
@@ -771,10 +775,10 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "emnotes/emnotes-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				PRODUCT_NAME = WikEM;
-				PROVISIONING_PROFILE = "E96D86D5-DBF1-4E15-860D-B58934A75570";
-				"PROVISIONING_PROFILE[sdk=*]" = "E96D86D5-DBF1-4E15-860D-B58934A75570";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E96D86D5-DBF1-4E15-860D-B58934A75570";
+				PRODUCT_NAME = WikEMv3;
+				PROVISIONING_PROFILE = "36AA4061-0440-4EA6-AA7A-E665A7662162";
+				"PROVISIONING_PROFILE[sdk=*]" = "36AA4061-0440-4EA6-AA7A-E665A7662162";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "36AA4061-0440-4EA6-AA7A-E665A7662162";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;

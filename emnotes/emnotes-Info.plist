@@ -18,7 +18,7 @@
 		<string>WikEMIcon@2x.png</string>
 	</array>
 	<key>CFBundleIdentifier</key>
-	<string>com.sabindang.com.emnotes</string>
+	<string>com.wikemv3.com.wikem</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>

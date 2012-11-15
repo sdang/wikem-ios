@@ -728,7 +728,7 @@ inManagedObjectContext:managedObjectContext];
                     
                     BOOL success = [self addSkipBackupAttributeToItemAtURL:imagePath];
                     if (success) 
-                        NSLog(@"Marked %@", name);
+                        NSLog(@"dl and added skipbackup attribrute to %@", name);
                     else
                         NSLog(@"Can't marked %@", name);
                 }
@@ -736,7 +736,7 @@ inManagedObjectContext:managedObjectContext];
                 
                 
                 i++;//some sort of progress bar later?
-                NSLog(@"created image file");
+                //NSLog(@"created image file");
             }
             else{ //NSLog(@"no image downlaoded file already exists");
             }
